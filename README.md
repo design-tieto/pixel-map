@@ -1,27 +1,18 @@
 # Pixel Office
 
-Pixel Office is a static, responsive floor map for finding and sharing desk and meeting-room locations.
+Pixel Office is a static floor map for finding and sharing desk and meeting-room locations.
 
-## Floor-plan coordinate audit
+## Map source
 
-The original Plan 4 / Vån 3 architectural PDF and a clean high-resolution rendering were inspected in full, including enlarged crops of the upper-left, upper perimeter, right perimeter, lower-left, lower perimeter and central areas. The existing 258 SVG workstation candidates were plotted on the floor-plan image individually with index labels. Fourteen points were identified as non-workstation furniture in meeting, focus or ancillary spaces and removed (original candidate indices: 1, 2, 62, 66, 69, 70, 71, 72, 73, 74, 107, 124, 141, 142). The remaining 244 points retain their vector-derived centres rather than receiving any global offsets or manual shifts.
+The map background comes from the supplied Plan 4 / Vån 3 PDF's original SVG export. The SVG paths, fills, strokes, furniture, rotations, labels, corridors, and planting details are kept from the export. Only the SVG page viewBox is cropped to the plan; no architectural geometry is redrawn. The compressed SVG is decompressed by the browser before display.
 
-Desk IDs are regenerated deterministically from the retained points, beginning in the top-left corner and proceeding around the perimeter, then through interior desks. The source drawing's stated 244 workstations now matches the retained candidate count, but a count match is not independent proof of one-to-one completeness. The vector data still needs checking against individual furniture footprints where workstation symbols are ambiguous.
+Desk and room markers are separate interactive overlays in the app's `0 0 850 779` coordinate system. The datasets contain 244 desk markers and 34 room records; the desk count alone does not prove every marker is centered correctly.
 
-Meeting-room hotspots (32 labelled MÖTE spaces) were independently compared to the centre coordinates of their pink room rectangles in the PDF. Existing coordinates match those rectangle centres, so they were preserved without unnecessary shifts.
+## Verification
 
-## Features
+- Confirmed the compressed asset expands to valid SVG with a `216 77 666 618` viewBox and 152,854 PDF-exported paths.
+- Confirmed 244 unique desk IDs and 34 unique room IDs.
+- Rendered the PDF plan crop with desk and room marker centers overlaid for a full-map visual comparison.
+- Checked the inline JavaScript syntax and `git diff --check`.
 
-- Search desk and room IDs; click a location to share it.
-- A selected location has a prominent pulsing marker.
-- Shared links expire client-side after one hour.
-- No booking, locking, directions, login, backend or live presence.
-
-Built by Rashmi Borole.
-
-
-## Browser verification (2026-10-13)
-
-The public branch application was opened in a browser and checked against the high-resolution plan displayed from `assets/floor-plan-hires.jpg`. The rendered image and desk overlay loaded together; the explicit desk dataset contains 244 unique IDs from D001 through D244. A whole-map visual pass and enlarged views were used to review marker placement across the plan; searches for D001, D122 and D244 placed their selected markers on the corresponding map regions. Search selection preserved the current zoom. Manual zoom, scrolling at enlarged zoom and Reset all worked in the browser.
-
-The original uploaded architectural PDF was not present in this branch, so the browser pass does not establish independent one-to-one completeness against that PDF. The 244-count agreement is not treated as proof of completeness.
+The feature branch has not yet been verified in Chrome or Edge as a running app. The public site may continue to serve its configured branch until deployment settings include this feature branch.

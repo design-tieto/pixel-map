@@ -108,7 +108,7 @@
 <div class="mapview" id="mapview">
 
 <svg id="map" class="map" viewBox="0 0 850 779" role="img" aria-label="Interactive Kv Poolen floor plan. Find desks and meeting rooms, then share a location.">
-<image id="vector-plan" x="0" y="0" width="850" height="779" preserveAspectRatio="none" href="assets/floor-map.svg?v=vector-trace-2"></image>
+<image id="vector-plan" x="0" y="0" width="850" height="779" preserveAspectRatio="none"></image>
 <g id="room-hotspots"></g><g id="desks"></g>
 <g id="pin-layer"></g><g id="destination-layer"></g>
 
@@ -130,6 +130,7 @@ const NS='http://www.w3.org/2000/svg', svg=document.getElementById('map'),mapvie
 let selected=null,shareUrl='',zoom=1,toastTimer;
 const $=id=>document.getElementById(id);
 const toast=message=>{const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000)};
+fetch('assets/floor-plan-source.svg.gz?v=pdf-vector-1').then(response=>{if(!response.ok)throw new Error('PDF vector asset could not be loaded');return response.body.pipeThrough(new DecompressionStream('gzip')).getReader()}).then(async reader=>{const chunks=[];for(;;){const {done,value}=await reader.read();if(done)break;chunks.push(value)}const href=URL.createObjectURL(new Blob(chunks,{type:'image/svg+xml'}));const image=document.getElementById('vector-plan');image.addEventListener('load',()=>URL.revokeObjectURL(href),{once:true});image.setAttribute('href',href)}).catch(error=>{console.error(error);toast('The floor plan could not be loaded. Please refresh the page.')});
 const svgEl=(tag,attrs={})=>{const el=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));return el};
 const roomHotspotLayer=document.getElementById('room-hotspots');
 const desks=window.PIXEL_OFFICE_DESKS.map(p=>({...p,name:'Desk '+p.id,type:'desk'}));

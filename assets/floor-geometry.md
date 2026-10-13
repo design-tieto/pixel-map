@@ -1,9 +1,9 @@
 # Floor geometry
 
-The application uses `floor-map.svg`, a simplified vector trace made from the original architectural PDF. It does not load the floor-plan JPG.
+The map background is the vector drawing exported directly from the supplied PDF. Its paths, strokes, fills, furniture, rotations, labels, corridors, and planting details are retained from that source. The SVG page viewBox is cropped to the floor-plan area; no floor-plan shapes are redrawn or simplified.
 
-- `floor-map.svg` contains traced floor zones, corridors, all 34 room blocks, and all 244 workstation blocks.
-- `floor-rooms.js` stores each room block's SVG center and size plus the capacity shown in search.
-- `desks.js` stores each desk block's SVG center, size, and rotation. The interactive green desk marker is rendered at the same center.
+- `floor-plan-source.svg.gz` is the original PDF SVG export compressed for delivery. The app decompresses it in the browser before displaying it.
+- `desks.js` stores the 244 desk marker centers in the map's `0 0 850 779` overlay coordinate system.
+- `floor-rooms.js` stores the room hotspot centers, hit areas, labels, and capacities in that same coordinate system.
 
-All geometry uses the `0 0 850 779` SVG coordinate system. When revising the floor, update the vector drawing and its geometry records together. Keep each marker's `x` and `y` equal to the center of its block.
+When the source floor plan changes, replace the compressed vector export and review the marker overlays against it. Keep the PDF's geometry as the map background; use the overlay records only for interaction and search.
