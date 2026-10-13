@@ -129,12 +129,13 @@ const $=id=>document.getElementById(id);
 const toast=message=>{const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000)};
 const svgEl=(tag,attrs={})=>{const el=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));return el};
 const roomHotspotLayer=document.getElementById('room-hotspots');
-// Desk positions and IDs are explicit in assets/desks.js. Coordinates use the full SVG viewBox.
-const desks=window.PIXEL_OFFICE_DESKS.map(p=>({...p,name:'Desk '+p.id,type:'desk'}));
+// Marker positions are stored in native pixels of the floor-plan JPG and converted to the SVG viewBox here.
+const imagePixelToSvg=(x,y)=>({x:x*850/2600,y:y*779/2409});
+const desks=window.PIXEL_OFFICE_DESKS.map(p=>({...p,...imagePixelToSvg(p.xPx,p.yPx),name:'Desk '+p.id,type:'desk'}));
 desks.forEach(p=>{const g=svgEl('g',{class:'desk-hotspot',tabindex:0,role:'button','aria-label':p.name});g.appendChild(svgEl('circle',{class:'hit',cx:p.x,cy:p.y,r:10}));g.appendChild(svgEl('circle',{class:'dot',cx:p.x,cy:p.y,r:4.4}));const title=svgEl('title');title.textContent=p.name;g.appendChild(title);p.node=g;g.addEventListener('click',e=>{e.stopPropagation();select(p)});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();select(p)}});deskLayer.appendChild(g)});
-const roomCoords="04F021,429.2,125.0;04F022,429.2,169.9;04I011,577.6,99.9;04G091,449.1,616.9;04K081,706.5,528.3;04D101,252.6,745.6;04K092,735.8,617.1;04L061,809.7,404.9;04L021,809.7,179.2;04J011,640.2,34.5;04C011,188.0,34.5;04C012,187.8,99.9;04F011,414.2,34.5;04G022,474.0,169.9;04K022,728.9,146.2;04G021,474.2,125.0;04K023,727.4,175.0;04K024,703.8,176.7;04K073,739.2,471.0;04K075,706.5,503.1;04K082,739.2,528.3;04J071,645.3,471.2;04J072,645.3,496.3;04J042,645.3,309.3;04J051,645.3,337.2;04J041,645.1,280.3;04K031,704.6,243.5;04K051,704.6,340.6;04L091,809.7,598.3;04G011,321.8,99.9;04G012,347.6,99.9;04G092,474.0,616.9";
+const roomCoords="04F021,1312.8,386.6;04F022,1312.8,525.4;04I011,1766.8,308.9;04G091,1373.7,1907.7;04K081,2187.4,1609.9;04D101,772.7,2305.7;04K092,2250.7,1908.3;04L061,2476.7,1252.1;04L021,2476.7,554.2;04J011,1958.3,106.7;04C011,575.1,106.7;04C012,574.4,308.9;04F011,1267.0,106.7;04G022,1449.9,525.4;04K022,2229.6,452.1;04G021,1450.5,386.6;04K023,2225.0,541.2;04K024,2152.8,546.4;04K073,2261.1,1456.5;04K075,2161.1,1555.8;04K082,2310.0,1609.9;04J071,2033.5,1441.7;04J072,2033.5,1519.3;04J042,2033.5,941.0;04J051,2033.5,1027.3;04J041,2032.9,851.3;04K031,2155.2,753.0;04K051,2237.8,1040.9;04L091,2512.2,1883.3;04G011,984.3,308.9;04G012,1063.2,308.9;04G092,1449.9,1907.7";
 const roomCapacities={'04F021':'10P','04F022':'10P','04K023':'2P','04K024':'2P'};
-const roomRecords=roomCoords.split(';').map(row=>{const [id,x,y]=row.split(',');const capacity=roomCapacities[id]||'4P';return{id,name:'Möte · '+capacity,type:'room',capacity,x:+x,y:+y,access:null,node:null}});
+const roomRecords=roomCoords.split(';').map(row=>{const [id,xPx,yPx]=row.split(',');const capacity=roomCapacities[id]||'4P';return{id,name:'Möte · '+capacity,type:'room',capacity,...imagePixelToSvg(+xPx,+yPx),access:null,node:null}});
 const extraLandmarks=[
 {id:'LOUNGE',name:'Lounge 04G031',type:'landmark',x:406.2,y:228.5,access:null},
 {id:'COFFEE1',name:'Coffee station 1',type:'landmark',x:435.8,y:327.4,access:null},
