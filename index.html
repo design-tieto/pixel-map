@@ -14,13 +14,13 @@
 #room-hotspots{display:block!important}
 .desk-hotspot{cursor:pointer;outline:none}
 .desk-hotspot .dot{fill:#b7dfa4;fill-opacity:.9;stroke:#315b3a;stroke-width:1.1}
-.desk-hotspot .hit{fill:transparent;stroke:none;pointer-events:all}
-.desk-hotspot:hover .dot,.desk-hotspot:focus .dot,.desk-hotspot.selected .dot{fill:#ffbe58;stroke:#8d4b28;stroke-width:2.2}
+.desk-hotspot .hit{fill:transparent;stroke:none;pointer-events:all}.desk-hotspot:hover .dot{fill-opacity:1}
+.desk-hotspot:hover .dot,.desk-hotspot:focus .dot,.desk-hotspot.selected .dot{fill:#ffbe58;fill-opacity:1;stroke:#8d4b28;stroke-opacity:1;stroke-width:2.2}
 .desk-hotspot.selected .hit{fill:#ffbe5830}
 .room-hotspot{cursor:pointer}
-.room-hotspot circle{fill:#ffe58e;fill-opacity:.76;stroke:#30372f;stroke-width:1.8}
+.room-hotspot circle{fill:#ffe58e;fill-opacity:0;stroke:#30372f;stroke-opacity:0;stroke-width:1.8}
 .room-hotspot text{font-size:9px;fill:#30372f;font-weight:900;paint-order:stroke;stroke:#fffef4;stroke-width:2px;stroke-linejoin:round;pointer-events:none}
-.room-hotspot:hover circle,.room-hotspot:focus circle,.room-hotspot.selected circle{fill:#ffb1b5;stroke:#c84d45;stroke-width:3}
+.room-hotspot:hover circle,.room-hotspot:focus circle,.room-hotspot.selected circle{fill:#ffb1b5;fill-opacity:.9;stroke:#c84d45;stroke-opacity:1;stroke-width:3}
 #route-layer,#pin-layer{display:block!important}
 </style>
 </head>
