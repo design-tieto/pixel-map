@@ -93,7 +93,7 @@
 <div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title"><section class="modal"><h2 id="modal-title">Share your spot</h2><p id="modalcopy">Send a link so someone can find you.</p><div class="modalplace" id="modalplace"></div><p class="tiny">This link contains the place and expiry time. Client-side expiry prevents opening an old link in this app, but cannot revoke a copied URL from outside it.</p><div class="modalactions"><button class="btn primary" id="copy">Copy link</button><button class="btn" id="teams">Share to Teams</button><button class="btn" id="close">Close</button></div></section></div>
 <script>
 (() => {
-const NS='http://www.w3.org/2000/svg', svg=document.getElementById('map'),deskLayer=document.getElementById('desks'),routeLayer=document.getElementById('route-layer'),pinLayer=document.getElementById('pin-layer');
+const NS='http://www.w3.org/2000/svg', svg=document.getElementById('map'),routeLayer=document.getElementById('route-layer'),pinLayer=document.getElementById('pin-layer');
 let selected=null,starting=null,routeMode=false,shareUrl='',zoom=1,toastTimer;
 const $=id=>document.getElementById(id);
 const toast=message=>{const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000)};
@@ -140,42 +140,7 @@ const graph={
  E3:{x:644,y:545,edges:{E1:1,E4:1,B5:1}},
  E4:{x:810,y:545,edges:{E2:1,E3:1,B6:1}}
 };
-const access={
- '04A011':'T1','04C011':'T2','04F011':'T3','04J011':'T4','04K011':'T6','04D011':'T3','04H011':'T4','04G011':'C1','04G012':'C1','04F012':'C2','04C012':'T1','04D012':'T2','04I011':'E1','04F021':'C1','04G022':'C2','04H021':'C3','04K024':'E2','LOUNGE':'C4','KITCHEN':'C4','COPY':'B2','ELEVATORS':'C5','04C091':'S1','04E091':'S2','04H091':'S5','04L091':'S6','COFFEE2':'E4','PLANTS':'W2'
-};
-// Distribute 244 individually selectable desk IDs across the visible seating clusters.
-// Cluster positions follow the desk banks visible on the supplied plan; final CAD-coordinate verification remains a needed QA pass.
-const deskZones=[
- {count:24,x:70,y:47,cols:24,dx:30,dy:25,access:'T2',kind:'top-rim'},
- {count:16,x:264,y:142,cols:8,dx:26,dy:23,access:'T3',kind:'north-inner'},
- {count:14,x:53,y:212,cols:2,dx:30,dy:25,access:'W1',kind:'west-bay'},
- {count:12,x:56,y:340,cols:2,dx:30,dy:26,access:'W2',kind:'west-edge'},
- {count:16,x:352,y:243,cols:4,dx:31,dy:28,access:'C2',kind:'central-island'},
- {count:18,x:640,y:149,cols:6,dx:24,dy:24,access:'E1',kind:'east-north'},
- {count:22,x:764,y:226,cols:1,dx:0,dy:25,access:'E2',kind:'east-edge'},
- {count:14,x:660,y:343,cols:3,dx:29,dy:24,access:'E3',kind:'east-inner'},
- {count:64,x:525,y:596,cols:8,dx:34,dy:17,access:'E3',kind:'cards-area'},
- {count:20,x:278,y:606,cols:4,dx:34,dy:22,access:'S3',kind:'south-middle'},
- {count:24,x:55,y:640,cols:6,dx:32,dy:20,access:'S1',kind:'south-west'}
-];
-let deskNum=1;const desks=[];
-function addDesk(x,y,id,accessNode,zone){
- const g=svgEl('g',{class:'desk',tabindex:0,role:'button','aria-label':'Desk '+id,'data-id':id,'data-name':'Desk '+id,'data-type':'desk','data-x':x,'data-y':y});
- g.appendChild(svgEl('rect',{x:x-8,y:y-5,width:16,height:10}));
- g.appendChild(svgEl('path',{d:'M'+(x-5)+' '+(y-2)+'h10 M'+(x-5)+' '+(y+6)+'v3 M'+(x+5)+' '+(y+6)+'v3'}));
- g.appendChild(svgEl('rect',{class:'hit',x:x-11,y:y-10,width:22,height:22}));
- g.dataset.access=accessNode;g.dataset.zone=zone;
- g.addEventListener('click',()=>select(deskPlace(g)));
- g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(deskPlace(g))}});
- deskLayer.appendChild(g);desks.push({id,name:'Desk '+id,type:'desk',x,y,node:g,access:accessNode,zone});
-}
-function deskPlace(n){return{id:n.dataset.id,name:n.dataset.name,type:'desk',x:+n.dataset.x,y:+n.dataset.y,node:n,access:n.dataset.access,zone:n.dataset.zone}}
-deskZones.forEach(z=>{for(let i=0;i<z.count;i++){const col=i%z.cols,row=Math.floor(i/z.cols);let x=z.x+col*z.dx,y=z.y+row*z.dy;
- if(z.kind==='east-edge') {x=774+(i%2===0?-8:8);y=225+row*z.dy}
- if(z.kind==='cards-area'){x=z.x+col*z.dx+(row%2?5:0);y=z.y+row*z.dy}
- if(z.kind==='south-west'){x=z.x+col*z.dx;y=z.y+row*z.dy}
- const id='D'+String(deskNum++).padStart(3,'0');addDesk(x,y,id,z.access,z.kind)
-}});
+
 function allPlaces(){return namedPlaces()}
 function chooseSvgNode(p){document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));if(!p.node)return;if(p.type==='desk')p.node.classList.add('selected');else if(p.node.classList.contains('room-hotspot'))p.node.classList.add('selected');else{const shape=p.node.querySelector('.room');if(shape)shape.classList.add('selected')}}
 function select(p){if(!p)return;selected=p;chooseSvgNode(p);if(p.id&&p.id.startsWith('PIN-')){pinLayer.innerHTML='';pinLayer.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:12,fill:'#ffe58e',stroke:'#29362a','stroke-width':3}));pinLayer.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:3.5,fill:'#29362a'}));}else if(!starting){pinLayer.innerHTML='';}$('title').textContent=p.name;$('description').textContent=p.type==='desk'?'Work desk. Set it as your spot, share it, or get a route here.':p.type==='room'?'A room on this floor. Use directions to reach the door from your current position.':'An office landmark to help you orient yourself.';$('selectedinfo').hidden=false;$('spoticon').textContent=p.type==='desk'?'🪑':p.type==='room'?'🚪':'📍';$('placeid').textContent=p.id;$('placemeta').textContent=p.type==='desk'?'Work desk · '+p.id:p.type==='room'?'Room · '+p.id:'Landmark';$('share').disabled=false;$('directions').disabled=false;routeLayer.innerHTML='';if(routeMode){routeMode=false;setStarting(p)}}
@@ -212,6 +177,6 @@ svg.addEventListener('click',e=>{
 });
 fetch(new URL('assets/floor-plan.b64',document.baseURI)).then(r=>{if(!r.ok)throw new Error('Floor plan asset not available');return r.text()}).then(encoded=>{document.getElementById('architectural-plan').setAttribute('href','data:image/jpeg;base64,'+encoded.trim())}).catch(err=>{console.error('Could not load source floor plan',err);toast('Source floor-plan image failed to load. Check assets/floor-plan.b64.');});
 try{const m=location.hash.match(/spot=([^&]+)/);if(m){const payload=decodePayload(m[1]);if(!payload.expires||Date.now()>payload.expires){toast('This location link has expired. Ask for a new one.');history.replaceState(null,'',location.pathname+location.search)}else{const p=allPlaces().find(x=>x.id===payload.place)||{id:payload.place,name:payload.name||payload.place,type:payload.type||'landmark',x:+payload.x||400,y:+payload.y||350,access:payload.access};select(p);toast('Shared location: '+p.name+'. Select your starting point to get directions.')}}}catch{toast('Could not read the shared location link. Ask for a new one.')}
-if(deskNum!==245)console.error('Desk count mismatch:',deskNum-1);
+
 })();
 </script></body></html>
