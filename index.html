@@ -1,32 +1,234 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f6f3ed">
-  <meta name="description" content="A little hello from the web.">
-  <title>Hello, world!</title>
-  <style>
-    :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#20231f;background:#f6f3ed;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
-    *{box-sizing:border-box}
-    body{min-width:320px;min-height:100vh;margin:0;display:grid;place-items:center;padding:28px;background-image:radial-gradient(#d9d4c9 .7px,transparent .7px);background-size:19px 19px}
-    main{width:min(100%,680px);min-height:430px;padding:clamp(32px,7vw,72px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;background:#fffefa;border:1px solid #e8e4db;border-radius:8px;box-shadow:0 22px 70px #37322612}
-    .eyebrow,.signature{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
-    .eyebrow{display:flex;align-items:center;gap:10px;color:#73766b}
-    .dot{width:8px;height:8px;border-radius:50%;background:#91a66f;box-shadow:0 0 0 4px #91a66f20}
-    h1{margin:30px 0 14px;font-size:clamp(64px,12vw,112px);line-height:.98;letter-spacing:-.085em;font-weight:700}
-    h1 span{color:#718454}
-    p{margin:12px 0 48px;color:#77776f;font-size:clamp(15px,2.5vw,18px)}
-    .signature{color:#9a988f}.signature span{color:#718454;font-size:16px;margin-left:4px}
-    @media(max-width:480px){main{min-height:370px}}
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8f6ef">
+<meta name="description" content="Pixel Office - find a desk or meeting room and share your location."><title>Pixel Office</title>
+<style>
+:root{font-family:ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif;color:#273027;background:#f8f6ef;--ink:#273027;--paper:#fffef9;--muted:#70786c;--line:#dcded2;--green:#cce8b8;--pink:#ffc7cb;--blue:#bce8f0;--yellow:#ffe58e;--lav:#ddd1ff}
+*{box-sizing:border-box}body{margin:0;min-width:320px;background-image:radial-gradient(#d9d5c7 .7px,transparent .7px);background-size:18px 18px}.app{max-width:1500px;margin:auto;padding:22px clamp(12px,3vw,38px) 28px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #6b8cdc;outline-offset:3px}.top{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:19px}.brand{display:flex;align-items:center;gap:12px}.logo{width:47px;height:47px;display:grid;place-items:center;background:var(--yellow);border:3px solid var(--ink);border-radius:9px;box-shadow:4px 4px var(--ink);font-size:25px}.brand h1{font-size:clamp(25px,3vw,32px);letter-spacing:-.06em;margin:0}.brand p{margin:3px 0 0;color:var(--muted);font-size:13px}.live{font-size:11px;font-weight:900;letter-spacing:.09em;color:#567151;text-transform:uppercase}.live:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#70b975;margin-right:8px}.toolbar{display:grid;grid-template-columns:minmax(220px,1fr) auto auto;gap:10px;margin-bottom:16px}.search-wrap{position:relative;min-width:0;grid-column:1/2}.search{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:3px 3px var(--ink);padding:0 14px;min-height:49px}.search input{border:0;outline:0;min-width:0;width:100%;font-size:14px;background:transparent}.btn{min-height:45px;padding:0 16px;border:2px solid var(--ink);border-radius:10px;background:white;box-shadow:3px 3px var(--ink);font-size:13px;font-weight:850;transition:transform .12s,box-shadow .12s}.btn:hover{transform:translate(1px,1px);box-shadow:2px 2px var(--ink)}.btn:active{transform:translate(3px,3px);box-shadow:none}.primary{background:var(--green)}.pinkbtn{background:var(--pink)}.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}.layout{display:block}.map-card,.card{background:var(--paper);border:2px solid var(--ink);border-radius:13px;box-shadow:5px 5px var(--ink);overflow:hidden}.maphead{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:2px solid var(--ink)}.maphead h2{font-size:15px;margin:0}.maphead p{font-size:11px;color:var(--muted);margin:4px 0 0}.maptools{display:flex;gap:6px}.iconbtn{height:36px;min-width:36px;border:1.5px solid var(--ink);background:white;border-radius:7px;font-weight:900;font-size:17px}.mapview{position:relative;min-height:600px;overflow:auto;background:#e9e7d8;background-image:linear-gradient(#d1cfbe55 1px,transparent 1px),linear-gradient(90deg,#d1cfbe55 1px,transparent 1px);background-size:22px 22px}.map{display:block;width:100%;min-width:630px;height:auto;max-height:900px;transform-origin:center center}.floor{fill:#eeeddf;stroke:#272e27;stroke-width:5;stroke-linejoin:round}.corridor{fill:#f8f4e2;stroke:#c2c1b1;stroke-width:2}.void{fill:#fffefa;stroke:#333a32;stroke-width:3}.wall{fill:none;stroke:#3c443a;stroke-width:3;stroke-linejoin:round}.room{stroke:#333c33;stroke-width:2;cursor:pointer}.room:hover{stroke-width:4;filter:brightness(.97)}.room.selected{stroke:#df5e52;stroke-width:5}.roomlabel{font-size:10px;fill:#30372f;font-weight:850;text-anchor:middle;pointer-events:none}.smalllabel{font-size:8px;fill:#555d51;text-anchor:middle;pointer-events:none}.desk{cursor:pointer}.desk rect{fill:#fffdf6;stroke:#434b41;stroke-width:1.3;rx:1}.desk path{fill:none;stroke:#434b41;stroke-width:1.2}.desk .hit{fill:transparent;stroke:transparent;stroke-width:0}.desk:hover rect,.desk.selected rect{fill:#ffe58e;stroke:#e45f53;stroke-width:2.6}.desk.selected text{fill:#b5423d}.furn{fill:#d7cbb0;stroke:#63695d;stroke-width:1.4}.plant{fill:#7daf73;stroke:#456d40;stroke-width:1.3}.start-ring{fill:#bce8f0;stroke:#29362a;stroke-width:3;pointer-events:none}.legend{padding:10px 15px;display:flex;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:10px;height:10px;border:1px solid #667064;border-radius:2px}.side{display:flex;flex-direction:column;gap:14px}.card{padding:17px}.eyebrow{color:#6c7864;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px}.card h3{font-size:19px;letter-spacing:-.04em;margin:0 0 8px}.card p{font-size:13px;color:var(--muted);line-height:1.5;margin:0}.selectedinfo{display:flex;gap:10px;align-items:center;margin:14px 0}.spoticon{width:42px;height:42px;flex:none;display:grid;place-items:center;border:2px solid var(--ink);border-radius:9px;background:var(--blue);font-size:22px}.selectedinfo strong{font-size:13px;display:block}.selectedinfo small{font-size:11px;color:var(--muted)}.stack{display:grid;gap:8px}.stack .btn{width:100%;min-height:42px}.divider{height:1px;background:var(--line);margin:15px 0}.quicklist{display:grid;gap:4px;margin-top:10px}.quick{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;border-radius:8px;background:transparent;padding:8px}.quick:hover{background:#f0f0e5}.quickicon{width:33px;height:33px;display:grid;place-items:center;background:#edf0df;border:1px solid #d6dbc9;border-radius:7px}.quick strong{display:block;font-size:12px}.quick small{font-size:11px;color:var(--muted)}.note{margin-top:auto;padding:13px;border:1.5px dashed #b8bbae;border-radius:8px;background:#f7f5e9;color:#677063;font-size:11px;line-height:1.5}.footer{display:flex;justify-content:space-between;gap:12px;padding:20px 0 0;color:#777b70;font-size:11px}.toast{position:fixed;z-index:20;left:50%;bottom:20px;transform:translate(-50%,15px);opacity:0;pointer-events:none;max-width:calc(100vw - 24px);padding:12px 16px;border-radius:9px;background:var(--ink);color:white;box-shadow:0 8px 24px #2225;font-size:13px;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}.backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:15px;background:#1e251db8;z-index:10}.backdrop.open{display:flex}.modal{width:min(100%,450px);padding:23px;background:var(--paper);border:2px solid var(--ink);border-radius:14px;box-shadow:7px 7px var(--ink)}.modal h2{margin:0 0 8px;font-size:24px}.modal p{font-size:13px;line-height:1.5;color:var(--muted)}.modalplace{margin:15px 0;padding:12px;border:1.5px solid var(--line);border-radius:8px;background:#f7f5ec;font-weight:850}.modalactions{display:flex;gap:8px;flex-wrap:wrap}.modalactions .btn{flex:1}.tiny{font-size:11px!important}
+@media(max-width:900px){.layout{grid-template-columns:minmax(0,1fr) 250px}.mapview{min-height:500px}}@media(max-width:700px){.app{padding:14px 10px 24px}.live{display:none}.toolbar{grid-template-columns:1fr 1fr}.search-wrap{grid-column:1/-1}.toolbar .btn{padding:0 8px}.layout{grid-template-columns:1fr}.mapview{min-height:420px}.side{display:grid;grid-template-columns:1fr 1fr}.side .card:first-child,.note{grid-column:1/-1}.footer{flex-direction:column}}@media(max-width:420px){.side{grid-template-columns:1fr}.side .card:first-child,.note{grid-column:auto}.mapview{min-height:360px}}
+
+/* The supplied architectural plan is the visual source of truth; old schematic vector fills are hidden. */
+#map>.floor,#map>.corridor,#map>.void,#map>.wall,#map>.place,#map>rect:not(#architectural-plan),#map>text{display:none!important}
+#architectural-plan{display:block;image-rendering:auto;pointer-events:none}
+#room-hotspots{display:block!important}
+.desk-hotspot{cursor:pointer;outline:none}
+.desk-hotspot .dot{fill:#a8e78e;fill-opacity:1;stroke:#173f21;stroke-opacity:1;stroke-width:1.7}
+.desk-hotspot .hit{fill:transparent;stroke:none;pointer-events:all}.desk-hotspot:focus .hit{fill:#ffcf4e30;stroke:#173f21;stroke-width:1.2}.desk-hotspot:hover .dot{fill-opacity:1}
+.desk-hotspot:hover .dot,.desk-hotspot:focus .dot,.desk-hotspot.selected .dot{fill:#ffbe58;fill-opacity:1;stroke:#7b351e;stroke-opacity:1;stroke-width:2.6}
+.desk-hotspot.selected .hit{fill:#ffbe5830}
+.room-hotspot{cursor:pointer}
+.room-hotspot circle{fill:#ffc7cb;fill-opacity:.96;stroke:#3a3330;stroke-opacity:1;stroke-width:1.7}
+.room-hotspot text{font-size:8px;fill:#3a2d2d;font-weight:950;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
+.room-hotspot:hover circle,.room-hotspot:focus circle,.room-hotspot.selected circle{fill:#ff8c98;fill-opacity:1;stroke:#a9323b;stroke-opacity:1;stroke-width:2.8}
+#pin-layer,#destination-layer{display:block!important}
+
+.destination-marker{pointer-events:none}
+.destination-pulse{fill:#ff4b43;fill-opacity:.3;stroke:#c51f18;stroke-width:3;transform-box:fill-box;transform-origin:center;animation:destination-pulse 1.15s ease-out infinite}
+.destination-halo{fill:#fff;fill-opacity:1;stroke:#a71e18;stroke-width:3.2}
+.destination-pin{fill:#f0443b;stroke:#fff;stroke-width:3.2;filter:drop-shadow(0 2px 1px #1e261c70)}
+.destination-label-bg{fill:#fffef9;stroke:#252d25;stroke-width:2}
+.destination-label-title{font-size:11px;fill:#252d25;font-weight:900;text-anchor:middle}
+.destination-label-kicker{font-size:7px;fill:#a12a23;font-weight:900;letter-spacing:.7px;text-anchor:middle}
+
+@keyframes destination-pulse{0%{transform:scale(.65);fill-opacity:.42;stroke-opacity:1}75%{transform:scale(1.65);fill-opacity:0;stroke-opacity:0}100%{transform:scale(1.65);fill-opacity:0;stroke-opacity:0}}
+@media(prefers-reduced-motion:reduce){.destination-pulse{animation:none;fill-opacity:.48}}
+
+.map-status{padding:9px 14px;background:#f7f5e9;border-bottom:1px solid #dcded2;font-size:12px;color:#53604c;line-height:1.4}
+.location-popover{position:fixed;z-index:1000;width:228px;padding:10px;background:#fffef9;border:2px solid #273027;border-radius:10px;box-shadow:4px 4px #273027;display:grid;gap:7px}
+.location-popover[hidden]{display:none!important;pointer-events:none}.location-popover:not([hidden]){display:grid!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important}
+.popover-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;color:#626f5a;font-size:9px;font-weight:950;letter-spacing:.1em}
+.popover-close{width:24px;height:24px;border:1.5px solid #273027;background:white;border-radius:6px;font-size:17px;line-height:1}
+#popover-title{font-size:14px;line-height:1.2;overflow-wrap:anywhere;margin-bottom:2px}
+.popover-action{width:100%;border:1.5px solid #273027;background:#fff;padding:9px;text-align:left;border-radius:7px;font-weight:850;font-size:11px;line-height:1.2;box-shadow:2px 2px #273027}
+.primary-action{background:#ffe58e}.start-action{background:#cce8b8}
+.popover-action:hover{filter:brightness(.97);transform:translate(1px,1px);box-shadow:1px 1px #273027}
+.desk-hotspot.selected .dot{transform:scale(2.5);transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 1px 1px #1f271d)}
+.desk-hotspot.selected .hit{fill:#ffc94b55;stroke:#422b1c;stroke-width:1.8}
+.room-hotspot.selected circle:not(.selection-pulse){r:11px;filter:drop-shadow(0 1px 1px #1f271d)}
+.selection-pulse{fill:#ff3f36;fill-opacity:.28;stroke:#d92a22;stroke-width:2.8;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:selected-location-pulse 1.15s ease-out infinite;vector-effect:non-scaling-stroke}
+@keyframes selected-location-pulse{0%{transform:scale(.65);fill-opacity:.48;stroke-opacity:1}80%,100%{transform:scale(2.5);fill-opacity:0;stroke-opacity:0}}
+@media(prefers-reduced-motion:reduce){.selection-pulse{animation:none;transform:none;fill-opacity:.5}}
+.room-hotspot.selected text{font-size:10px;fill:#222}
+@media(max-width:700px){.location-popover{width:210px}.popover-action{font-size:12px;padding:10px}}
+.search-results{position:absolute;z-index:60;top:calc(100% + 5px);left:0;right:0;max-height:320px;overflow:auto;background:#fffef9;border:2px solid #293329;border-radius:9px;box-shadow:3px 3px #293329;padding:4px}.search-results[hidden]{display:none!important}.search-option{display:flex;align-items:center;gap:9px;width:100%;padding:8px 9px;border:0;border-radius:6px;background:transparent;text-align:left;color:#293329;font-size:12px;cursor:pointer}.search-option:hover,.search-option:focus{background:#e8efd9;outline:2px solid #809b70;outline-offset:-2px}.search-option .result-id{min-width:72px;font-weight:950;font-variant-numeric:tabular-nums}.search-option .result-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.search-empty{padding:10px;color:#68705f;font-size:12px}</style>
 </head>
 <body>
-  <main>
-    <div class="eyebrow"><span class="dot"></span>A small start</div>
-    <h1>Hello,<br><span>world!</span></h1>
-    <p>Every great idea begins with a first line.</p>
-    <div class="signature">Made for the web <span aria-hidden="true">↗</span></div>
-  </main>
-</body>
-</html>
+<div class="app">
+<header class="top"><div class="brand"><div class="logo" aria-hidden="true">▦</div><div><h1>Pixel Office</h1><p>A little map to find your people ✦</p></div></div><div class="live">Kv Poolen · Floor 3</div></header>
+<div class="toolbar"><div class="search-wrap"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search desk or room number…" aria-label="Search desk or meeting room number" autocomplete="off" aria-controls="search-results" aria-expanded="false"></label><div id="search-results" class="search-results" role="listbox" hidden></div></div><button class="btn" id="reset">↺ Reset map</button></div>
+<main class="layout">
+<section class="map-card">
+<div class="maphead"><div><h2>PLAN 4 · VÅN 3 <span aria-hidden="true">✦</span></h2><p>Actual floor-plan reference · search a room or tap anywhere to pin your spot</p></div><div class="maptools"><button class="iconbtn" id="zoomout" aria-label="Zoom out">−</button><button class="iconbtn" id="zoomin" aria-label="Zoom in">+</button><button class="iconbtn" id="fit" aria-label="Fit map">⌗</button></div></div>
+<div class="map-status" id="startlabel">Select a desk, meeting room, or landmark to share its location.</div>
+<div class="mapview" id="mapview">
+<svg id="map" class="map" viewBox="0 0 850 779" role="img" aria-label="Interactive Kv Poolen floor plan. Find desks and meeting rooms, then share a location.">
+<image id="architectural-plan" x="0" y="0" width="850" height="779" preserveAspectRatio="none" href="assets/floor-plan-hires.jpg"></image><g id="room-hotspots"></g><g id="desks"></g>
+<!-- Building perimeter, traced from the source drawing's curved footprint and inner openings. -->
+<path class="floor" d="M145 30 H705 Q814 30 814 142 V624 Q814 739 699 739 H150 Q34 739 34 624 V143 Q34 30 145 30Z"/>
+<!-- Perimeter walkways and the central horizontal passages. -->
+<path class="corridor" d="M49 192 H800 V232 H49Z M49 510 H800 V554 H49Z"/>
+<path class="corridor" d="M317 177 H536 V510 H317Z"/>
+<!-- Left open bay and central-right voids retain the conspicuous shape of the architectural plan. -->
+<path class="void" d="M112 218 H279 Q326 218 326 267 V471 Q326 514 280 514 H112Z"/>
+<path class="void" d="M526 248 Q526 214 562 214 H587 Q623 214 623 250 V478 Q623 514 587 514 H562 Q526 514 526 478Z"/>
+<!-- Walls / primary circulation edges; room entrances are shown as gaps at their access edges. -->
+<path class="wall" d="M112 218 H279 Q326 218 326 267 V471 Q326 514 280 514 H112 M526 248 Q526 214 562 214 H587 Q623 214 623 250 V478 Q623 514 587 514 H562 Q526 514 526 478"/>
+<path class="corridor" d="M326 232 H354 V510 H326Z M494 232 H526 V510 H494Z M623 232 H647 V510 H623Z"/>
+<!-- Upper perimeter meeting rooms / work areas. -->
+<g class="place" data-id="04A011" data-name="Meeting room 04A011" data-type="room" data-x="127" data-y="112" data-access="T1"><rect class="room" x="83" y="70" width="87" height="81" rx="4" fill="#ffc7cb"/><text class="roomlabel" x="126" y="92">04A011</text><text class="smalllabel" x="126" y="105">MEETING · 4P</text><rect x="107" y="117" width="38" height="16" rx="3" fill="#fff8ed" stroke="#4d544a"/><path d="M102 124h5 M145 124h5" stroke="#4d544a"/></g>
+<g class="place" data-id="04C011" data-name="Meeting room 04C011" data-type="room" data-x="207" data-y="112" data-access="T2"><rect class="room" x="176" y="70" width="62" height="81" rx="4" fill="#ffc7cb"/><text class="roomlabel" x="207" y="92">04C011</text><text class="smalllabel" x="207" y="105">MEETING · 4P</text><rect x="188" y="119" width="38" height="14" rx="3" fill="#fff8ed" stroke="#4d544a"/></g>
+<g class="place" data-id="04F011" data-name="Meeting room 04F011" data-type="room" data-x="309" data-y="112" data-access="T3"><rect class="room" x="270" y="70" width="78" height="81" rx="4" fill="#ffc7cb"/><text class="roomlabel" x="309" y="92">04F011</text><text class="smalllabel" x="309" y="105">MEETING · 4P</text><rect x="290" y="118" width="38" height="15" rx="3" fill="#fff8ed" stroke="#4d544a"/></g>
+<g class="place" data-id="04J011" data-name="Meeting room 04J011" data-type="room" data-x="576" data-y="112" data-access="T5"><rect class="room" x="537" y="70" width="78" height="81" rx="4" fill="#ffc7cb"/><text class="roomlabel" x="576" y="92">04J011</text><text class="smalllabel" x="576" y="105">MEETING · 4P</text><rect x="556" y="118" width="40" height="15" rx="3" fill="#fff8ed" stroke="#4d544a"/></g>
+<g class="place" data-id="04K011" data-name="Meeting room 04K011" data-type="room" data-x="689" data-y="112" data-access="T6"><rect class="room" x="648" y="70" width="82" height="81" rx="4" fill="#ffc7cb"/><text class="roomlabel" x="689" y="92">04K011</text><text class="smalllabel" x="689" y="105">MEETING · 4P</text><rect x="668" y="118" width="42" height="15" rx="3" fill="#fff8ed" stroke="#4d544a"/></g>
+<g class="place" data-id="04D011" data-name="ABW work area 04D011" data-type="room" data-x="390" data-y="168" data-access="T4"><rect class="room" x="359" y="125" width="90" height="70" rx="3" fill="#dbe8ce"/><text class="roomlabel" x="404" y="144">04D011</text><text class="smalllabel" x="404" y="157">WORK AREA / ABW</text><rect x="375" y="166" width="24" height="12" fill="#fff" stroke="#596154"/><rect x="405" y="166" width="24" height="12" fill="#fff" stroke="#596154"/></g>
+<g class="place" data-id="04H011" data-name="Meeting room 04H011" data-type="room" data-x="492" data-y="165" data-access="T4"><rect class="room" x="461" y="125" width="66" height="70" rx="3" fill="#ffc7cb"/><text class="roomlabel" x="494" y="145">04H011</text><text class="smalllabel" x="494" y="158">MEETING</text></g>
+<g class="place" data-id="04G011" data-name="Focus room 04G011" data-type="room" data-x="362" data-y="220" data-access="C1"><rect class="room" x="340" y="202" width="43" height="41" rx="3" fill="#dbe8ce"/><text class="smalllabel" x="361" y="221">04G011</text><text class="smalllabel" x="361" y="232">FOCUS</text></g>
+<g class="place" data-id="04G012" data-name="Focus room 04G012" data-type="room" data-x="385" data-y="220" data-access="C1"><rect class="room" x="386" y="202" width="43" height="41" rx="3" fill="#dbe8ce"/><text class="smalllabel" x="407" y="221">04G012</text><text class="smalllabel" x="407" y="232">FOCUS</text></g>
+<g class="place" data-id="04F012" data-name="Focus room 04F012" data-type="room" data-x="432" data-y="220" data-access="C2"><rect class="room" x="432" y="202" width="43" height="41" rx="3" fill="#dbe8ce"/><text class="smalllabel" x="453" y="221">04F012</text><text class="smalllabel" x="453" y="232">FOCUS</text></g>
+<g class="place" data-id="04C012" data-name="Meeting room 04C012" data-type="room" data-x="90" data-y="173" data-access="T1"><rect class="room" x="54" y="137" width="73" height="46" rx="4" fill="#ffc7cb"/><text class="roomlabel" x="90" y="155">04C012</text><text class="smalllabel" x="90" y="167">MEETING · 4P</text></g>
+<g class="place" data-id="04D012" data-name="ABW area 04D012" data-type="room" data-x="208" data-y="173" data-access="T2"><rect class="room" x="174" y="158" width="78" height="35" rx="3" fill="#dbe8ce"/><text class="roomlabel" x="213" y="173">04D012 · ABW</text><text class="smalllabel" x="213" y="184">WORK AREA</text></g>
+<!-- Room groups along the east wing. -->
+<g class="place" data-id="04I011" data-name="Meeting room 04I011" data-type="room" data-x="685" data-y="213" data-access="E1"><rect class="room" x="650" y="175" width="72" height="73" rx="3" fill="#ffc7cb"/><text class="roomlabel" x="686" y="195">04I011</text><text class="smalllabel" x="686" y="207">MEETING · 4P</text></g>
+<g class="place" data-id="04F021" data-name="Meeting room 04F021" data-type="room" data-x="367" data-y="295" data-access="C2"><rect class="room" x="339" y="266" width="58" height="58" rx="3" fill="#ffc7cb"/><text class="roomlabel" x="368" y="287">04F021</text><text class="smalllabel" x="368" y="299">MEETING · 10P</text></g>
+<g class="place" data-id="04G022" data-name="Meeting room 04G022" data-type="room" data-x="441" data-y="295" data-access="C3"><rect class="room" x="408" y="266" width="66" height="58" rx="3" fill="#ffc7cb"/><text class="roomlabel" x="441" y="287">04G022</text><text class="smalllabel" x="441" y="299">MEETING · 4P</text></g>
+<g class="place" data-id="04H021" data-name="Meeting room 04H021" data-type="room" data-x="492" data-y="295" data-access="C3"><rect class="room" x="480" y="266" width="55" height="58" rx="3" fill="#ffc7cb"/><text class="roomlabel" x="507" y="287">04H021</text><text class="smalllabel" x="507" y="299">MEETING · 4P</text></g>
+<g class="place" data-id="04K024" data-name="Meeting room 04K024" data-type="room" data-x="687" data-y="297" data-access="E2"><rect class="room" x="651" y="265" width="72" height="62" rx="3" fill="#ffc7cb"/><text class="roomlabel" x="687" y="286">04K024</text><text class="smalllabel" x="687" y="299">MEETING · 2P</text></g>
+<g class="place" data-id="LOUNGE" data-name="Lounge 04G031" data-type="landmark" data-x="376" data-y="396" data-access="C4"><rect class="room" x="344" y="359" width="66" height="75" rx="5" fill="#ddd1ff"/><text class="roomlabel" x="377" y="377">LOUNGE</text><rect x="355" y="385" width="44" height="17" rx="4" fill="#9b8cce" stroke="#514a70" stroke-width="2"/><rect x="360" y="407" width="34" height="10" rx="3" fill="#f5f0ff" stroke="#514a70" stroke-width="2"/><text class="smalllabel" x="377" y="427">04G031</text></g>
+<g class="place" data-id="KITCHEN" data-name="Coffee station" data-type="landmark" data-x="440" data-y="370" data-access="C4"><rect class="room" x="418" y="342" width="52" height="51" rx="4" fill="#bce8f0"/><text class="roomlabel" x="444" y="361">COFFEE</text><text class="smalllabel" x="444" y="373">STATION</text><rect x="431" y="378" width="26" height="9" rx="2" fill="#fffdf4" stroke="#59655b"/></g>
+<g class="place" data-id="COPY" data-name="Copy area" data-type="landmark" data-x="247" data-y="535" data-access="B2"><rect class="room" x="215" y="515" width="64" height="43" rx="4" fill="#ffe58e"/><text class="roomlabel" x="247" y="533">COPY</text><text class="smalllabel" x="247" y="545">AREA</text></g>
+<g class="place" data-id="ELEVATORS" data-name="Elevator lobby" data-type="landmark" data-x="443" data-y="468" data-access="C5"><rect class="room" x="390" y="430" width="108" height="86" rx="4" fill="#bce8f0"/><text class="roomlabel" x="444" y="447">ELEVATOR LOBBY</text><g fill="#f9f8ef" stroke="#526056" stroke-width="2"><rect x="400" y="458" width="21" height="24" rx="2"/><rect x="426" y="458" width="21" height="24" rx="2"/><rect x="452" y="458" width="21" height="24" rx="2"/><rect x="400" y="488" width="21" height="18" rx="2"/><rect x="426" y="488" width="21" height="18" rx="2"/><rect x="452" y="488" width="21" height="18" rx="2"/></g><text class="smalllabel" x="444" y="511">LIFTS</text></g>
+<g class="place" data-id="04C091" data-name="Meeting room 04C091" data-type="room" data-x="123" data-y="625" data-access="S1"><rect class="room" x="83" y="587" width="80" height="69" rx="3" fill="#ffc7cb"/><text class="roomlabel" x="123" y="610">04C091</text><text class="smalllabel" x="123" y="623">MEETING · 4P</text></g>
+<g class="place" data-id="04E091" data-name="Quiet room 04E091" data-type="room" data-x="212" data-y="625" data-access="S2"><rect class="room" x="173" y="587" width="78" height="69" rx="3" fill="#ddd1ff"/><text class="roomlabel" x="212" y="610">04E091</text><text class="smalllabel" x="212" y="623">QUIET ROOM</text></g>
+<g class="place" data-id="04H091" data-name="Meeting room 04H091" data-type="room" data-x="572" data-y="625" data-access="S5"><rect class="room" x="533" y="587" width="78" height="69" rx="3" fill="#ffc7cb"/><text class="roomlabel" x="572" y="610">04H091</text><text class="smalllabel" x="572" y="623">MEETING · 4P</text></g>
+<g class="place" data-id="04L091" data-name="Meeting room 04L091" data-type="room" data-x="681" data-y="625" data-access="S6"><rect class="room" x="640" y="587" width="82" height="69" rx="3" fill="#ffc7cb"/><text class="roomlabel" x="681" y="610">04L091</text><text class="smalllabel" x="681" y="623">MEETING · 4P</text></g>
+<g class="place" data-id="COFFEE2" data-name="Coffee station 2" data-type="landmark" data-x="757" data-y="465" data-access="E4"><rect class="room" x="727" y="443" width="60" height="46" rx="4" fill="#bce8f0"/><text class="smalllabel" x="757" y="459">COFFEE</text><text class="smalllabel" x="757" y="471">STATION 2</text><rect x="741" y="476" width="31" height="7" rx="2" fill="#fff" stroke="#566257"/></g>
+<g class="place" data-id="PLANTS" data-name="Plants" data-type="landmark" data-x="66" data-y="390" data-access="W2"><rect x="54" y="391" width="22" height="18" rx="2" fill="#b98d68" stroke="#56624a"/><circle class="plant" cx="60" cy="389" r="10"/><circle class="plant" cx="72" cy="385" r="7"/></g>
+<!-- Card / open-work zone at the lower right, labelled in the source drawing. -->
+<rect x="492" y="559" width="313" height="169" fill="#d4d2ca" opacity=".74" stroke="#5a5d54" stroke-width="2" stroke-dasharray="6 4"/>
+<text class="roomlabel" x="650" y="575">CARDS · ABW</text><text class="smalllabel" x="650" y="588">64 DESKS SHOWN IN SOURCE PLAN</text>
+<!-- Main walkable corridor spines and door-access markers. -->
+<path class="corridor" d="M54 185 H796 V213 H54Z M54 505 H796 V532 H54Z M326 212 H350 V532 H326Z M493 212 H516 V532 H493Z M620 222 H644 V532 H620Z"/>
+<g id="pin-layer"></g><g id="destination-layer"></g>
+<g fill="#52624d" font-size="10" font-weight="900"><text x="48" y="51">N ↑</text><text x="690" y="719">KV POOLEN · PLAN 4 / VÅN 3</text></g>
+</svg>
+<div id="location-popover" class="location-popover" role="dialog" aria-label="Share location" hidden>
+<div class="popover-heading"><span id="popover-type">SELECTED LOCATION</span><button type="button" id="popover-close" class="popover-close" aria-label="Close location actions">×</button></div>
+<strong id="popover-title">Selected place</strong><button type="button" class="popover-action primary-action" id="popover-share">↗ Share this as your location</button>
+</div>
+<div class="legend"><span><i style="background:#fffdf5"></i> Work desks · select to share</span><span><i style="background:#ffc7cb"></i> Meeting rooms</span><span><i style="background:#bce8f0"></i> Landmarks</span></div>
+</section>
+</main>
+<footer class="footer"><span><strong>Pixel Office</strong> · Kv Poolen · Plan 4 / Vån 3</span><span>Static app · No account required</span></footer></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title"><section class="modal"><h2 id="modal-title">Share your spot</h2><p id="modalcopy">Send a link so someone can find you.</p><div class="modalplace" id="modalplace"></div><p class="tiny">This link contains the place and expiry time. Client-side expiry prevents opening an old link in this app, but cannot revoke a copied URL from outside it.</p><div class="modalactions"><button class="btn primary" id="copy">Copy link</button><button class="btn" id="teams">Share to Teams</button><button class="btn" id="close">Close</button></div></section></div>
+<script>
+(() => {
+const NS='http://www.w3.org/2000/svg', svg=document.getElementById('map'),mapview=document.getElementById('mapview'),deskLayer=document.getElementById('desks'),pinLayer=document.getElementById('pin-layer'),destinationLayer=document.getElementById('destination-layer');
+let selected=null,shareUrl='',zoom=1,toastTimer;
+const $=id=>document.getElementById(id);
+const toast=message=>{const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000)};
+const svgEl=(tag,attrs={})=>{const el=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));return el};
+const roomHotspotLayer=document.getElementById('room-hotspots');
+const rawDeskPoints=[[402.9,615.6],[716.5,147],[54.4,102.4],[52.4,112.6],[35.7,98.9],[33.8,109.1],[51.4,144.5],[51.4,154.9],[32.4,144.5],[32.4,154.9],[51.4,185.1],[51.4,195.5],[32.4,185.1],[32.4,195.5],[79.3,67.1],[72,74.4],[65.9,53.7],[58.6,61],[116.7,50.3],[106.4,52.1],[113.3,31.6],[103.1,33.5],[158.1,48.9],[147.7,48.9],[158.1,30],[147.7,30],[146.9,118.7],[146.9,129.1],[128,118.7],[128,129.1],[165.9,118.7],[165.9,129.1],[109,129.1],[109,118.7],[146.9,88.5],[128,88.5],[165.9,88.5],[779.3,83.6],[784.9,92.3],[795.1,73.3],[800.8,81.9],[792.5,122.4],[792.5,132.8],[811.5,122.4],[811.5,132.8],[749.1,56.6],[757.7,62.4],[759.8,40.9],[768.3,46.7],[708.6,48.6],[718.9,48.6],[708.6,29.7],[718.9,29.7],[668.5,48.9],[678.9,48.9],[668.5,30],[678.9,30],[698.1,95.7],[708.5,95.7],[708.5,114.7],[698.1,114.7],[738.5,114.7],[792.5,162.5],[811.5,162.5],[404.1,94],[184.3,135.7],[466.9,94],[436.9,94],[544.9,119.6],[403.7,644.3],[403.7,663.4],[745.7,332.5],[725.9,332.5],[241.6,639.1],[240.7,48.7],[230.4,48.7],[240.7,29.8],[230.4,29.8],[281.3,48.7],[270.9,48.7],[281.3,29.8],[270.9,29.8],[557.5,48.6],[547.1,48.6],[557.5,29.6],[547.1,29.6],[598.1,48.6],[587.7,48.6],[598.1,29.6],[587.7,29.6],[793.4,271.3],[793.4,260.9],[812.3,271.3],[812.3,260.9],[793.4,230.7],[793.4,220.3],[812.3,230.7],[812.3,220.3],[793.4,479.5],[793.4,469.2],[812.3,479.5],[812.3,469.2],[212.8,729.7],[223.2,729.7],[212.8,748.6],[223.2,748.6],[709.2,291.4],[553.9,748.6],[564.3,748.6],[553.9,729.7],[564.3,729.7],[793.4,519.1],[793.4,508.7],[812.3,519.1],[812.3,508.7],[793.4,558.5],[793.4,548.1],[812.3,558.5],[812.3,548.1],[513.3,748.6],[523.7,748.6],[513.3,729.7],[523.7,729.7],[733.3,507.9],[602.4,748.6],[612.8,748.6],[602.4,729.7],[612.8,729.7],[643,748.6],[653.4,748.6],[643,729.7],[653.4,729.7],[321.9,48.7],[311.5,48.7],[321.9,29.8],[311.5,29.8],[362.5,48.7],[352.1,48.7],[362.5,29.8],[352.1,29.8],[392.1,48.7],[392.1,29.8],[516.9,48.6],[506.5,48.6],[516.9,29.6],[506.5,29.6],[476.3,48.6],[465.9,48.6],[476.3,29.6],[465.9,29.6],[435.7,48.6],[435.7,29.6],[793.4,311.9],[793.4,301.5],[812.3,311.9],[812.3,301.5],[793.4,352.5],[793.4,342.2],[812.3,352.5],[812.3,342.2],[793.4,382.2],[812.3,382.2],[636.1,387.7],[636.1,377.3],[655.1,387.7],[655.1,377.3],[636.1,428.3],[636.1,417.9],[655.1,428.3],[655.1,417.9],[793.4,444.7],[812.3,444.7],[633.1,543.5],[633.1,533.1],[652,543.5],[652,533.1],[293.1,747.9],[303.5,747.9],[293.1,729],[303.5,729],[333.7,748.6],[333.7,729.7],[364.1,688.1],[324.5,688],[334.9,688],[324.5,669],[334.9,669],[171.8,728.6],[182.2,729.6],[170.1,747.5],[180.4,748.5],[132.4,719.7],[142.2,723],[126.2,737.6],[136,741],[106.6,704],[98.8,697.1],[94.1,718.2],[86.3,711.4],[72.1,666.9],[78.2,675.3],[56.7,678],[62.8,686.4],[57.9,640.1],[54.6,630.2],[39.9,646],[36.6,636.2],[52.4,599.2],[52.4,588.8],[33.4,599.2],[33.4,588.8],[133.7,667.6],[144,667.6],[170.9,667.6],[633.1,235.5],[633.1,245.9],[652,235.5],[652,245.9],[596.4,688.9],[606.8,688.9],[596.4,670],[606.8,670],[563.5,688.9],[563.5,670],[536.7,688.9],[536.7,670],[643.9,688.9],[643.9,670],[703.8,664.9],[714.2,664.9],[703.8,645.9],[714.2,645.9],[703.8,683.9],[714.2,683.9],[712.6,748.6],[723,748.6],[712.6,729.7],[723,729.7],[681.5,748.6],[681.5,729.7],[763.9,737],[772.4,731.1],[753.1,721.4],[761.6,715.5],[793.4,654],[793.4,643.6],[812.3,654],[812.3,643.6],[793.4,614.4],[812.3,614.4],[798.1,703.5],[803.8,694.8],[782.2,693.1],[787.9,684.4],[209.5,208.7],[199.2,208.7],[209.5,189.7],[199.2,189.7]];
+function deskOrderZone(p){
+ const [x,y]=p;
+ if((x<100&&y<125)||(x>=100&&x<145&&y<80))return 0;
+ if(y<105&&x>=100&&x<740)return 1;
+ if(x>=740&&y<170)return 2;
+ if(x>=740&&y<680)return 3;
+ if(x>=650&&y>=680)return 4;
+ if(y>=680&&x>=130)return 5;
+ if(x<145&&y>=570)return 6;
+ if(x<80&&y>=135&&y<570)return 7;
+ return 8;
+}
+function deskOrder(a,b){
+ const za=deskOrderZone(a),zb=deskOrderZone(b);
+ if(za!==zb)return za-zb;
+ if(za===0){const angle=p=>{let v=Math.atan2(p[1]-110,p[0]-110);if(v<0)v+=Math.PI*2;return v};return angle(a)-angle(b)}
+ if(za===1)return a[0]-b[0]||a[1]-b[1];
+ if(za===2||za===3)return a[1]-b[1]||a[0]-b[0];
+ if(za===4||za===5||za===6)return b[0]-a[0]||b[1]-a[1];
+ if(za===7)return b[1]-a[1]||a[0]-b[0];
+ return a[1]-b[1]||a[0]-b[0];
+}
+const deskPoints=rawDeskPoints.slice().sort(deskOrder);
+const desks=deskPoints.map(([x,y],i)=>({id:'D'+String(i+1).padStart(3,'0'),name:'Desk D'+String(i+1).padStart(3,'0'),type:'desk',x,y,access:null,node:null}));
+
+desks.forEach(p=>{const g=svgEl('g',{class:'desk-hotspot',tabindex:0,role:'button','aria-label':p.name});g.appendChild(svgEl('circle',{class:'hit',cx:p.x,cy:p.y,r:14}));g.appendChild(svgEl('circle',{class:'dot',cx:p.x,cy:p.y,r:5.3}));const title=svgEl('title');title.textContent=p.name;g.appendChild(title);p.node=g;g.addEventListener('click',e=>{e.stopPropagation();select(p)});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();select(p)}});deskLayer.appendChild(g)});
+const roomCoords="04F021,429.6,125.4;04F022,429.6,171.4;04I011,573,104.5;04G091,445.3,613.2;04K081,701.6,529.5;04D101,257,740.3;04K092,727.7,613.2;04L061,803.6,403.9;04L021,803.6,184.1;04J011,633.5,39.6;04C011,194.2,39.6;04C012,194.2,104.5;04F011,413.9,39.6;04G022,476.6,171.4;04K022,727.7,146.4;04G021,476.6,125.4;04K023,727.7,181.8;04K024,696.3,181.8;04K073,739.6,466.7;04K075,701.6,498.1;04K082,739.6,529.5;04J071,640.2,466.7;04J072,640.2,498.1;04J042,640.2,309.7;04J051,640.2,341.1;04J041,640.2,278.3;04K031,697.7,246.9;04K051,697.7,341.1;04L091,803.6,592.3;04G011,320,104.5;04G012,351.7,104.5;04G092,476.6,613.2";
+const roomRecords=roomCoords.split(';').map(row=>{const [id,x,y]=row.split(',');return{id,name:'Möte · '+id,type:'room',x:+x,y:+y,access:null,node:null}});
+const extraLandmarks=[
+{id:'LOUNGE',name:'Lounge 04G031',type:'landmark',x:406.2,y:228.5,access:null},
+{id:'COFFEE1',name:'Coffee station 1',type:'landmark',x:435.8,y:327.4,access:null},
+{id:'COFFEE2',name:'Coffee station 2',type:'landmark',x:489.6,y:327.4,access:null},
+{id:'ELEVATORS',name:'Elevator lobby',type:'landmark',x:453.3,y:483.6,access:null},
+{id:'COPY',name:'Copy area',type:'landmark',x:284.5,y:102,access:null},
+{id:'PLANTS',name:'Plant area',type:'landmark',x:57,y:390,access:null}
+];
+const placeRecords=roomRecords.concat(extraLandmarks);
+placeRecords.forEach(p=>{const g=svgEl('g',{class:'room-hotspot',tabindex:0,role:'button','aria-label':p.name});g.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:p.type==='room'?7.2:7}));if(p.type==='room'){const letter=svgEl('text',{x:p.x,y:p.y+.4});letter.textContent='M';g.appendChild(letter)}const title=svgEl('title');title.textContent=p.name;g.appendChild(title);g.addEventListener('click',e=>{e.stopPropagation();select(p)});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(p)}});roomHotspotLayer.appendChild(g);p.node=g});
+const namedPlaces=()=>placeRecords.concat(desks);
+function allPlaces(){return namedPlaces()}
+function showDestinationMarker(place,shared=false){
+ destinationLayer.innerHTML='';
+ const g=svgEl('g',{class:'destination-marker',transform:'translate('+place.x+' '+place.y+')','aria-hidden':'true'});
+ g.appendChild(svgEl('circle',{class:'destination-pulse',cx:0,cy:-7,r:20}));
+ g.appendChild(svgEl('circle',{class:'destination-halo',cx:0,cy:-7,r:12}));
+ g.appendChild(svgEl('path',{class:'destination-pin',d:'M0 19 C-4 12 -15 1 -15 -7 A15 15 0 1 1 15 -7 C15 1 4 12 0 19Z'}));
+ g.appendChild(svgEl('circle',{cx:0,cy:-7,r:4.5,fill:'#fff'}));
+ const label=String(place.name||place.id||'Shared location').slice(0,28);
+ const lx=Math.max(94,Math.min(756,place.x)),ly=Math.max(29,place.y-52);
+ const group=svgEl('g',{transform:'translate('+(lx-place.x)+' '+(ly-place.y)+')'});
+ group.appendChild(svgEl('rect',{class:'destination-label-bg',x:-88,y:-12,width:176,height:27,rx:6}));
+ const kicker=svgEl('text',{class:'destination-label-kicker',x:0,y:-2});kicker.textContent=shared?'SHARED LOCATION':'DESTINATION';group.appendChild(kicker);
+ const title=svgEl('text',{class:'destination-label-title',x:0,y:9});title.textContent=label;group.appendChild(title);
+ g.appendChild(group);destinationLayer.appendChild(g);
+}
+function focusView(place){
+ const w=430,h=w*779/850;
+ const x=Math.max(0,Math.min(850-w,place.x-w/2));
+ const y=Math.max(0,Math.min(779-h,place.y-h/2));
+ svg.setAttribute('viewBox',x+' '+y+' '+w+' '+h);
+ svg.style.transform='';
+ mapview.scrollTo({left:0,top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+}
+function resetMapView(){svg.setAttribute('viewBox','0 0 850 779');svg.style.transform='';}
+
+function chooseSvgNode(p){document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));document.querySelectorAll('.selection-pulse').forEach(n=>n.remove());if(!p||!p.node)return;if(p.type==='desk'||p.node.classList.contains('room-hotspot')){p.node.classList.add('selected');p.node.appendChild(svgEl('circle',{class:'selection-pulse',cx:p.x,cy:p.y,r:p.type==='desk'?8:10}))}}
+function placePopover(place){const pop=$('location-popover');if(!place){pop.hidden=true;return}$('popover-title').textContent=place.name||place.id||'Map point';$('popover-type').textContent=place.type==='room'?'MEETING ROOM':place.type==='desk'?'DESK':'MAP LOCATION';pop.hidden=false;pop.style.display='grid';pop.style.visibility='visible';pop.style.opacity='1';if(pop.parentElement!==document.body)document.body.appendChild(pop);const pt=svg.createSVGPoint();pt.x=place.x;pt.y=place.y;const screen=pt.matrixTransform(svg.getScreenCTM());const width=pop.offsetWidth||228,height=pop.offsetHeight||110,gap=14,margin=10;let left=screen.x+gap,top=screen.y-height/2;if(left+width>window.innerWidth-margin)left=screen.x-width-gap;left=Math.max(margin,Math.min(left,window.innerWidth-width-margin));if(top<margin)top=screen.y+gap;top=Math.max(margin,Math.min(top,window.innerHeight-height-margin));pop.style.left=left+'px';pop.style.top=top+'px'}
+function select(p){if(!p)return;selected=p;chooseSvgNode(p);pinLayer.innerHTML='';if(p.id&&p.id.startsWith('PIN-')){pinLayer.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:17,fill:'#ffe58e',stroke:'#29362a','stroke-width':3}));pinLayer.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:5,fill:'#29362a'}))}placePopover(p)}
+function encodePayload(obj){const bytes=new TextEncoder().encode(JSON.stringify(obj));let binary='';bytes.forEach(b=>binary+=String.fromCharCode(b));return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function decodePayload(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const binary=atob(s);const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))}
+const backdrop=$('backdrop');
+function openShare(){if(!selected)return;const expires=Date.now()+3600000;shareUrl=location.href.split('#')[0]+'#spot='+encodePayload({place:selected.id,expires,x:selected.x,y:selected.y,name:selected.name,type:selected.type,access:selected.access||null});$('modalplace').textContent=selected.name+' · expires in 1 hour';$('modalcopy').textContent='Send this link so someone can find '+selected.name+'.';backdrop.classList.add('open')}
+$('close').addEventListener('click',()=>backdrop.classList.remove('open'));
+window.addEventListener('resize',()=>{if(selected&&!$('location-popover').hidden)placePopover(selected)});
+$('popover-close').addEventListener('click',()=>{$('location-popover').hidden=true});$('popover-share').addEventListener('click',()=>{if(selected)openShare()});
+backdrop.addEventListener('click',e=>{if(e.target===backdrop)backdrop.classList.remove('open')});
+$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(shareUrl);toast('Location link copied. Share it in Teams.');backdrop.classList.remove('open')}catch{window.prompt('Copy your location link:',shareUrl)}});
+$('teams').addEventListener('click',()=>window.open('https://teams.microsoft.com/share?href='+encodeURIComponent(shareUrl),'_blank','noopener'));
+const searchInput=$('search'),searchResults=$('search-results');
+function closeSearchResults(){searchResults.hidden=true;searchInput.setAttribute('aria-expanded','false')}
+function renderSearchResults(query){const q=query.trim().toLowerCase();if(!q){closeSearchResults();searchResults.innerHTML='';return}
+const matches=allPlaces().filter(p=>p.id.toLowerCase().includes(q)||p.name.toLowerCase().includes(q)).slice(0,12);searchResults.innerHTML='';
+if(!matches.length){const empty=document.createElement('div');empty.className='search-empty';empty.textContent='No matching desks or rooms.';searchResults.appendChild(empty)}
+else{matches.forEach(p=>{const b=document.createElement('button');b.type='button';b.className='search-option';b.setAttribute('role','option');const id=document.createElement('span');id.className='result-id';id.textContent=p.id;const name=document.createElement('span');name.className='result-name';name.textContent=p.name;b.append(id,name);b.addEventListener('click',()=>{searchInput.value=p.id;closeSearchResults();focusView(p);select(p)});searchResults.appendChild(b)})}
+searchResults.hidden=false;searchInput.setAttribute('aria-expanded','true')}
+searchInput.addEventListener('input',e=>renderSearchResults(e.target.value));
+searchInput.addEventListener('focus',()=>{if(searchInput.value.trim())renderSearchResults(searchInput.value)});
+searchInput.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSearchResults();return}if(e.key!=='Enter')return;e.preventDefault();const first=searchResults.querySelector('.search-option');if(first)first.click()});
+document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))closeSearchResults()});
+$('reset').addEventListener('click',()=>{selected=null;zoom=1;pinLayer.innerHTML='';destinationLayer.innerHTML='';$('location-popover').hidden=true;$('search').value='';$('search-results').hidden=true;$('search').setAttribute('aria-expanded','false');backdrop.classList.remove('open');document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));document.querySelectorAll('.selection-pulse').forEach(n=>n.remove());resetMapView();mapview.scrollTo({left:0,top:0,behavior:'auto'});$('startlabel').textContent='Select a desk, meeting room, or landmark to share its location.';toast('Map reset.')});
+$('zoomin').addEventListener('click',()=>{zoom=Math.min(1.55,zoom+.1);svg.style.transform='scale('+zoom+')';if(selected)placePopover(selected)});$('zoomout').addEventListener('click',()=>{zoom=Math.max(.8,zoom-.1);svg.style.transform='scale('+zoom+')';if(selected)placePopover(selected)});$('fit').addEventListener('click',()=>{zoom=1;resetMapView();mapview.scrollTo({left:0,top:0,behavior:'auto'});if(selected)placePopover(selected);toast('Showing the full map.')});
+svg.addEventListener('click',e=>{
+ if(e.target.closest('#room-hotspots .room-hotspot,.desk-hotspot'))return;
+ const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const q=pt.matrixTransform(svg.getScreenCTM().inverse());
+ const custom={id:'PIN-'+Math.round(q.x)+'-'+Math.round(q.y),name:'Map pin',type:'landmark',x:q.x,y:q.y,access:null};
+ select(custom);
+});
+try{const m=location.hash.match(/spot=([^&]+)/);if(m){const payload=decodePayload(m[1]);if(!payload.expires||Date.now()>payload.expires){toast('This location link has expired. Ask for a new one.');history.replaceState(null,'',location.pathname+location.search)}else{const p=allPlaces().find(x=>x.id===payload.place)||{id:payload.place,name:payload.name||payload.place,type:payload.type||'landmark',x:+payload.x||400,y:+payload.y||350,access:payload.access};showDestinationMarker(p,true);focusView(p);select(p);toast('Shared location: '+p.name+'. The pulsing pin marks the place.')}}}catch{toast('Could not read the shared location link. Ask for a new one.')}
+
+})();
+</script></body></html>
