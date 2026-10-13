@@ -133,7 +133,8 @@ const roomHotspotLayer=document.getElementById('room-hotspots');
 const desks=window.PIXEL_OFFICE_DESKS.map(p=>({...p,name:'Desk '+p.id,type:'desk'}));
 desks.forEach(p=>{const g=svgEl('g',{class:'desk-hotspot',tabindex:0,role:'button','aria-label':p.name});g.appendChild(svgEl('circle',{class:'hit',cx:p.x,cy:p.y,r:10}));g.appendChild(svgEl('circle',{class:'dot',cx:p.x,cy:p.y,r:4.4}));const title=svgEl('title');title.textContent=p.name;g.appendChild(title);p.node=g;g.addEventListener('click',e=>{e.stopPropagation();select(p)});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();select(p)}});deskLayer.appendChild(g)});
 const roomCoords="04F021,429.6,125.4;04F022,429.6,171.4;04I011,573,104.5;04G091,445.3,613.2;04K081,701.6,529.5;04D101,257,740.3;04K092,727.7,613.2;04L061,803.6,403.9;04L021,803.6,184.1;04J011,633.5,39.6;04C011,194.2,39.6;04C012,194.2,104.5;04F011,413.9,39.6;04G022,476.6,171.4;04K022,727.7,146.4;04G021,476.6,125.4;04K023,727.7,181.8;04K024,696.3,181.8;04K073,739.6,466.7;04K075,701.6,498.1;04K082,739.6,529.5;04J071,640.2,466.7;04J072,640.2,498.1;04J042,640.2,309.7;04J051,640.2,341.1;04J041,640.2,278.3;04K031,697.7,246.9;04K051,697.7,341.1;04L091,803.6,592.3;04G011,320,104.5;04G012,351.7,104.5;04G092,476.6,613.2";
-const roomRecords=roomCoords.split(';').map(row=>{const [id,x,y]=row.split(',');return{id,name:'Möte · '+id,type:'room',x:+x,y:+y,access:null,node:null}});
+const roomCapacities={'04F021':'10P','04F022':'10P','04K023':'2P','04K024':'2P'};
+const roomRecords=roomCoords.split(';').map(row=>{const [id,x,y]=row.split(',');const capacity=roomCapacities[id]||'4P';return{id,name:'Möte · '+capacity,type:'room',capacity,x:+x,y:+y,access:null,node:null}});
 const extraLandmarks=[
 {id:'LOUNGE',name:'Lounge 04G031',type:'landmark',x:406.2,y:228.5,access:null},
 {id:'COFFEE1',name:'Coffee station 1',type:'landmark',x:435.8,y:327.4,access:null},
