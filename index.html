@@ -33,7 +33,7 @@
 <div class="maphead"><div><h2>PLAN 4 · VÅN 3 <span aria-hidden="true">✦</span></h2><p>Actual floor-plan reference · search a room or tap anywhere to pin your spot</p></div><div class="maptools"><button class="iconbtn" id="zoomout" aria-label="Zoom out">−</button><button class="iconbtn" id="zoomin" aria-label="Zoom in">+</button><button class="iconbtn" id="fit" aria-label="Fit map">⌗</button></div></div>
 <div class="mapview" id="mapview">
 <svg id="map" class="map" viewBox="0 0 850 779" role="img" aria-label="Pixel-art interpretation of the supplied Kv Poolen floor plan, with selectable spaces and a corridor route graph.">
-<image id="architectural-plan" x="0" y="0" width="850" height="779" preserveAspectRatio="none" href=""></image><g id="room-hotspots"></g><g id="desks"></g>
+<image id="architectural-plan" x="0" y="0" width="850" height="779" preserveAspectRatio="none" href="assets/floor-plan-hires.jpg"></image><g id="room-hotspots"></g><g id="desks"></g>
 <!-- Building perimeter, traced from the source drawing's curved footprint and inner openings. -->
 <path class="floor" d="M145 30 H705 Q814 30 814 142 V624 Q814 739 699 739 H150 Q34 739 34 624 V143 Q34 30 145 30Z"/>
 <!-- Perimeter walkways and the central horizontal passages. -->
@@ -178,7 +178,6 @@ svg.addEventListener('click',e=>{
  const custom={id:'PIN-'+Math.round(q.x)+'-'+Math.round(q.y),name:'Map pin ('+Math.round(q.x)+', '+Math.round(q.y)+')',type:'landmark',x:q.x,y:q.y,access:nearestNode({x:q.x,y:q.y})};
  if(routeMode){setStarting(custom);routeMode=false;}else{select(custom)}
 });
-fetch(new URL('assets/floor-plan.b64',document.baseURI)).then(r=>{if(!r.ok)throw new Error('Floor plan asset not available');return r.text()}).then(encoded=>{document.getElementById('architectural-plan').setAttribute('href','data:image/jpeg;base64,'+encoded.trim())}).catch(err=>{console.error('Could not load source floor plan',err);toast('Source floor-plan image failed to load. Check assets/floor-plan.b64.');});
 try{const m=location.hash.match(/spot=([^&]+)/);if(m){const payload=decodePayload(m[1]);if(!payload.expires||Date.now()>payload.expires){toast('This location link has expired. Ask for a new one.');history.replaceState(null,'',location.pathname+location.search)}else{const p=allPlaces().find(x=>x.id===payload.place)||{id:payload.place,name:payload.name||payload.place,type:payload.type||'landmark',x:+payload.x||400,y:+payload.y||350,access:payload.access};select(p);toast('Shared location: '+p.name+'. Select your starting point to get directions.')}}}catch{toast('Could not read the shared location link. Ask for a new one.')}
 
 })();
