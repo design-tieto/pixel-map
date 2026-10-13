@@ -1,26 +1,23 @@
 # Pixel Office
 
-Responsive static office map for Kv Poolen, Plan 4 / Vån 3. It is suitable for GitHub Pages and needs no backend.
+Static, responsive office map for Kv Poolen, Plan 4 / Vån 3. Find a desk or meeting room and share its location. No backend or build step is required.
 
-## Map and locations
-- Uses `assets/floor-plan-hires.jpg`; do not load the old `assets/floor-plan.b64` thumbnail.
-- There are 243 desk-position candidates from PDF vector geometry, while the drawing summary states 244 desks. One location remains to be verified.
-- Pink `M` meeting-room targets are inferred from room rectangles. Confirm a one-to-one match to each real `MÖTE` room.
-- Desk IDs such as D001 are app IDs, not printed labels. Room and desk markers remain point targets, not full vector-traced polygons.
+## Run / publish
+Open `index.html` locally or enable GitHub Pages from the repository root.
 
-## Interaction
-- The side panel is removed. Clicking a desk, room or map point opens a small contextual action menu beside it.
-- The menu lets a user share the selected place or mark it as their starting point. Once a start is set, another selected place offers `Use this as destination`.
-- Search selection opens the same menu; clicking another map item transfers the highlight and menu to the newly selected item.
-- Reset clears start/destination, route, pins, selected marker, popup, search query, share modal, zoom, pan and focused viewBox.
-- A valid shared link focuses the map on the destination with a large pulsing pin. The recipient chooses their own point and marks it as the start to preview a route to the shared destination.
-- Share links expire client-side after one hour. There is no server-side revocation, database, authentication or live presence.
+## Finding and sharing
+- The map displays `assets/floor-plan-hires.jpg`; do not use the blurry `assets/floor-plan.b64` thumbnail.
+- Clicking a desk, meeting room, landmark, or arbitrary point opens a small popover beside it with one action: `Share this as your location`.
+- Search has a dropdown of matching desk IDs, meeting-room numbers, and landmarks. Selecting a result focuses the map, highlights that place, and opens the share popover.
+- Shared links expire client-side after one hour. A valid link focuses the map on the location and shows a prominent pulsing pin. No server-side revocation, database, authentication, or live colleague presence is included.
+- Twenty manually positioned corner/curved-edge desk targets were added from the user's screenshot. These placements need visual QA against individual desk rectangles.
+- The map currently shows 263 selectable desk targets. The source summary states 244 desks; reconcile extra candidates, duplicates and any false-positive locations before claiming a complete one-to-one desk inventory.
+- Pink `M` targets represent inferred meeting-room candidates and need a one-to-one audit against actual rooms labelled `MÖTE`.
 
-## Directions status
-The route uses a provisional corridor waypoint graph. It is not yet fully connected to validated room doors and desk aisles; route lines are previews, not verified door-to-door navigation. Validate all graph edges and target access paths against the PDF and ideally by walking representative routes.
+## Scope
+Walking directions, route graphs, route previews, and start/end-point selection have been removed. Pixel Office is only for finding and sharing locations.
 
 ## Remaining validation
-1. Resolve the 243-versus-244 desk mismatch and verify desk centres.
-2. Verify exactly one location target for every actual meeting room labelled `MÖTE`.
-3. Trace room boundaries/doors and connect desks and rooms to verified walkable access nodes.
-4. Test selection, search, reset after zoom/share/route, popup position near map edges, share-link expiry and routing across each wing.
+1. Check the added corner targets against the source image and reconcile the desk count against 244 physical desks.
+2. Confirm exactly one target for each meeting room.
+3. Test dropdown search, selecting a result, sharing links, expiry, popup placement, and reset after focused shared links.
