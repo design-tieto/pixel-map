@@ -5,21 +5,23 @@ Responsive static prototype for Kv Poolen, Plan 4 / Vån 3. It runs as a static 
 ## Run / publish
 Open `index.html` locally or enable GitHub Pages from the repository root. On GitHub Pages, use Settings → Pages → Deploy from a branch → `main` → `/(root)`, after merging the prototype pull request.
 
-## Map assets and alignment
-- `assets/floor-plan-hires.jpg` is the high-resolution plan image and should be the displayed map. The old `assets/floor-plan.b64` file is a low-resolution thumbnail and must not be used.
-- Desk point coordinates are currently embedded in `index.html` and were derived from PDF vector geometry in the floor-plan coordinate frame (850 × 779). The 243 candidate centres were visually overlaid on the high-resolution crop during development; one desk remains unaccounted for compared with the 244-desk summary on the drawing.
-- Desk markers are intended to sit on the desk rectangles; check them at high zoom if the image crop or viewBox changes. Keep dots large enough to select and clearly visible without obscuring furniture.
-- Room/space hotspots are point targets inferred from PDF text positions, not accurate room polygons.
+## Map and desk hotspots
+- The map displays `assets/floor-plan-hires.jpg`; the old `assets/floor-plan.b64` thumbnail is no longer loaded.
+- Desk hotspots are based on PDF vector-shape centre candidates in the map's 850 × 779 coordinate frame. The data has 243 candidates while the drawing summary states 244 desks, so one position still requires verification.
+- Desk targets now have a stronger green fill, dark outline and a larger hit area. Compare them with the source drawing if the crop or SVG viewBox changes.
+- Room/space targets are point hotspots inferred from PDF text coordinates. They are not room-boundary or doorway traces.
 
-## Location sharing
-Shared links carry the target location and an expiry timestamp. Opening a valid link zooms the map toward the selected location and displays a large animated pin with a label. Expiry is client-side only: no server-side revocation, central storage, login, colleague directory, or live presence.
+## Shared location
+A valid shared link automatically focuses the map on the location and displays a large labelled red pin with a pulsing halo. Reduced-motion preferences are respected. The fit control returns to the full map while keeping the destination visible. The URL's one-hour expiry is client-side only; there is no server-side revocation, central storage, login, colleague directory or live presence.
 
-## Directions status
-The red arrow path uses a 21-waypoint / 23-edge corridor graph that avoids the two main central voids. This is a **route preview**, not yet verified door-to-door directions: selecting a desk/room currently associates it to a nearby corridor waypoint, and the exact approach connector is not fully modelled. Do not claim routes are operationally reliable until the corridor edges, room doorways, and desk approaches are traced and validated against the PDF (ideally also by walking representative routes).
+## Directions
+- The corridor route uses Dijkstra over a 21-waypoint / 23-edge provisional graph and displays red directional arrows.
+- Start/destination points are snapped to a corridor waypoint in the same broad floor zone to avoid some obviously wrong nearest-node connections across the central voids.
+- This is still a corridor-route preview. Desk approach routes and actual door access points are not fully modelled, so the line does not yet prove a reliable door-to-door walking route. Do not claim operational wayfinding until each corridor edge, room entrance and desk approach has been checked against the source plan and representative routes have been walk-tested.
 
-## Remaining engineering work
-1. Verify all 243 detected desk centres and resolve the mismatch with the 244-desk summary.
-2. Trace room boundaries and door openings as editable vector geometry.
-3. Add explicit access nodes/connectors from each desk and room doorway to the walkable corridor graph, so routes visibly and safely reach the target rather than ending at a nearby corridor node.
-4. Test routes across each wing and confirm no route crosses walls, furniture, room interiors without a doorway, lift shafts, or the central open voids.
-5. Smoke-test shared link focus/pin visibility, expiry, search, reset/full-map control, and responsive mobile layout.
+## Remaining validation
+1. Reconcile 243 detected desk centres with the stated 244 desks, then validate each centre against the drawing.
+2. Trace room boundaries and doorway access points as editable SVG geometry.
+3. Connect every room/desk to a validated walkable aisle/corridor access point instead of relying on broad zone snapping.
+4. Test routes from the elevator lobby and representative starts to destinations throughout all wings. Ensure no line crosses walls, furniture, room interiors without doors, lift shafts or the central voids.
+5. Test valid/expired/malformed share links, auto-zoom, destination pin visibility, fit/reset, search, and mobile interaction.

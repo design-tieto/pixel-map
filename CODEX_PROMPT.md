@@ -1,29 +1,27 @@
-# Pixel Office — implementation and validation prompt for Codex
+# Pixel Office — Codex implementation and validation brief
 
 Continue on the existing `feat/pixel-office-prototype` branch. Do not create a new branch or merge the pull request.
 
-## Current UX fixes
-- The page must display `assets/floor-plan-hires.jpg`, never the blurry `assets/floor-plan.b64` thumbnail.
-- Desk markers need to align with the real desk/table rectangles in that crop. Current candidate centres are embedded in `index.html` in the 850 × 779 viewBox coordinate system. Verify visually at high zoom before changing any image crop or the viewBox.
-- Desk markers are larger and clearer now; keep idle desk targets visible but not overpowering. Room hotspots should stay low-clutter until selected.
-- On a valid shared link, automatically zoom toward the target and display a large, red, animated pin with a readable label. Respect reduced-motion preferences. The map's fit control must return to the full floor.
-- Route lines have arrowheads and the selected destination gets the large pin. The route is still a preview because room/desk access connectors are not yet fully modelled.
+## User feedback being addressed
+- Keep the high-resolution map asset `assets/floor-plan-hires.jpg`; never reintroduce the old `assets/floor-plan.b64` thumbnail.
+- Desk dots must align to real desk centres, be easy to see, and remain clickable. Current candidate coordinates were extracted from PDF vector geometry into the SVG 850 × 779 coordinate frame; there are 243 candidates compared with 244 desks in the drawing summary. Validate and resolve that discrepancy, and correct any real coordinate offsets.
+- A shared-location link must open zoomed to the place, with a large, labelled, blinking/pulsing red location pin. Keep reduced-motion support. The Fit map action should retain the pin.
+- Directions must not be presented as fully accurate yet. The current graph is a provisional corridor preview, and room/desk door-level access connectors are not verified.
 
 ## Source of truth
-Use the original PDF `260921 Plan 4 Vån 3 PROGRAMSKISS MAX MÖBL. INREDNING.pdf` from the conversation as authoritative. Preserve actual building outline, desk arrangement, room boundaries, corridors, doorways and landmarks. Styling can be pixel-art, but must not change geometry.
+Use the original PDF `260921 Plan 4 Vån 3 PROGRAMSKISS MAX MÖBL. INREDNING.pdf` from the conversation as authoritative. Preserve building footprint, desk arrangements, rooms, corridor widths, doorways and landmarks. Pixel-art styling can simplify colours/shapes, but it must not change the geometry.
 
-## Next priorities
-1. Compare all desk markers with `assets/floor-plan-hires.jpg` and source PDF. Correct any offset/scale mismatch, and resolve why the drawing summary says 244 desks but current vector detection finds 243 candidate centres. Desk IDs D001… are app IDs, not printed labels.
-2. Verify all room IDs/positions and draw room shapes and door openings as editable SVG geometry.
-3. Replace nearest-waypoint-only routing with explicit walkable access nodes: each selected desk should be connected to a real aisle/corridor path; each room should connect at its actual doorway. Every edge must represent physically walkable space.
-4. Use Dijkstra/A* over the verified graph. Draw the corridor route plus validated desk/room connectors, arrows and start/destination markers. Never route across walls, furniture, lift shafts, room interiors without door access, or the central open voids.
-5. Test routes from multiple start locations to destinations in each wing, including rooms, perimeter desks and the shared elevator lobby. If a destination has no verified access node yet, say so rather than inventing a route.
-6. Test shared URLs (valid, expired, malformed and custom pins), auto-zoom, blinking pointer, Fit map reset, search, desktop/mobile, and prefers-reduced-motion.
-7. Update README with what was actually tested and remaining caveats.
+## Priority tasks
+1. Visually verify all desk markers against the current high-resolution crop and source PDF. Resolve 243-versus-244 before claiming desk coverage is complete. IDs D001… are app IDs, not identifiers printed in the source.
+2. Trace room boundaries, doors, corridors and landmarks as editable geometry with a common coordinate system.
+3. Build the walkable graph from verified corridor centres, junctions and door openings. For every desk, add a safe route connector to its real aisle; for every room, route to the actual door. Do not connect using straight lines that pass through walls, furniture, room interiors without a door, lift shafts or central open voids.
+4. Use Dijkstra/A* on verified weighted edges. Draw the path with arrows, start marker, final destination marker, and the necessary access connectors. If access geometry is not verified, label the result a preview or decline to draw the route.
+5. Test starts/destinations in every wing and the elevator lobby. Verify that each route is physically walkable.
+6. Test share URLs: valid, expired, malformed and custom pins; verify the location zoom, large pulsing marker, Fit map behaviour, accessible/reduced-motion state, search and mobile layout.
+7. Run a smoke test and update README with exactly what was checked and what remains unverified.
 
-## Acceptance criteria
-- Image is sharp and desk dots align to real desk centres.
-- A shared link opens focused on the correct location, with a large blinking/pulsing labelled pin.
-- Directions visibly reach the selected destination through verified doorways and corridors.
-- No route is claimed accurate until its actual path and destination access have been checked.
-- Static hosting continues to work on GitHub Pages without a backend or build step.
+## Acceptance
+- Desk markers visibly and accurately sit on real desks.
+- Shared links make the exact destination unmistakable, including after zoom and on mobile.
+- Routes follow verified corridors and enter rooms through the correct door, or are explicitly labelled as unverified previews.
+- Static GitHub Pages hosting remains supported with no backend.
