@@ -153,7 +153,15 @@ function deskOrder(a,b){
  if(za===7)return b[1]-a[1]||a[0]-b[0];
  return a[1]-b[1]||a[0]-b[0];
 }
-const deskPoints=rawDeskPoints.slice().sort(deskOrder);
+// Source-image audit: snap every individual marker to its white desk-surface centre.
+// Each byte encodes a signed tenth-of-SVG-unit offset in rawDeskPoints order.
+const surfaceCorrection=atob('f4B/gICAf4CAgIB9fYB9fYB+gH99foB/gH9+gIB/foB+gH+Af4F+gHt+fn57g36Dgn+CgH5/foB8f3yAf4B/f4OCfoJ8gnqBeoBzd3qAd4F3fnqBen57gHt/dHt7gHyBeoF8fXp9eX56fnmDeoN7fH18fX97f3eAeoB6hH6Ee4R/gH2Af3x9fH2AgIB9fIB8fYF7gX1+e356gXmBen55fnd8d397fHt/d353fXt+e315e3V9en1+fn19fn19eH54fXh7eH5/e352end+ent4fnd8dHl8fXl8e3p9fHt7fH57eX13fH5+fX16e3h+fnt9f4B+gH98fnx9gHyAfXx8fHqBfYF6fn1+fIF7gXx+e356gXp+d393fXt/e313fXd/e317f3d+e354fHh/e3x7f3h+eH17fnt9d317fXx9fHx7fXt8fXZ/dn17f3t7eHt9end7eH14e359fn56fXt9e356f3p/enZ3f3p+en56f3p/en97fnqAen57fnt/fH97gHt+fn58e357fH56gHp/enx/fIB7f3uAe3l8fHp+fH16enl+enl7fXp3eX18e3h7e3h5eHyBeX57e3h4fH15fnp4e3t4eHh6enl8fHd6enl5enp5d3x9e3p6e3x6enx9f399f398fXw=');
+if(surfaceCorrection.length!==rawDeskPoints.length*2)throw Error('Desk-centre audit mismatch');
+const centredDeskPoints=rawDeskPoints.map(([x,y],i)=>[
+ Math.round((x+(surfaceCorrection.charCodeAt(i*2)-128)/10)*10)/10,
+ Math.round((y+(surfaceCorrection.charCodeAt(i*2+1)-128)/10)*10)/10
+]);
+const deskPoints=centredDeskPoints.sort(deskOrder);
 // Begin numbering at the physical desk previously labelled D195, as requested.
 // Preserve the perimeter traversal order by rotating the sorted sequence.
 const firstDeskIndex=deskPoints.findIndex(([x,y])=>Math.abs(x-32.4)<.2&&Math.abs(y-195.5)<.2);
