@@ -198,17 +198,9 @@ function showDestinationMarker(place,shared=false){
  g.appendChild(group);destinationLayer.appendChild(g);
 }
 function focusView(place){
- // Never crop the SVG viewBox: a cropped viewBox cannot be scrolled back to the rest of the floor.
- svg.setAttribute('viewBox','0 0 850 779');
- svg.style.transform='none';
- zoom=1;svg.style.width='';svg.style.height='';
- requestAnimationFrame(()=>{
-   setMapZoom(2);
-   const width=svg.getBoundingClientRect().width,height=svg.getBoundingClientRect().height;
-   mapview.scrollLeft=Math.max(0,Math.min(mapview.scrollWidth-mapview.clientWidth,place.x/850*width-mapview.clientWidth/2));
-   mapview.scrollTop=Math.max(0,Math.min(mapview.scrollHeight-mapview.clientHeight,place.y/779*height-mapview.clientHeight/2));
-   if(selected&&!$('location-popover').hidden)placePopover(selected);
- });
+ // Search highlights the selected place without changing the user's zoom.
+ // At the default full-floor view, the location remains visible in context.
+ if(selected&&!$('location-popover').hidden)placePopover(selected);
 }
 function resetMapView(){svg.setAttribute('viewBox','0 0 850 779');zoom=1;svg.style.transform='';svg.style.width='';svg.style.height='';}
 
