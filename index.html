@@ -154,6 +154,10 @@ function deskOrder(a,b){
  return a[1]-b[1]||a[0]-b[0];
 }
 const deskPoints=rawDeskPoints.slice().sort(deskOrder);
+// Begin numbering at the physical desk previously labelled D195, as requested.
+// Preserve the perimeter traversal order by rotating the sorted sequence.
+const firstDeskIndex=deskPoints.findIndex(([x,y])=>Math.abs(x-32.4)<.2&&Math.abs(y-195.5)<.2);
+if(firstDeskIndex>=0)deskPoints.push(...deskPoints.splice(0,firstDeskIndex));
 const desks=deskPoints.map(([x,y],i)=>({id:'D'+String(i+1).padStart(3,'0'),name:'Desk D'+String(i+1).padStart(3,'0'),type:'desk',x,y,access:null,node:null}));
 
 desks.forEach(p=>{const g=svgEl('g',{class:'desk-hotspot',tabindex:0,role:'button','aria-label':p.name});g.appendChild(svgEl('circle',{class:'hit',cx:p.x,cy:p.y,r:10}));g.appendChild(svgEl('circle',{class:'dot',cx:p.x,cy:p.y,r:4.4}));const title=svgEl('title');title.textContent=p.name;g.appendChild(title);p.node=g;g.addEventListener('click',e=>{e.stopPropagation();select(p)});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();select(p)}});deskLayer.appendChild(g)});
