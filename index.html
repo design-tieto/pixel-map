@@ -116,7 +116,7 @@ let deskNum=1;const desks=[];
 function addDesk(x,y,id,accessNode,zone){
  const g=svgEl('g',{class:'desk',tabindex:0,role:'button','aria-label':'Desk '+id,'data-id':id,'data-name':'Desk '+id,'data-type':'desk','data-x':x,'data-y':y});
  g.appendChild(svgEl('rect',{x:x-8,y:y-5,width:16,height:10}));
- g.appendChild(svgEl('path',{d:'M'+(x-5)+' '+(y-2)+'h10 M'+(x-5)+' '+(y+6)+'v3 M'+(x+5)+' '+(y+6)+'v3}));
+ g.appendChild(svgEl('path',{d:'M'+(x-5)+' '+(y-2)+'h10 M'+(x-5)+' '+(y+6)+'v3 M'+(x+5)+' '+(y+6)+'v3'}));
  g.appendChild(svgEl('rect',{class:'hit',x:x-11,y:y-10,width:22,height:22}));
  g.dataset.access=accessNode;g.dataset.zone=zone;
  g.addEventListener('click',()=>select(deskPlace(g)));
