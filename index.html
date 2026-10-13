@@ -184,7 +184,30 @@ function resetMapView(){svg.setAttribute('viewBox','0 0 850 779');svg.style.tran
 function chooseSvgNode(p){document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));if(!p.node)return;if(p.type==='desk'||p.node.classList.contains('room-hotspot'))p.node.classList.add('selected');else{const shape=p.node.querySelector('.room');if(shape)shape.classList.add('selected')}}
 function select(p){if(!p)return;selected=p;chooseSvgNode(p);if(p.id&&p.id.startsWith('PIN-')){pinLayer.innerHTML='';pinLayer.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:12,fill:'#ffe58e',stroke:'#29362a','stroke-width':3}));pinLayer.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:3.5,fill:'#29362a'}));}else if(!starting){pinLayer.innerHTML='';}$('title').textContent=p.name;$('description').textContent=p.type==='desk'?'Work desk. Set it as your spot, share it, or get a route here.':p.type==='room'?'A room on this floor. Use directions to reach the door from your current position.':'An office landmark to help you orient yourself.';$('selectedinfo').hidden=false;$('spoticon').textContent=p.type==='desk'?'🪑':p.type==='room'?'🚪':'📍';$('placeid').textContent=p.id;$('placemeta').textContent=p.type==='desk'?'Work desk · '+p.id:p.type==='room'?'Room · '+p.id:'Landmark';$('share').disabled=false;$('directions').disabled=false;routeLayer.innerHTML='';if(routeMode){routeMode=false;setStarting(p)}}
 
-function nearestNode(p){if(p.access&&graph[p.access])return p.access;const candidate=Object.keys(graph).map(id=>({id,d:Math.hypot(graph[id].x-p.x,graph[id].y-p.y)})).sort((a,b)=>a.d-b.d)[0];return candidate.id}
+function nearestNode(p){
+ if(p.access&&graph[p.access])return p.access;
+ // Snap to a corridor waypoint in the same broad floor zone. A global nearest-node
+ // search can connect a desk through a wall or across one of the central voids.
+ const ids=Object.keys(graph);
+ let eligible=ids;
+ if(p.y<220){
+   eligible=ids.filter(id=>['T1','T2','T3','T4','T5','T6','C0','C6','E0'].includes(id));
+ } else if(p.y>530){
+   eligible=ids.filter(id=>['B1','B2','B3','B4','B5','B6','C7','E1'].includes(id));
+ } else if(p.x>620){
+   eligible=ids.filter(id=>['T5','T6','E0','E1','B5','B6'].includes(id));
+ } else if(p.x<300){
+   eligible=ids.filter(id=>['T1','B1','B2'].includes(id));
+ } else if(p.x<435){
+   eligible=ids.filter(id=>['T2','T3','C0','C1','C4','B2','B3'].includes(id));
+ } else if(p.x<600){
+   eligible=ids.filter(id=>['T3','T4','C6','C3','C5','C7','B3','B4'].includes(id));
+ } else {
+   eligible=ids.filter(id=>['T4','T5','E0','E1','B4','B5'].includes(id));
+ }
+ const candidates=(eligible.length?eligible:ids).map(id=>({id,d:Math.hypot(graph[id].x-p.x,graph[id].y-p.y)})).sort((a,b)=>a.d-b.d);
+ return candidates[0].id;
+}
 function shortestPath(from,to){const dist={},prev={},unvisited=new Set(Object.keys(graph));Object.keys(graph).forEach(k=>dist[k]=Infinity);dist[from]=0;while(unvisited.size){let u=null;for(const id of unvisited)if(u===null||dist[id]<dist[u])u=id;if(u===null||dist[u]===Infinity)break;unvisited.delete(u);if(u===to)break;for(const v of Object.keys(graph)){if(v===u||!unvisited.has(v))continue;const connected=graph[u].edges[v]!==undefined||graph[v].edges[u]!==undefined;if(!connected)continue;const alt=dist[u]+Math.hypot(graph[u].x-graph[v].x,graph[u].y-graph[v].y);if(alt<dist[v]){dist[v]=alt;prev[v]=u}}}if(from!==to&&!prev[to])return null;const path=[to];while(path[0]!==from){const p=prev[path[0]];if(!p)return null;path.unshift(p)}return path}
 function drawRoute(destination){if(!starting){routeMode=true;toast('Choose your starting point first. Tap a desk or choose a landmark.');return}if(starting.id===destination.id){toast('You are already at that location.');return}
  const from=nearestNode(starting),to=nearestNode(destination),path=shortestPath(from,to);if(!path){toast('No connected corridor route found for these locations.');return}
