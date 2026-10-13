@@ -14,5 +14,6 @@ Desk and room markers are separate interactive overlays in the app's `0 0 850 77
 - Confirmed 244 unique desk IDs and 34 unique room IDs.
 - Rendered the PDF plan crop with desk and room marker centers overlaid for a full-map visual comparison.
 - Checked the inline JavaScript syntax and `git diff --check`.
+- Verified the deployed feature branch in Chrome: the PDF-derived plan loaded; searches for D001, D122, and D244 selected their desks; room 04F021 showed 10P; search selection preserved the manual zoom; manual zoom, map scrolling, and Reset worked.
 
-The feature branch has not yet been verified in Chrome or Edge as a running app. The public site may continue to serve its configured branch until deployment settings include this feature branch.
+GitHub Pages now publishes `feat/pixel-map-vector-trace`. The branch remains unmerged.
