@@ -18,7 +18,6 @@
 .desk-hotspot:hover .dot,.desk-hotspot:focus .dot,.desk-hotspot.selected .dot{fill:#ffbe58;fill-opacity:1;stroke:#7b351e;stroke-opacity:1;stroke-width:2.6}
 .desk-hotspot.selected .hit{fill:#ffbe5830}
 .room-hotspot{cursor:pointer}
-.audit-label{font:700 4px Arial,sans-serif;fill:#111;stroke:#fff;stroke-width:1px;paint-order:stroke;pointer-events:none}
 .room-hotspot circle{fill:#ffc7cb;fill-opacity:.96;stroke:#3a3330;stroke-opacity:1;stroke-width:1.7}
 .room-hotspot text{font-size:7px;fill:#3a2d2d;font-weight:950;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
 .room-hotspot:hover circle,.room-hotspot:focus circle,.room-hotspot.selected circle{fill:#ff8c98;fill-opacity:1;stroke:#a9323b;stroke-opacity:1;stroke-width:2.8}
@@ -121,7 +120,7 @@
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title"><section class="modal"><h2 id="modal-title">Share your spot</h2><p id="modalcopy">Send a link so someone can find you.</p><div class="modalplace" id="modalplace"></div><p class="tiny">This link contains the place and expiry time. Client-side expiry prevents opening an old link in this app, but cannot revoke a copied URL from outside it.</p><div class="modalactions"><button class="btn primary" id="copy">Copy link</button><button class="btn" id="teams">Share to Teams</button><button class="btn" id="close">Close</button></div></section></div>
-<script src="assets/desks.js?v=native-pixel-coordinate-audit-3"></script>
+<script src="assets/desks.js?v=native-pixel-coordinate-audit-4"></script>
 <script>
 (() => {
 const NS='http://www.w3.org/2000/svg', svg=document.getElementById('map'),mapview=document.getElementById('mapview'),deskLayer=document.getElementById('desks'),pinLayer=document.getElementById('pin-layer'),destinationLayer=document.getElementById('destination-layer');
@@ -132,10 +131,9 @@ const svgEl=(tag,attrs={})=>{const el=document.createElementNS(NS,tag);Object.en
 const roomHotspotLayer=document.getElementById('room-hotspots');
 // Marker positions are stored in native pixels of the floor-plan JPG and converted to the SVG viewBox here.
 const imagePixelToSvg=(x,y)=>({x:x*850/2600,y:y*779/2409});
-const auditMode=new URLSearchParams(location.search).has('audit');
 const desks=window.PIXEL_OFFICE_DESKS.map(p=>({...p,...imagePixelToSvg(p.xPx,p.yPx),name:'Desk '+p.id,type:'desk'}));
-desks.forEach(p=>{const g=svgEl('g',{class:'desk-hotspot',tabindex:0,role:'button','aria-label':p.name,'data-place-id':p.id});g.appendChild(svgEl('circle',{class:'hit',cx:p.x,cy:p.y,r:10}));g.appendChild(svgEl('circle',{class:'dot',cx:p.x,cy:p.y,r:4.4}));if(auditMode){const label=svgEl('text',{class:'audit-label',x:p.x+4.5,y:p.y-4.5});label.textContent=p.id;g.appendChild(label)}const title=svgEl('title');title.textContent=p.name;g.appendChild(title);p.node=g;g.addEventListener('click',e=>{e.stopPropagation();select(p)});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();select(p)}});deskLayer.appendChild(g)});
-const roomCoords="04F021,1370.9,386.6;04F022,1361.7,525.4;04I011,1766.8,308.9;04G091,1416.5,1907.7;04K081,2187.4,1609.9;04D101,778.8,2308.8;04K092,2272.1,1908.3;04L061,2476.7,1252.1;04L021,2525.6,554.2;04J011,1958.3,106.7;04C011,575.1,106.7;04C012,574.4,308.9;04F011,1267.0,106.7;04G022,1501.9,525.4;04K022,2263.2,452.1;04G021,1499.4,386.6;04K023,2258.6,553.6;04K024,2180.3,549.5;04K073,2291.7,1456.5;04K075,2191.7,1555.8;04K082,2310.0,1609.9;04J071,2033.5,1441.7;04J072,2033.5,1519.3;04J042,2033.5,941.0;04J051,2033.5,1027.3;04J041,2032.9,851.3;04K031,2182.7,753.0;04K051,2237.8,1040.9;04L091,2512.2,1883.3;04G011,984.3,308.9;04G012,1093.8,308.9;04G092,1498.8,1907.7";
+desks.forEach(p=>{const g=svgEl('g',{class:'desk-hotspot',tabindex:0,role:'button','aria-label':p.name});g.appendChild(svgEl('circle',{class:'hit',cx:p.x,cy:p.y,r:10}));g.appendChild(svgEl('circle',{class:'dot',cx:p.x,cy:p.y,r:4.4}));const title=svgEl('title');title.textContent=p.name;g.appendChild(title);p.node=g;g.addEventListener('click',e=>{e.stopPropagation();select(p)});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();select(p)}});deskLayer.appendChild(g)});
+const roomCoords="04F021,1370.9,386.6;04F022,1361.7,525.4;04I011,1772.9,321.3;04G091,1401.2,1907.7;04K081,2187.4,1609.9;04D101,778.8,2308.8;04K092,2272.1,1908.3;04L061,2476.7,1252.1;04L021,2528.7,575.8;04J011,1982.8,125.3;04C011,587.3,119.1;04C012,595.8,333.6;04F011,1279.2,119.1;04G022,1501.9,525.4;04K022,2263.2,452.1;04G021,1499.4,386.6;04K023,2258.6,553.6;04K024,2180.3,549.5;04K073,2291.7,1456.5;04K075,2191.7,1555.8;04K082,2310.0,1609.9;04J071,2033.5,1441.7;04J072,2033.5,1519.3;04J042,2033.5,941.0;04J051,2033.5,1027.3;04J041,2032.9,851.3;04K031,2182.7,753.0;04K051,2237.8,1040.9;04L091,2512.2,1883.3;04G011,993.5,318.2;04G012,1109.1,318.2;04G092,1498.8,1907.7";
 const roomCapacities={'04F021':'10P','04F022':'10P','04K023':'2P','04K024':'2P'};
 const roomRecords=roomCoords.split(';').map(row=>{const [id,xPx,yPx]=row.split(',');const capacity=roomCapacities[id]||'4P';return{id,name:'Möte · '+capacity,type:'room',capacity,...imagePixelToSvg(+xPx,+yPx),access:null,node:null}});
 const extraLandmarks=[
@@ -146,7 +144,7 @@ const extraLandmarks=[
 {id:'COPY',name:'Copy area',type:'landmark',x:284.5,y:102,access:null}
 ];
 const placeRecords=roomRecords.concat(extraLandmarks);
-placeRecords.forEach(p=>{const g=svgEl('g',{class:'room-hotspot',tabindex:0,role:'button','aria-label':p.name,'data-place-id':p.id});g.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:p.type==='room'?5.2:5.5}));if(p.type==='room'){const letter=svgEl('text',{x:p.x,y:p.y+.4});letter.textContent='M';g.appendChild(letter)}if(auditMode){const label=svgEl('text',{class:'audit-label',x:p.x+5.5,y:p.y-4.5});label.textContent=p.id;g.appendChild(label)}const title=svgEl('title');title.textContent=p.name;g.appendChild(title);g.addEventListener('click',e=>{e.stopPropagation();select(p)});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(p)}});roomHotspotLayer.appendChild(g);p.node=g});
+placeRecords.forEach(p=>{const g=svgEl('g',{class:'room-hotspot',tabindex:0,role:'button','aria-label':p.name});g.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:p.type==='room'?5.2:5.5}));if(p.type==='room'){const letter=svgEl('text',{x:p.x,y:p.y+.4});letter.textContent='M';g.appendChild(letter)}const title=svgEl('title');title.textContent=p.name;g.appendChild(title);g.addEventListener('click',e=>{e.stopPropagation();select(p)});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(p)}});roomHotspotLayer.appendChild(g);p.node=g});
 const namedPlaces=()=>placeRecords.concat(desks);
 function allPlaces(){return namedPlaces()}
 function showDestinationMarker(place,shared=false){
