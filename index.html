@@ -78,7 +78,7 @@
 <g fill="#52624d" font-size="10" font-weight="900"><text x="48" y="51">N ↑</text><text x="690" y="719">KV POOLEN · PLAN 4 / VÅN 3</text></g>
 </svg>
 </div>
-<div class="legend"><span><i style="background:#fffdf5"></i> Work desks · D001–D244</span><span><i style="background:#ffc7cb"></i> Meeting rooms</span><span><i style="background:#bce8f0"></i> Landmarks</span><span>🔴 Highlighted route</span></div>
+<div class="legend"><span><i style="background:#fffdf5"></i> Work desks · click a specific spot</span><span><i style="background:#ffc7cb"></i> Meeting rooms</span><span><i style="background:#bce8f0"></i> Landmarks</span><span>🔴 Highlighted route</span></div>
 </section>
 <aside class="side">
 <section class="card"><div class="eyebrow">Your map pin</div><h3 id="title">Pick a place</h3><p id="description">Select a room or landmark, or tap anywhere on the plan to place your own pin.</p>
@@ -86,7 +86,7 @@
 <div class="stack"><button class="btn primary" id="share" disabled>↗ Share this location</button><button class="btn" id="directions" disabled>➜ Show directions</button><button class="btn pinkbtn" id="start">◎ Set as my starting point</button></div>
 <div class="divider"></div><div class="eyebrow">Your starting point</div><p id="startlabel">Not selected — tap where you are on the map.</p></section>
 <section class="card"><div class="eyebrow">Places to know</div><h3>Quick find</h3><div class="quicklist"><button class="quick" data-target="ELEVATORS"><span class="quickicon">🛗</span><span><strong>Elevator lobby</strong><small>A good place to start</small></span></button><button class="quick" data-target="KITCHEN"><span class="quickicon">☕</span><span><strong>Coffee station</strong><small>Meet by the coffee</small></span></button><button class="quick" data-target="LOUNGE"><span class="quickicon">🛋️</span><span><strong>Lounge</strong><small>Take a breather</small></span></button><button class="quick" data-target="COPY"><span class="quickicon">🖨️</span><span><strong>Copy area</strong><small>Printers and supplies</small></span></button></div></section>
-<div class="note"><strong>Temporary location sharing.</strong><br>Desk IDs are not printed on the source plan, so tap the exact desk yourself. Links expire in one hour; no live presence is stored.</div>
+<div class="note"><strong>Temporary location sharing.</strong><br>The source plan does not number desks individually. Tap the exact desk to place a pin. Links expire in one hour; no live presence is stored.</div>
 </aside></main>
 <footer class="footer"><span><strong>Pixel Office</strong> · Kv Poolen · Plan 4 / Vån 3</span><span>Static app · No account required</span></footer></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -117,7 +117,7 @@ const graph={
  T1:{x:126,y:212,edges:{W0:1,T2:1}},
  T2:{x:300,y:212,edges:{T1:1,T3:1,C0:1}},
  T3:{x:435,y:212,edges:{T2:1,T4:1,C6:1}},
- T4:{x:580,y:212,edges:{T3:1,T5:1}},
+ T4:{x:580,y:212,edges:{T3:1,T5:1,C6:1}},
  T5:{x:692,y:212,edges:{T4:1,T6:1,E0:1}},
  T6:{x:787,y:212,edges:{T5:1,E2:1}},
  W1:{x:67,y:314,edges:{W0:1,W2:1}},
@@ -129,12 +129,11 @@ const graph={
  B5:{x:644,y:545,edges:{B4:1,B6:1,E3:1}},
  B6:{x:746,y:545,edges:{B5:1,E4:1}},
  C0:{x:333,y:212,edges:{T2:1,C1:1}},
- C1:{x:333,y:303,edges:{C0:1,C2:1,C4:1}},
- C6:{x:463,y:212,edges:{T3:1,C2:1}},
- C2:{x:463,y:303,edges:{C1:1,C3:1,C6:1}},
- C3:{x:528,y:303,edges:{C2:1,C5:1}},
- C4:{x:333,y:429,edges:{C1:1,C5:1,B3:1}},
- C5:{x:528,y:429,edges:{C4:1,C3:1,B4:1}},
+ C1:{x:333,y:303,edges:{C0:1,C4:1}},
+ C6:{x:528,y:212,edges:{T3:1,T4:1,C3:1}},
+ C3:{x:528,y:303,edges:{C6:1,C5:1}},
+ C4:{x:333,y:429,edges:{C1:1,B3:1}},
+ C5:{x:528,y:429,edges:{C3:1,B4:1}},
  E0:{x:644,y:212,edges:{T5:1,E1:1}},
  E1:{x:644,y:303,edges:{E0:1,E3:1}},
  E2:{x:810,y:303,edges:{T6:1,E4:1}},
