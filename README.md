@@ -1,30 +1,26 @@
 # Pixel Office
 
-Responsive static prototype for Kv Poolen, Plan 4 / Vån 3. No backend or build step is required.
-
-## Run / publish
-Open `index.html` locally or enable GitHub Pages from the repository root. On GitHub Pages, use Settings → Pages → Deploy from a branch → `main` → `/(root)`, after merging the prototype pull request.
+Responsive static office map for Kv Poolen, Plan 4 / Vån 3. It is suitable for GitHub Pages and needs no backend.
 
 ## Map and locations
-- The map uses the high-resolution `assets/floor-plan-hires.jpg` image; the old `assets/floor-plan.b64` thumbnail must not be loaded.
-- There are 243 desk-position candidates extracted from PDF vector geometry. The drawing summary says 244 desks, so one position remains to be found and verified.
-- Meeting-room targets are visible pink `M` markers, positioned at the centre of the inferred pink room rectangles. They represent the 32 currently identified `MÖTE` room candidates; confirm room IDs and ensure each actual meeting room has exactly one target.
-- Room targets are point hotspots, not fully traced room polygons. Desk IDs such as D001 are app IDs, not printed labels in the architectural plan.
+- Uses `assets/floor-plan-hires.jpg`; do not load the old `assets/floor-plan.b64` thumbnail.
+- There are 243 desk-position candidates from PDF vector geometry, while the drawing summary states 244 desks. One location remains to be verified.
+- Pink `M` meeting-room targets are inferred from room rectangles. Confirm a one-to-one match to each real `MÖTE` room.
+- Desk IDs such as D001 are app IDs, not printed labels. Room and desk markers remain point targets, not full vector-traced polygons.
 
 ## Interaction
-- Map clicks now define the route: first click = start; second click = destination and route preview. A third click starts a new route selection.
-- The separate “I'm here”, “Set as my starting point”, and “Show directions” actions have been removed. Select a single place and use “Share this location” to share it.
-- Opening a shared link focuses the map on the shared target and shows a large pulsing, labelled red pin. The recipient then clicks their current point once to request a route preview to the shared destination.
-- The share URL expires client-side after one hour. There is no central presence, server-side revocation, database or authentication.
+- The side panel is removed. Clicking a desk, room or map point opens a small contextual action menu beside it.
+- The menu lets a user share the selected place or mark it as their starting point. Once a start is set, another selected place offers `Use this as destination`.
+- Search selection opens the same menu; clicking another map item transfers the highlight and menu to the newly selected item.
+- Reset clears start/destination, route, pins, selected marker, popup, search query, share modal, zoom, pan and focused viewBox.
+- A valid shared link focuses the map on the destination with a large pulsing pin. The recipient chooses their own point and marks it as the start to preview a route to the shared destination.
+- Share links expire client-side after one hour. There is no server-side revocation, database, authentication or live presence.
 
 ## Directions status
-- The route is a provisional corridor preview using a 21-waypoint / 23-edge hand-entered graph. It no longer uses large route arrowheads.
-- The line currently shows the corridor waypoint path; its exact approach to a clicked desk or room is not fully modelled. Room doors, desk aisles and destination connectors have not been validated end to end, so do not treat the route as reliable door-to-door wayfinding yet.
-- A connected graph is not proof that its edges are physically walkable. Validate every route edge and room access point against the PDF, and walk-test representative routes before describing routing as reliable.
+The route uses a provisional corridor waypoint graph. It is not yet fully connected to validated room doors and desk aisles; route lines are previews, not verified door-to-door navigation. Validate all graph edges and target access paths against the PDF and ideally by walking representative routes.
 
 ## Remaining validation
-1. Resolve the 243-versus-244 desk mismatch and verify every desk marker centre.
-2. Confirm the 32 meeting-room targets correspond one-for-one to actual rooms labelled `MÖTE`; correct IDs/locations as needed.
-3. Trace room boundaries, door openings and aisle/corridor access points in editable SVG/data.
-4. Connect each desk and meeting room to a verified walkable access node; never route through walls, furniture, room interiors without a door, lift shafts or central voids.
-5. Test manual two-click routing, routes to rooms on all wings, shared-link targeting/expiry, search, reset, keyboard access and responsive layout.
+1. Resolve the 243-versus-244 desk mismatch and verify desk centres.
+2. Verify exactly one location target for every actual meeting room labelled `MÖTE`.
+3. Trace room boundaries/doors and connect desks and rooms to verified walkable access nodes.
+4. Test selection, search, reset after zoom/share/route, popup position near map edges, share-link expiry and routing across each wing.

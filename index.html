@@ -5,7 +5,7 @@
 <meta name="description" content="Pixel Office - find a room, share where you are, and get directions across the office."><title>Pixel Office</title>
 <style>
 :root{font-family:ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif;color:#273027;background:#f8f6ef;--ink:#273027;--paper:#fffef9;--muted:#70786c;--line:#dcded2;--green:#cce8b8;--pink:#ffc7cb;--blue:#bce8f0;--yellow:#ffe58e;--lav:#ddd1ff}
-*{box-sizing:border-box}body{margin:0;min-width:320px;background-image:radial-gradient(#d9d5c7 .7px,transparent .7px);background-size:18px 18px}.app{max-width:1500px;margin:auto;padding:22px clamp(12px,3vw,38px) 28px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #6b8cdc;outline-offset:3px}.top{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:19px}.brand{display:flex;align-items:center;gap:12px}.logo{width:47px;height:47px;display:grid;place-items:center;background:var(--yellow);border:3px solid var(--ink);border-radius:9px;box-shadow:4px 4px var(--ink);font-size:25px}.brand h1{font-size:clamp(25px,3vw,32px);letter-spacing:-.06em;margin:0}.brand p{margin:3px 0 0;color:var(--muted);font-size:13px}.live{font-size:11px;font-weight:900;letter-spacing:.09em;color:#567151;text-transform:uppercase}.live:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#70b975;margin-right:8px}.toolbar{display:grid;grid-template-columns:minmax(220px,1fr) auto auto;gap:10px;margin-bottom:16px}.search{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:3px 3px var(--ink);padding:0 14px;min-height:49px}.search input{border:0;outline:0;min-width:0;width:100%;font-size:14px;background:transparent}.btn{min-height:45px;padding:0 16px;border:2px solid var(--ink);border-radius:10px;background:white;box-shadow:3px 3px var(--ink);font-size:13px;font-weight:850;transition:transform .12s,box-shadow .12s}.btn:hover{transform:translate(1px,1px);box-shadow:2px 2px var(--ink)}.btn:active{transform:translate(3px,3px);box-shadow:none}.primary{background:var(--green)}.pinkbtn{background:var(--pink)}.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}.layout{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:16px}.map-card,.card{background:var(--paper);border:2px solid var(--ink);border-radius:13px;box-shadow:5px 5px var(--ink);overflow:hidden}.maphead{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:2px solid var(--ink)}.maphead h2{font-size:15px;margin:0}.maphead p{font-size:11px;color:var(--muted);margin:4px 0 0}.maptools{display:flex;gap:6px}.iconbtn{height:36px;min-width:36px;border:1.5px solid var(--ink);background:white;border-radius:7px;font-weight:900;font-size:17px}.mapview{min-height:600px;overflow:auto;background:#e9e7d8;background-image:linear-gradient(#d1cfbe55 1px,transparent 1px),linear-gradient(90deg,#d1cfbe55 1px,transparent 1px);background-size:22px 22px}.map{display:block;width:100%;min-width:630px;height:auto;max-height:900px;transform-origin:center center}.floor{fill:#eeeddf;stroke:#272e27;stroke-width:5;stroke-linejoin:round}.corridor{fill:#f8f4e2;stroke:#c2c1b1;stroke-width:2}.void{fill:#fffefa;stroke:#333a32;stroke-width:3}.wall{fill:none;stroke:#3c443a;stroke-width:3;stroke-linejoin:round}.room{stroke:#333c33;stroke-width:2;cursor:pointer}.room:hover{stroke-width:4;filter:brightness(.97)}.room.selected{stroke:#df5e52;stroke-width:5}.roomlabel{font-size:10px;fill:#30372f;font-weight:850;text-anchor:middle;pointer-events:none}.smalllabel{font-size:8px;fill:#555d51;text-anchor:middle;pointer-events:none}.desk{cursor:pointer}.desk rect{fill:#fffdf6;stroke:#434b41;stroke-width:1.3;rx:1}.desk path{fill:none;stroke:#434b41;stroke-width:1.2}.desk .hit{fill:transparent;stroke:transparent;stroke-width:0}.desk:hover rect,.desk.selected rect{fill:#ffe58e;stroke:#e45f53;stroke-width:2.6}.desk.selected text{fill:#b5423d}.furn{fill:#d7cbb0;stroke:#63695d;stroke-width:1.4}.plant{fill:#7daf73;stroke:#456d40;stroke-width:1.3}.route{fill:none;stroke:#df5149;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:7 5;pointer-events:none}.route-end{fill:#dc5b50;stroke:white;stroke-width:3;pointer-events:none}.start-ring{fill:#bce8f0;stroke:#29362a;stroke-width:3;pointer-events:none}.legend{padding:10px 15px;display:flex;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:10px;height:10px;border:1px solid #667064;border-radius:2px}.side{display:flex;flex-direction:column;gap:14px}.card{padding:17px}.eyebrow{color:#6c7864;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px}.card h3{font-size:19px;letter-spacing:-.04em;margin:0 0 8px}.card p{font-size:13px;color:var(--muted);line-height:1.5;margin:0}.selectedinfo{display:flex;gap:10px;align-items:center;margin:14px 0}.spoticon{width:42px;height:42px;flex:none;display:grid;place-items:center;border:2px solid var(--ink);border-radius:9px;background:var(--blue);font-size:22px}.selectedinfo strong{font-size:13px;display:block}.selectedinfo small{font-size:11px;color:var(--muted)}.stack{display:grid;gap:8px}.stack .btn{width:100%;min-height:42px}.divider{height:1px;background:var(--line);margin:15px 0}.quicklist{display:grid;gap:4px;margin-top:10px}.quick{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;border-radius:8px;background:transparent;padding:8px}.quick:hover{background:#f0f0e5}.quickicon{width:33px;height:33px;display:grid;place-items:center;background:#edf0df;border:1px solid #d6dbc9;border-radius:7px}.quick strong{display:block;font-size:12px}.quick small{font-size:11px;color:var(--muted)}.note{margin-top:auto;padding:13px;border:1.5px dashed #b8bbae;border-radius:8px;background:#f7f5e9;color:#677063;font-size:11px;line-height:1.5}.footer{display:flex;justify-content:space-between;gap:12px;padding:20px 0 0;color:#777b70;font-size:11px}.toast{position:fixed;z-index:20;left:50%;bottom:20px;transform:translate(-50%,15px);opacity:0;pointer-events:none;max-width:calc(100vw - 24px);padding:12px 16px;border-radius:9px;background:var(--ink);color:white;box-shadow:0 8px 24px #2225;font-size:13px;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}.backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:15px;background:#1e251db8;z-index:10}.backdrop.open{display:flex}.modal{width:min(100%,450px);padding:23px;background:var(--paper);border:2px solid var(--ink);border-radius:14px;box-shadow:7px 7px var(--ink)}.modal h2{margin:0 0 8px;font-size:24px}.modal p{font-size:13px;line-height:1.5;color:var(--muted)}.modalplace{margin:15px 0;padding:12px;border:1.5px solid var(--line);border-radius:8px;background:#f7f5ec;font-weight:850}.modalactions{display:flex;gap:8px;flex-wrap:wrap}.modalactions .btn{flex:1}.tiny{font-size:11px!important}
+*{box-sizing:border-box}body{margin:0;min-width:320px;background-image:radial-gradient(#d9d5c7 .7px,transparent .7px);background-size:18px 18px}.app{max-width:1500px;margin:auto;padding:22px clamp(12px,3vw,38px) 28px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #6b8cdc;outline-offset:3px}.top{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:19px}.brand{display:flex;align-items:center;gap:12px}.logo{width:47px;height:47px;display:grid;place-items:center;background:var(--yellow);border:3px solid var(--ink);border-radius:9px;box-shadow:4px 4px var(--ink);font-size:25px}.brand h1{font-size:clamp(25px,3vw,32px);letter-spacing:-.06em;margin:0}.brand p{margin:3px 0 0;color:var(--muted);font-size:13px}.live{font-size:11px;font-weight:900;letter-spacing:.09em;color:#567151;text-transform:uppercase}.live:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#70b975;margin-right:8px}.toolbar{display:grid;grid-template-columns:minmax(220px,1fr) auto auto;gap:10px;margin-bottom:16px}.search{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:3px 3px var(--ink);padding:0 14px;min-height:49px}.search input{border:0;outline:0;min-width:0;width:100%;font-size:14px;background:transparent}.btn{min-height:45px;padding:0 16px;border:2px solid var(--ink);border-radius:10px;background:white;box-shadow:3px 3px var(--ink);font-size:13px;font-weight:850;transition:transform .12s,box-shadow .12s}.btn:hover{transform:translate(1px,1px);box-shadow:2px 2px var(--ink)}.btn:active{transform:translate(3px,3px);box-shadow:none}.primary{background:var(--green)}.pinkbtn{background:var(--pink)}.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}.layout{display:block}.map-card,.card{background:var(--paper);border:2px solid var(--ink);border-radius:13px;box-shadow:5px 5px var(--ink);overflow:hidden}.maphead{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:2px solid var(--ink)}.maphead h2{font-size:15px;margin:0}.maphead p{font-size:11px;color:var(--muted);margin:4px 0 0}.maptools{display:flex;gap:6px}.iconbtn{height:36px;min-width:36px;border:1.5px solid var(--ink);background:white;border-radius:7px;font-weight:900;font-size:17px}.mapview{position:relative;min-height:600px;overflow:auto;background:#e9e7d8;background-image:linear-gradient(#d1cfbe55 1px,transparent 1px),linear-gradient(90deg,#d1cfbe55 1px,transparent 1px);background-size:22px 22px}.map{display:block;width:100%;min-width:630px;height:auto;max-height:900px;transform-origin:center center}.floor{fill:#eeeddf;stroke:#272e27;stroke-width:5;stroke-linejoin:round}.corridor{fill:#f8f4e2;stroke:#c2c1b1;stroke-width:2}.void{fill:#fffefa;stroke:#333a32;stroke-width:3}.wall{fill:none;stroke:#3c443a;stroke-width:3;stroke-linejoin:round}.room{stroke:#333c33;stroke-width:2;cursor:pointer}.room:hover{stroke-width:4;filter:brightness(.97)}.room.selected{stroke:#df5e52;stroke-width:5}.roomlabel{font-size:10px;fill:#30372f;font-weight:850;text-anchor:middle;pointer-events:none}.smalllabel{font-size:8px;fill:#555d51;text-anchor:middle;pointer-events:none}.desk{cursor:pointer}.desk rect{fill:#fffdf6;stroke:#434b41;stroke-width:1.3;rx:1}.desk path{fill:none;stroke:#434b41;stroke-width:1.2}.desk .hit{fill:transparent;stroke:transparent;stroke-width:0}.desk:hover rect,.desk.selected rect{fill:#ffe58e;stroke:#e45f53;stroke-width:2.6}.desk.selected text{fill:#b5423d}.furn{fill:#d7cbb0;stroke:#63695d;stroke-width:1.4}.plant{fill:#7daf73;stroke:#456d40;stroke-width:1.3}.route{fill:none;stroke:#df5149;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:7 5;pointer-events:none}.route-end{fill:#dc5b50;stroke:white;stroke-width:3;pointer-events:none}.start-ring{fill:#bce8f0;stroke:#29362a;stroke-width:3;pointer-events:none}.legend{padding:10px 15px;display:flex;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:10px;height:10px;border:1px solid #667064;border-radius:2px}.side{display:flex;flex-direction:column;gap:14px}.card{padding:17px}.eyebrow{color:#6c7864;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px}.card h3{font-size:19px;letter-spacing:-.04em;margin:0 0 8px}.card p{font-size:13px;color:var(--muted);line-height:1.5;margin:0}.selectedinfo{display:flex;gap:10px;align-items:center;margin:14px 0}.spoticon{width:42px;height:42px;flex:none;display:grid;place-items:center;border:2px solid var(--ink);border-radius:9px;background:var(--blue);font-size:22px}.selectedinfo strong{font-size:13px;display:block}.selectedinfo small{font-size:11px;color:var(--muted)}.stack{display:grid;gap:8px}.stack .btn{width:100%;min-height:42px}.divider{height:1px;background:var(--line);margin:15px 0}.quicklist{display:grid;gap:4px;margin-top:10px}.quick{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;border-radius:8px;background:transparent;padding:8px}.quick:hover{background:#f0f0e5}.quickicon{width:33px;height:33px;display:grid;place-items:center;background:#edf0df;border:1px solid #d6dbc9;border-radius:7px}.quick strong{display:block;font-size:12px}.quick small{font-size:11px;color:var(--muted)}.note{margin-top:auto;padding:13px;border:1.5px dashed #b8bbae;border-radius:8px;background:#f7f5e9;color:#677063;font-size:11px;line-height:1.5}.footer{display:flex;justify-content:space-between;gap:12px;padding:20px 0 0;color:#777b70;font-size:11px}.toast{position:fixed;z-index:20;left:50%;bottom:20px;transform:translate(-50%,15px);opacity:0;pointer-events:none;max-width:calc(100vw - 24px);padding:12px 16px;border-radius:9px;background:var(--ink);color:white;box-shadow:0 8px 24px #2225;font-size:13px;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}.backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:15px;background:#1e251db8;z-index:10}.backdrop.open{display:flex}.modal{width:min(100%,450px);padding:23px;background:var(--paper);border:2px solid var(--ink);border-radius:14px;box-shadow:7px 7px var(--ink)}.modal h2{margin:0 0 8px;font-size:24px}.modal p{font-size:13px;line-height:1.5;color:var(--muted)}.modalplace{margin:15px 0;padding:12px;border:1.5px solid var(--line);border-radius:8px;background:#f7f5ec;font-weight:850}.modalactions{display:flex;gap:8px;flex-wrap:wrap}.modalactions .btn{flex:1}.tiny{font-size:11px!important}
 @media(max-width:900px){.layout{grid-template-columns:minmax(0,1fr) 250px}.mapview{min-height:500px}}@media(max-width:700px){.app{padding:14px 10px 24px}.live{display:none}.toolbar{grid-template-columns:1fr 1fr}.search{grid-column:1/-1}.toolbar .btn{padding:0 8px}.layout{grid-template-columns:1fr}.mapview{min-height:420px}.side{display:grid;grid-template-columns:1fr 1fr}.side .card:first-child,.note{grid-column:1/-1}.footer{flex-direction:column}}@media(max-width:420px){.side{grid-template-columns:1fr}.side .card:first-child,.note{grid-column:auto}.mapview{min-height:360px}}
 
 /* The supplied architectural plan is the visual source of truth; old schematic vector fills are hidden. */
@@ -33,6 +33,21 @@
 .route-label-bg{fill:#fffef8;stroke:#2b342b;stroke-width:1.7}
 @keyframes destination-pulse{0%{transform:scale(.65);fill-opacity:.42;stroke-opacity:1}75%{transform:scale(1.65);fill-opacity:0;stroke-opacity:0}100%{transform:scale(1.65);fill-opacity:0;stroke-opacity:0}}
 @media(prefers-reduced-motion:reduce){.destination-pulse{animation:none;fill-opacity:.48}}
+
+.map-status{padding:9px 14px;background:#f7f5e9;border-bottom:1px solid #dcded2;font-size:12px;color:#53604c;line-height:1.4}
+.location-popover{position:absolute;z-index:12;width:228px;padding:10px;background:#fffef9;border:2px solid #273027;border-radius:10px;box-shadow:4px 4px #273027;display:grid;gap:7px}
+.location-popover[hidden]{display:none!important}
+.popover-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;color:#626f5a;font-size:9px;font-weight:950;letter-spacing:.1em}
+.popover-close{width:24px;height:24px;border:1.5px solid #273027;background:white;border-radius:6px;font-size:17px;line-height:1}
+#popover-title{font-size:14px;line-height:1.2;overflow-wrap:anywhere;margin-bottom:2px}
+.popover-action{width:100%;border:1.5px solid #273027;background:#fff;padding:9px;text-align:left;border-radius:7px;font-weight:850;font-size:11px;line-height:1.2;box-shadow:2px 2px #273027}
+.primary-action{background:#ffe58e}.start-action{background:#cce8b8}
+.popover-action:hover{filter:brightness(.97);transform:translate(1px,1px);box-shadow:1px 1px #273027}
+.desk-hotspot.selected .dot{transform:scale(2.5);transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 1px 1px #1f271d)}
+.desk-hotspot.selected .hit{fill:#ffc94b55;stroke:#422b1c;stroke-width:1.8}
+.room-hotspot.selected circle{r:11px;filter:drop-shadow(0 1px 1px #1f271d)}
+.room-hotspot.selected text{font-size:10px;fill:#222}
+@media(max-width:700px){.location-popover{width:210px}.popover-action{font-size:12px;padding:10px}}
 </style>
 </head>
 <body>
@@ -42,6 +57,7 @@
 <main class="layout">
 <section class="map-card">
 <div class="maphead"><div><h2>PLAN 4 · VÅN 3 <span aria-hidden="true">✦</span></h2><p>Actual floor-plan reference · search a room or tap anywhere to pin your spot</p></div><div class="maptools"><button class="iconbtn" id="zoomout" aria-label="Zoom out">−</button><button class="iconbtn" id="zoomin" aria-label="Zoom in">+</button><button class="iconbtn" id="fit" aria-label="Fit map">⌗</button></div></div>
+<div class="map-status" id="startlabel">Click a location to share it or mark it as your starting point.</div>
 <div class="mapview" id="mapview">
 <svg id="map" class="map" viewBox="0 0 850 779" role="img" aria-label="Interactive Kv Poolen floor plan. Select a desk or room; shared locations appear as a blinking pin."><defs><marker id="route-arrow" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0,0 L6,3.5 L0,7 Z" fill="#a32c25"/></marker></defs>
 <image id="architectural-plan" x="0" y="0" width="850" height="779" preserveAspectRatio="none" href="assets/floor-plan-hires.jpg"></image><g id="room-hotspots"></g><g id="desks"></g>
@@ -93,17 +109,17 @@
 <g id="route-layer"></g><g id="pin-layer"></g><g id="destination-layer"></g>
 <g fill="#52624d" font-size="10" font-weight="900"><text x="48" y="51">N ↑</text><text x="690" y="719">KV POOLEN · PLAN 4 / VÅN 3</text></g>
 </svg>
+<div id="location-popover" class="location-popover" role="dialog" aria-label="Location actions" hidden>
+  <div class="popover-heading"><span id="popover-type">SELECTED LOCATION</span><button type="button" id="popover-close" class="popover-close" aria-label="Close location actions">×</button></div>
+  <strong id="popover-title">Selected place</strong>
+  <button type="button" class="popover-action primary-action" id="popover-share">↗ Share this as your location</button>
+  <button type="button" class="popover-action start-action" id="popover-start">◎ Mark this my starting point</button>
+  <button type="button" class="popover-action" id="popover-destination" hidden>➜ Use this as destination</button>
+</div>
 </div>
 <div class="legend"><span><i style="background:#fffdf5"></i> Work desks · click a specific spot</span><span><i style="background:#ffc7cb"></i> Meeting rooms</span><span><i style="background:#bce8f0"></i> Landmarks</span><span>🔴 Highlighted route</span></div>
 </section>
-<aside class="side">
-<section class="card"><div class="eyebrow">Your map pin</div><h3 id="title">Pick a place</h3><p id="description">Click two points on the map for a route, or select one place and share it.</p>
-<div class="selectedinfo" id="selectedinfo" hidden><div class="spoticon" id="spoticon">📍</div><div><strong id="placeid"></strong><small id="placemeta"></small></div></div>
-<div class="stack"><button class="btn primary" id="share" disabled>↗ Share this location</button></div>
-<div class="divider"></div><div class="eyebrow">Your starting point</div><p id="startlabel">Click a first point for your start, then a second point for the destination. You can share the selected place.</p></section>
-<section class="card"><div class="eyebrow">Places to know</div><h3>Quick find</h3><div class="quicklist"><button class="quick" data-target="ELEVATORS"><span class="quickicon">🛗</span><span><strong>Elevator lobby</strong><small>A good place to start</small></span></button><button class="quick" data-target="KITCHEN"><span class="quickicon">☕</span><span><strong>Coffee station</strong><small>Meet by the coffee</small></span></button><button class="quick" data-target="LOUNGE"><span class="quickicon">🛋️</span><span><strong>Lounge</strong><small>Take a breather</small></span></button><button class="quick" data-target="COPY"><span class="quickicon">🖨️</span><span><strong>Copy area</strong><small>Printers and supplies</small></span></button></div></section>
-<div class="note"><strong>Temporary location sharing.</strong><br>243 desk centres were detected from the vector drawing and are selectable here. The drawing summary says 244 desks, so one position still needs verification. Links expire in one hour; no live presence is stored.</div>
-</aside></main>
+</main>
 <footer class="footer"><span><strong>Pixel Office</strong> · Kv Poolen · Plan 4 / Vån 3</span><span>Static app · No account required</span></footer></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title"><section class="modal"><h2 id="modal-title">Share your spot</h2><p id="modalcopy">Send a link so someone can find you.</p><div class="modalplace" id="modalplace"></div><p class="tiny">This link contains the place and expiry time. Client-side expiry prevents opening an old link in this app, but cannot revoke a copied URL from outside it.</p><div class="modalactions"><button class="btn primary" id="copy">Copy link</button><button class="btn" id="teams">Share to Teams</button><button class="btn" id="close">Close</button></div></section></div>
@@ -181,9 +197,41 @@ function focusView(place){
 }
 function resetMapView(){svg.setAttribute('viewBox','0 0 850 779');svg.style.transform='';}
 
-function chooseSvgNode(p){document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));if(!p.node)return;if(p.type==='desk'||p.node.classList.contains('room-hotspot'))p.node.classList.add('selected');else{const shape=p.node.querySelector('.room');if(shape)shape.classList.add('selected')}}
-function select(p){if(!p)return;selected=p;chooseSvgNode(p);if(p.id&&p.id.startsWith('PIN-')&&!starting){pinLayer.innerHTML='';pinLayer.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:12,fill:'#ffe58e',stroke:'#29362a','stroke-width':3}));pinLayer.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:3.5,fill:'#29362a'}));}else if(!starting){pinLayer.innerHTML='';}$('title').textContent=p.name;$('description').textContent=p.type==='desk'?'Work desk. Click it as a start or destination, or share this place.':p.type==='room'?'A meeting room. Click it as the first or second point to plan a route.':'An office landmark to help you orient yourself.';$('selectedinfo').hidden=false;$('spoticon').textContent=p.type==='desk'?'🪑':p.type==='room'?'🚪':'📍';$('placeid').textContent=p.id;$('placemeta').textContent=p.type==='desk'?'Work desk · '+p.id:p.type==='room'?'Room · '+p.id:'Landmark';$('share').disabled=false;routeLayer.innerHTML='';if(routeMode){routeMode=false;setStarting(p)}}
-
+function chooseSvgNode(p){
+ document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));
+ if(p&&p.node&&(p.type==='desk'||p.node.classList.contains('room-hotspot')))p.node.classList.add('selected');
+}
+function placePopover(place){
+ const pop=$('location-popover');if(!place){pop.hidden=true;return}
+ $('popover-title').textContent=place.name||place.id||'Map point';
+ $('popover-type').textContent=place.type==='room'?'MEETING ROOM':place.type==='desk'?'DESK':'MAP LOCATION';
+ const sameAsStart=!!starting&&starting.id===place.id;
+ const isSharedStart=!!sharedDestination&&!starting;
+ $('popover-start').hidden=!!starting&&!isSharedStart;
+ $('popover-destination').hidden=!starting||sameAsStart||isSharedStart;
+ pop.hidden=false;
+ const pt=svg.createSVGPoint();pt.x=place.x;pt.y=place.y;
+ const screen=pt.matrixTransform(svg.getScreenCTM()),rect=mapview.getBoundingClientRect();
+ const x=screen.x-rect.left+mapview.scrollLeft,y=screen.y-rect.top+mapview.scrollTop;
+ const width=pop.offsetWidth||228,height=pop.offsetHeight||145;
+ let left=x+15,top=y-height/2;
+ if(left+width>mapview.scrollWidth-8)left=x-width-15;
+ left=Math.max(8,Math.min(left,mapview.scrollWidth-width-8));
+ if(top<8)top=y+16;
+ top=Math.max(8,Math.min(top,mapview.scrollHeight-height-8));
+ pop.style.left=left+'px';pop.style.top=top+'px';
+}
+function select(p,opts={}){
+ if(!p)return;
+ selected=p;chooseSvgNode(p);
+ if(!opts.keepRoute)routeLayer.innerHTML='';
+ if(p.id&&p.id.startsWith('PIN-')&&!starting){
+   pinLayer.innerHTML='';
+   pinLayer.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:17,fill:'#ffe58e',stroke:'#29362a','stroke-width':3}));
+   pinLayer.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:5,fill:'#29362a'}));
+ }else if(!opts.keepStartPin&&!starting)pinLayer.innerHTML='';
+ placePopover(p);
+}
 function nearestNode(p){
  if(p.access&&graph[p.access])return p.access;
  // Snap to a corridor waypoint in the same broad floor zone. A global nearest-node
@@ -209,7 +257,7 @@ function nearestNode(p){
  return candidates[0].id;
 }
 function shortestPath(from,to){const dist={},prev={},unvisited=new Set(Object.keys(graph));Object.keys(graph).forEach(k=>dist[k]=Infinity);dist[from]=0;while(unvisited.size){let u=null;for(const id of unvisited)if(u===null||dist[id]<dist[u])u=id;if(u===null||dist[u]===Infinity)break;unvisited.delete(u);if(u===to)break;for(const v of Object.keys(graph)){if(v===u||!unvisited.has(v))continue;const connected=graph[u].edges[v]!==undefined||graph[v].edges[u]!==undefined;if(!connected)continue;const alt=dist[u]+Math.hypot(graph[u].x-graph[v].x,graph[u].y-graph[v].y);if(alt<dist[v]){dist[v]=alt;prev[v]=u}}}if(from!==to&&!prev[to])return null;const path=[to];while(path[0]!==from){const p=prev[path[0]];if(!p)return null;path.unshift(p)}return path}
-function drawRoute(destination){if(!starting){toast('Click a start point first, then a destination.');return}if(starting.id===destination.id){toast('You are already at that location.');return}
+function drawRoute(destination){if(!starting){toast('Mark a starting point first.');return}if(starting.id===destination.id){toast('You are already at that location.');return}
  const from=nearestNode(starting),to=nearestNode(destination),path=shortestPath(from,to);if(!path){toast('No connected corridor route found for these locations.');return}
  routeLayer.innerHTML='';const pts=path.map(id=>graph[id]);const poly=svgEl('polyline',{class:'route',points:pts.map(p=>p.x+','+p.y).join(' ')});routeLayer.appendChild(poly);
  // Endpoint rings identify where the corridor route starts/ends; the animated pin marks the exact selected place.
@@ -218,34 +266,62 @@ function drawRoute(destination){if(!starting){toast('Click a start point first, 
  const sum=path.slice(1).reduce((acc,id,i)=>acc+Math.hypot(graph[id].x-graph[path[i]].x,graph[id].y-graph[path[i]].y),0);toast('Corridor route preview only. Follow the blinking pin for the exact destination; final desk/room access and door connections are not yet verified.');
 }
 function pickMapPoint(place){
+ select(place);
  if(sharedDestination&&!starting){
-   const target=sharedDestination;routePickCount=2;setStarting(place);select(target);
-   $('startlabel').textContent='From '+place.name+' → shared destination '+target.name+'.';
-   drawRoute(target);return;
+   $('startlabel').textContent='Click “Mark this my starting point” beside your location. The shared place is already the destination.';
+   $('popover-start').hidden=false;$('popover-destination').hidden=true;return;
  }
- if(!starting||routePickCount>=2){
-   routePickCount=1;sharedDestination=null;routeLayer.innerHTML='';destinationLayer.innerHTML='';
-   select(place);setStarting(place);
-   $('startlabel').textContent='Start: '+place.name+' · click a destination next.';
-   toast('Start selected. Click a second point for the destination.');return;
+ if(!starting){
+   $('startlabel').textContent='Choose “Share this as your location” or “Mark this my starting point” beside the selected place.';return;
  }
- if(starting.id===place.id){toast('Choose a different point for the destination.');return}
- routePickCount=2;select(place);
- $('startlabel').textContent='From '+starting.name+' → '+place.name+'. Click another point to plan a new route.';
- drawRoute(place);
+ if(place.id===starting.id){
+   $('startlabel').textContent='This is your starting point. Click another place and choose “Use as destination”.';
+   $('popover-destination').hidden=true;return;
+ }
+ $('startlabel').textContent='Choose “Use this as destination” beside '+(place.name||place.id)+', or share this place.';
 }
 function setStarting(p){starting={...p};$('startlabel').textContent=p.name+' · selected manually';pinLayer.innerHTML='';pinLayer.appendChild(svgEl('circle',{class:'start-ring',cx:p.x,cy:p.y,r:15}));pinLayer.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:4,fill:'#27352a'}));toast('Starting point set to '+p.name+'.')}
 function encodePayload(obj){const bytes=new TextEncoder().encode(JSON.stringify(obj));let binary='';bytes.forEach(b=>binary+=String.fromCharCode(b));return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
 function decodePayload(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const binary=atob(s);const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))}
 const backdrop=$('backdrop');
 function openShare(){if(!selected)return;const expires=Date.now()+3600000;shareUrl=location.href.split('#')[0]+'#spot='+encodePayload({place:selected.id,expires,x:selected.x,y:selected.y,name:selected.name,type:selected.type,access:selected.access||null});$('modalplace').textContent=selected.name+' · expires in 1 hour';$('modalcopy').textContent='Send this link so someone can find '+selected.name+'.';backdrop.classList.add('open')}
-$('share').addEventListener('click',openShare);$('close').addEventListener('click',()=>backdrop.classList.remove('open'));backdrop.addEventListener('click',e=>{if(e.target===backdrop)backdrop.classList.remove('open')});
+$('close').addEventListener('click',()=>backdrop.classList.remove('open'));
+$('popover-close').addEventListener('click',()=>{$('location-popover').hidden=true});
+$('popover-share').addEventListener('click',()=>{if(selected)openShare()});
+$('popover-start').addEventListener('click',()=>{
+ if(!selected)return;
+ const point={...selected};
+ if(sharedDestination&&!starting){
+   setStarting(point);$('location-popover').hidden=true;drawRoute(sharedDestination);
+   $('startlabel').textContent='Route from '+point.name+' to shared destination '+sharedDestination.name+'.';return;
+ }
+ starting={...point};routePickCount=1;routeLayer.innerHTML='';destinationLayer.innerHTML='';
+ setStarting(point);select(point,{keepRoute:true,keepStartPin:true});
+ $('location-popover').hidden=true;
+ $('startlabel').textContent='Start: '+point.name+'. Click a destination and choose “Use this as destination”.';
+ toast('Starting point marked. Click a destination next.');
+});
+$('popover-destination').addEventListener('click',()=>{
+ if(!selected||!starting||selected.id===starting.id)return;
+ const destination={...selected};routePickCount=2;drawRoute(destination);
+ $('location-popover').hidden=true;
+ $('startlabel').textContent='Route preview: '+starting.name+' → '+destination.name+'. Click another location to choose a new destination, or Reset map to start over.';
+});
+backdrop.addEventListener('click',e=>{if(e.target===backdrop)backdrop.classList.remove('open')});
 $('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(shareUrl);toast('Location link copied. Share it in Teams.');backdrop.classList.remove('open')}catch{window.prompt('Copy your location link:',shareUrl)}});
 $('teams').addEventListener('click',()=>window.open('https://teams.microsoft.com/share?href='+encodeURIComponent(shareUrl),'_blank','noopener'));
 $('search').addEventListener('keydown',e=>{if(e.key!=='Enter')return;const q=e.target.value.trim().toLowerCase();if(!q)return;const found=allPlaces().find(p=>p.id.toLowerCase()===q)||allPlaces().find(p=>p.name.toLowerCase().includes(q));if(found){select(found);e.target.blur()}else toast('No match. Try D001–D243, a room ID such as 04F021, or a landmark.')});
 $('search').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();if(q.length<3)return;const found=allPlaces().find(p=>p.id.toLowerCase()===q);if(found)select(found)});
 document.querySelectorAll('[data-target]').forEach(b=>b.addEventListener('click',()=>{const p=allPlaces().find(p=>p.id===b.dataset.target);if(p)select(p)}));
-$('reset').addEventListener('click',()=>{selected=starting=null;routeMode=false;routePickCount=0;routeLayer.innerHTML='';pinLayer.innerHTML='';destinationLayer.innerHTML='';document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));$('title').textContent='Pick a place';$('description').textContent='Select a desk, room or landmark on the map to see details and actions.';$('selectedinfo').hidden=true;$('share').disabled=true;$('startlabel').textContent='Click a first point for your start, then a second point for the destination.';$('search').value='';zoom=1;svg.style.transform='';toast('Map selection reset.')});
+$('reset').addEventListener('click',()=>{
+ selected=null;starting=null;sharedDestination=null;routeMode=false;routePickCount=0;zoom=1;
+ routeLayer.innerHTML='';pinLayer.innerHTML='';destinationLayer.innerHTML='';
+ $('location-popover').hidden=true;$('search').value='';backdrop.classList.remove('open');
+ document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));
+ resetMapView();mapview.scrollTo({left:0,top:0,behavior:'auto'});
+ $('startlabel').textContent='Click a location to share it or mark it as your starting point.';
+ toast('Map reset. Choose a starting point or share any location.');
+});
 $('zoomin').addEventListener('click',()=>{zoom=Math.min(1.55,zoom+.1);svg.style.transform='scale('+zoom+')'});$('zoomout').addEventListener('click',()=>{zoom=Math.max(.8,zoom-.1);svg.style.transform='scale('+zoom+')'});$('fit').addEventListener('click',()=>{zoom=1;resetMapView();toast('Showing the full map. The selected destination marker remains visible.')});
 svg.addEventListener('click',e=>{
  if(e.target.closest('#room-hotspots .room-hotspot,.desk-hotspot'))return;
@@ -253,7 +329,7 @@ svg.addEventListener('click',e=>{
  const custom={id:'PIN-'+Math.round(q.x)+'-'+Math.round(q.y),name:'Map pin',type:'landmark',x:q.x,y:q.y,access:nearestNode({x:q.x,y:q.y})};
  pickMapPoint(custom);
 });
-try{const m=location.hash.match(/spot=([^&]+)/);if(m){const payload=decodePayload(m[1]);if(!payload.expires||Date.now()>payload.expires){toast('This location link has expired. Ask for a new one.');history.replaceState(null,'',location.pathname+location.search)}else{const p=allPlaces().find(x=>x.id===payload.place)||{id:payload.place,name:payload.name||payload.place,type:payload.type||'landmark',x:+payload.x||400,y:+payload.y||350,access:payload.access};selected=null;starting=null;routePickCount=0;sharedDestination=p;select(p);showDestinationMarker(p,true);focusView(p);$('startlabel').textContent='Shared destination: '+p.name+'. Click your current location once to preview the route.';toast('Shared location: '+p.name+'. Click your current location once to preview the route.')}}}catch{toast('Could not read the shared location link. Ask for a new one.')}
+try{const m=location.hash.match(/spot=([^&]+)/);if(m){const payload=decodePayload(m[1]);if(!payload.expires||Date.now()>payload.expires){toast('This location link has expired. Ask for a new one.');history.replaceState(null,'',location.pathname+location.search)}else{const p=allPlaces().find(x=>x.id===payload.place)||{id:payload.place,name:payload.name||payload.place,type:payload.type||'landmark',x:+payload.x||400,y:+payload.y||350,access:payload.access};selected=null;starting=null;routePickCount=0;sharedDestination=p;select(p);$('location-popover').hidden=true;showDestinationMarker(p,true);focusView(p);$('startlabel').textContent='Shared destination: '+p.name+'. Click your current location and mark it as the start.';toast('Shared location: '+p.name+'. Click your current location and mark it as the start.')}}}catch{toast('Could not read the shared location link. Ask for a new one.')}
 
 })();
 </script></body></html>
