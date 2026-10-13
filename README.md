@@ -1,19 +1,20 @@
 # Pixel Office
 
-Responsive static office map for Kv Poolen, Plan 4 / Vån 3. Find a desk or meeting room and share its location.
+Pixel Office is a static, responsive floor map for finding and sharing desk and meeting-room locations.
 
-## Interface
-- Compact single-row search at the top; no title/logo or explanatory map heading.
-- Map occupies the main viewport. Zoom out/in and reset (#) controls sit over its top-right corner.
-- Selecting a desk, meeting room, or landmark opens a nearby share popover. The share dialog hides the popover and is scrollable on small mobile screens.
-- Search dropdown lists matching desk IDs, meeting-room IDs and landmarks.
-- No plant-area location is listed as a selectable landmark.
-- Footer: “Built by Rashmi Borole” and “Not a booking system — you cannot book or lock desks or rooms.”
+## Floor-plan coordinate audit
 
-## Desk and room coordinates
-- Uses `assets/floor-plan-hires.jpg` and traced desk centre candidates.
-- Desk IDs are generated after stable spatial sorting. The intended order begins in the top-left corner and proceeds around the perimeter before the interior.
-- Candidate positions still require a one-to-one visual audit against desk surfaces and every actual meeting room. Do not claim the inventory is exact until checked against the source drawing.
+The original Plan 4 / Vån 3 architectural PDF and a clean high-resolution rendering were inspected in full, including enlarged crops of the upper-left, upper perimeter, right perimeter, lower-left, lower perimeter and central areas. The existing 258 SVG workstation candidates were plotted on the floor-plan image individually with index labels. Fourteen points were identified as non-workstation furniture in meeting, focus or ancillary spaces and removed (original candidate indices: 1, 2, 62, 66, 69, 70, 71, 72, 73, 74, 107, 124, 141, 142). The remaining 244 points retain their vector-derived centres rather than receiving any global offsets or manual shifts.
 
-## Share links
-Links expire client-side after one hour. No backend, authentication, database, server-side revocation, live colleague presence or booking/locking features.
+Desk IDs are regenerated deterministically from the retained points, beginning in the top-left corner and proceeding around the perimeter, then through interior desks. The source drawing's stated 244 workstations now matches the retained candidate count, but a count match is not independent proof of one-to-one completeness. The vector data still needs checking against individual furniture footprints where workstation symbols are ambiguous.
+
+Meeting-room hotspots (32 labelled MÖTE spaces) were independently compared to the centre coordinates of their pink room rectangles in the PDF. Existing coordinates match those rectangle centres, so they were preserved without unnecessary shifts.
+
+## Features
+
+- Search desk and room IDs; click a location to share it.
+- A selected location has a prominent pulsing marker.
+- Shared links expire client-side after one hour.
+- No booking, locking, directions, login, backend or live presence.
+
+Built by Rashmi Borole.
