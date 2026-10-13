@@ -36,7 +36,7 @@
 
 .map-status{padding:9px 14px;background:#f7f5e9;border-bottom:1px solid #dcded2;font-size:12px;color:#53604c;line-height:1.4}
 .location-popover{position:fixed;z-index:1000;width:228px;padding:10px;background:#fffef9;border:2px solid #273027;border-radius:10px;box-shadow:4px 4px #273027;display:grid;gap:7px}
-.location-popover[hidden]{display:none!important;pointer-events:none}.location-popover:not([hidden]){pointer-events:auto;visibility:visible;opacity:1}
+.location-popover[hidden]{display:none!important;pointer-events:none}.location-popover:not([hidden]){display:grid!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important}
 .popover-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;color:#626f5a;font-size:9px;font-weight:950;letter-spacing:.1em}
 .popover-close{width:24px;height:24px;border:1.5px solid #273027;background:white;border-radius:6px;font-size:17px;line-height:1}
 #popover-title{font-size:14px;line-height:1.2;overflow-wrap:anywhere;margin-bottom:2px}
@@ -46,8 +46,8 @@
 .desk-hotspot.selected .dot{transform:scale(2.5);transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 1px 1px #1f271d)}
 .desk-hotspot.selected .hit{fill:#ffc94b55;stroke:#422b1c;stroke-width:1.8}
 .room-hotspot.selected circle:not(.selection-pulse){r:11px;filter:drop-shadow(0 1px 1px #1f271d)}
-.selection-pulse{fill:#ff4a42;fill-opacity:.22;stroke:#ed3932;stroke-width:2;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:selected-location-pulse 1.25s ease-out infinite}
-@keyframes selected-location-pulse{0%{transform:scale(.6);fill-opacity:.38;stroke-opacity:1}80%,100%{transform:scale(1.8);fill-opacity:0;stroke-opacity:0}}
+.selection-pulse{fill:#ff3f36;fill-opacity:.28;stroke:#d92a22;stroke-width:2.8;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:selected-location-pulse 1.15s ease-out infinite;vector-effect:non-scaling-stroke}
+@keyframes selected-location-pulse{0%{transform:scale(.65);fill-opacity:.48;stroke-opacity:1}80%,100%{transform:scale(2.5);fill-opacity:0;stroke-opacity:0}}
 @media(prefers-reduced-motion:reduce){.selection-pulse{animation:none;transform:none;fill-opacity:.5}}
 .room-hotspot.selected text{font-size:10px;fill:#222}
 @media(max-width:700px){.location-popover{width:210px}.popover-action{font-size:12px;padding:10px}}
@@ -128,7 +128,7 @@
 <div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title"><section class="modal"><h2 id="modal-title">Share your spot</h2><p id="modalcopy">Send a link so someone can find you.</p><div class="modalplace" id="modalplace"></div><p class="tiny">This link contains the place and expiry time. Client-side expiry prevents opening an old link in this app, but cannot revoke a copied URL from outside it.</p><div class="modalactions"><button class="btn primary" id="copy">Copy link</button><button class="btn" id="teams">Share to Teams</button><button class="btn" id="close">Close</button></div></section></div>
 <script>
 (() => {
-const NS='http://www.w3.org/2000/svg', svg=document.getElementById('map'),deskLayer=document.getElementById('desks'),routeLayer=document.getElementById('route-layer'),pinLayer=document.getElementById('pin-layer');
+const NS='http://www.w3.org/2000/svg', svg=document.getElementById('map'),mapview=document.getElementById('mapview'),deskLayer=document.getElementById('desks'),routeLayer=document.getElementById('route-layer'),pinLayer=document.getElementById('pin-layer'),destinationLayer=document.getElementById('destination-layer');
 let selected=null,starting=null,routeMode=false,routePickCount=0,shareUrl='',zoom=1,toastTimer;
 const $=id=>document.getElementById(id);
 const toast=message=>{const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000)};
@@ -202,12 +202,11 @@ function resetMapView(){svg.setAttribute('viewBox','0 0 850 779');svg.style.tran
 
 function chooseSvgNode(p){
  document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));document.querySelectorAll('.selection-pulse').forEach(n=>n.remove());
- document.querySelectorAll('.selection-pulse').forEach(n=>n.remove());
  if(!p||!p.node)return;
  if(p.type==='desk'||p.node.classList.contains('room-hotspot')){
    p.node.classList.add('selected');
-   const pulse=svgEl('circle',{class:'selection-pulse',cx:p.x,cy:p.y,r:10});
-   p.node.insertBefore(pulse,p.node.firstChild);
+   const pulse=svgEl('circle',{class:'selection-pulse',cx:p.x,cy:p.y,r:p.type==='desk'?8:10});
+   p.node.appendChild(pulse);
  }
 }
 function placePopover(place){
@@ -219,7 +218,7 @@ function placePopover(place){
  const isSharedStart=!!sharedDestination&&!starting;
  $('popover-start').hidden=!!starting&&!isSharedStart;
  $('popover-destination').hidden=!starting||sameAsStart||isSharedStart;
- pop.hidden=false;
+ pop.hidden=false;pop.style.display='grid';pop.style.visibility='visible';pop.style.opacity='1';
  // Move the popover to <body> so overflow/scroll on the map cannot clip it.
  if(pop.parentElement!==document.body)document.body.appendChild(pop);
  const pt=svg.createSVGPoint();pt.x=place.x;pt.y=place.y;
