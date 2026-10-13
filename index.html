@@ -146,7 +146,7 @@ function deskOrderZone(p){
 function deskOrder(a,b){
  const za=deskOrderZone(a),zb=deskOrderZone(b);
  if(za!==zb)return za-zb;
- if(za===0){const angle=p=>{let v=Math.atan2(p[1]-110,p[0]-110);if(v>Math.PI/2)v-=Math.PI*2;return v};return angle(a)-angle(b)}
+ if(za===0){const angle=p=>{let v=Math.atan2(p[1]-110,p[0]-110);if(v<0)v+=Math.PI*2;return v};return angle(a)-angle(b)}
  if(za===1)return a[0]-b[0]||a[1]-b[1];
  if(za===2||za===3)return a[1]-b[1]||a[0]-b[0];
  if(za===4||za===5||za===6)return b[0]-a[0]||b[1]-a[1];
