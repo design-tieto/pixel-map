@@ -1,21 +1,16 @@
 # Pixel Office
 
-A responsive, static prototype for finding rooms, desks and landmarks on the Kv Poolen floor. No backend or build step is required.
+Responsive static prototype for locating desks, rooms and landmarks on Kv Poolen, Plan 4 / Vån 3. It runs as a static website and requires no backend.
 
-## Run locally
-Open `index.html` in a modern browser. For link sharing, Clipboard API is most reliable on HTTPS (GitHub Pages) or localhost.
+## Run / publish
+Open index.html locally or enable GitHub Pages from the repository root. On GitHub Pages, use Settings → Pages → Deploy from a branch → main → /(root), after merging the prototype pull request.
 
-## Publish with GitHub Pages
-1. In repository Settings → Pages, select **Deploy from a branch**.
-2. Choose `main` (after merging this branch) and `/(root)`.
-3. Save. The site will be published at `https://design-tieto.github.io/pixel-map/`.
+## Current map and routing notes
+- The SVG recreates the main curved footprint, two large open bays, meeting/focus room clusters, central lift lobby and desk zones from the supplied 2026-09-16 architectural drawing.
+- Desk markers D001–D244 are individually selectable and searchable. The source plan does not assign individual IDs to desks, so these are app IDs.
+- Room labels shown are transcribed from visible labels in the source drawing. This SVG is a hand-traced approximation, not a CAD/vector extraction. Verify every desk hotspot, room coordinate, door opening and path connection against the original PDF before operational use.
+- Directions use a weighted graph of corridor waypoints and room/desk access assignments. This is better than a straight-line/schematic route, but the graph and access points still require on-floor or CAD validation before being treated as exact accessible directions.
+- Location sharing is a URL fragment with a one-hour client-side expiry. There is no server-side revocation, directory, login or live presence.
 
-## Current prototype limitations
-- The interactive SVG is a schematic starter, not a survey-accurate trace of the supplied architectural PDF.
-- Desk identifiers D001+ are generated for the prototype and do not yet represent all 244 desks or their exact positions.
-- Routing is a visual preview along a schematic corridor spine, not yet a verified accessible walking route.
-- Shared location expiry is enforced by the client link parser; it is not server-side revocation and links can be copied.
-- No colleague directory, live presence, login or central storage is included.
-
-## Next build step
-Trace the architectural source into accurate room polygons, 244 desk coordinates, entrances, corridors and walkable path nodes. Add a graph-based routing algorithm after the map geometry is verified.
+## Next QA
+Compare the SVG against the source PDF at high zoom. Adjust every room boundary, desk marker and doorway. Then walk-test sample routes from the lift lobby to representative rooms and desk clusters. Ensure routes never cross walls, furniture or restricted areas.

@@ -1,24 +1,12 @@
-# Codex follow-up prompt: make Pixel Office map accurate
+# Accurate floor-plan and routing QA
 
-Work in this repository and preserve the current responsive visual style and static-hosting approach.
+Continue on this feature branch. Use the supplied source file named “Plan 4 Vån 3 PROGRAMSKISS MAX MÖBL. INREDNING.pdf” as the source of truth.
 
-The supplied source drawing is “KV POOLEN–INREDNING / Plan 4 Vån 3”, dated 2026-09-16. Treat it as the source of truth. Do not invent the building footprint, desk locations, room locations, corridors, room entrances or labels.
+1. Compare index.html's inline SVG to the PDF at high zoom and correct the outer building trace, all room locations and identifiers, corridors, door openings, desk footprints and landmark coordinates.
+2. Inspect and correct all 244 generated desk hotspot coordinates. D001–D244 are app IDs, not IDs printed on the source plan. Make them distinct, stable, and place them on real desks only.
+3. Refine the corridor graph and each room/desk access association. Graph edges must follow genuinely walkable corridors and doorways; do not route through rooms, walls, desks, lift shafts, voids or storage.
+4. Use Dijkstra or A* over weighted nodes; draw a route as a path along edges and only short access connectors at the start/destination. Add route QA cases from elevator lobby to multiple rooms, desk clusters and landmarks on different wings.
+5. Verify all visible labels against the source; do not silently invent room IDs or capacities. Preserve the playful style, responsive interface, keyboard access, search and one-hour link sharing.
+6. Smoke-test at desktop and mobile widths. Ensure no console errors, all 244 desks are searchable/selectable, expired links fail, and malformed URLs do not break the app.
 
-## Priorities
-1. Replace the schematic inline SVG in index.html with a separate, clean SVG asset traced from the source floor-plan drawing. Keep the source drawing only as a reference if its image file is added to the repository.
-2. Trace the overall curved building outline, central open areas, all corridors, room walls and door openings.
-3. Place and label all 244 desk markers individually. IDs D001–D244 are app IDs; the architectural drawing does not individually number all desks. Use a maintainable data file with x/y coordinates.
-4. Recreate all room IDs and landmark locations from the drawing. Preserve the exact IDs visible in the source.
-5. Build a walkable graph from real corridor segments and doorways. Use A* or Dijkstra for shortest routes. Never route through walls, furniture or rooms without passing through an entrance.
-6. Test search for room IDs, desk IDs and landmarks; test share links with valid, expired and malformed payloads; test route from a manually selected start to a destination.
-7. Keep the app static: plain HTML/CSS/JavaScript/SVG, no backend, no framework or build step unless necessary. Location sharing should remain link-based and client-side for this version.
-8. Keep the interface responsive and keyboard accessible. Clearly label any unverified coordinate or route instead of presenting it as accurate.
-
-The drawing notes include 244 desks, 22 meeting rooms for four people, two for ten people, two for two people, focus rooms, coffee stations, elevators, lounge and other support spaces. Verify counts and labels against the supplied drawing rather than relying only on this summary.
-
-## Done means
-- Every intended desk/room can be selected and searched.
-- Destination highlights accurately.
-- Route uses traced walkable pathways and doors.
-- No console errors; test desktop and mobile.
-- Document the coordinate data format and validation process in README.md.
+The existing SVG is an intentionally approximate trace based on the visible architectural page, not a measured CAD export. Do not claim routing is operationally accurate until the geometry and doors have been checked against the drawing and representative paths validated.
