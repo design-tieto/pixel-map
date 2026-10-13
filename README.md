@@ -18,3 +18,10 @@ Meeting-room hotspots (32 labelled MÖTE spaces) were independently compared to 
 - No booking, locking, directions, login, backend or live presence.
 
 Built by Rashmi Borole.
+
+
+## Browser verification (2026-10-13)
+
+The public branch application was opened in a browser and checked against the high-resolution plan displayed from `assets/floor-plan-hires.jpg`. The rendered image and desk overlay loaded together; the explicit desk dataset contains 244 unique IDs from D001 through D244. A whole-map visual pass and enlarged views were used to review marker placement across the plan; searches for D001, D122 and D244 placed their selected markers on the corresponding map regions. Search selection preserved the current zoom. Manual zoom, scrolling at enlarged zoom and Reset all worked in the browser.
+
+The original uploaded architectural PDF was not present in this branch, so the browser pass does not establish independent one-to-one completeness against that PDF. The 244-count agreement is not treated as proof of completeness.
