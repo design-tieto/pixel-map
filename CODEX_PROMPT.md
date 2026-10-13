@@ -1,19 +1,19 @@
 # Pixel Office — Codex project brief
 
-Continue on `feat/pixel-office-prototype`. Do not create another branch or merge the pull request unless asked.
+Continue on `feat/pixel-office-prototype`. Do not merge the PR unless instructed.
 
-## Product scope
-Pixel Office is only for finding and sharing locations on the office map. Remove directions completely: no route graph, start/end-point selection, route preview, routing arrows or directions UI.
+## Scope
+Find and share locations only: do not reintroduce routes, directions, or start/end selection.
+
+## Desk map
+- Use the centre points from the vector tracing data (`office_trace/desk-centres-poly.csv` in the local project workspace), which includes rotated desk rectangles in the curved corners.
+- IDs must be assigned deterministically after spatial sorting: top-left corner first, across the top, down the right, across the bottom right-to-left, up the left, then interior desks row-by-row.
+- The manual line of markers through the central open void must not return.
+- There are 258 candidate centres. Audit them against physical desk surfaces, especially corners and any furniture inside meeting rooms; remove non-desk detections before claiming the inventory is complete.
+- Keep one pink M marker per real MÖTE room.
 
 ## Interaction
-- Clicking a desk, meeting room, landmark, or map point opens a compact popover next to that location with one action: `Share this as your location`.
-- Only the current selection is highlighted. Selected desks and rooms use a large pulsing marker.
-- Search provides a dropdown of matching desk IDs, meeting-room IDs/numbers and landmarks while typing. Selecting a result focuses the map, highlights it, and opens the same share popover.
-- Reset clears selection/pulse, shared-location pin, popover, query/dropdown, share dialog, zoom/viewBox and scroll.
-- Shared links expire client-side after one hour. Opening a valid link focuses the map and shows a prominent pulsing, labelled pin. No backend or live presence.
-
-## Map accuracy
-- Use `assets/floor-plan-hires.jpg`, never `assets/floor-plan.b64`.
-- Twenty manually positioned candidate points were added for corner/curved-edge desks in response to the user's screenshot. Check every one against the source furniture. Current target count is 263 versus 244 in the drawing summary; reconcile duplicates/false-positive points.
-- Verify exactly one marker for each real room labelled `MÖTE`.
-- Keep static GitHub Pages support. Test dropdown search, selection, share links and reset.
+- Click/search a location to highlight it with a pulse and show a share-only popover.
+- Search dropdown lists matching desk IDs, meeting-room IDs and landmarks.
+- Reset clears the selection, pulse, shared pin, popover, search dropdown, share dialog and zoom.
+- Shared links expire client-side after one hour. Keep static GitHub Pages hosting.
