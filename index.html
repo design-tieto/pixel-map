@@ -10,9 +10,9 @@
 
 /* The floor is a simplified vector trace from the original architectural PDF. */
 #vector-plan{display:block;pointer-events:none}
-.desk-shape{fill:#fffdf6;stroke:#434b41;stroke-width:1.15;rx:1}
+.desk-shape{fill:transparent;stroke:transparent;stroke-width:1.15;rx:1;pointer-events:all}
 .desk-hotspot:hover .desk-shape,.desk-hotspot.selected .desk-shape{fill:#ffe58e;stroke:#e45f53;stroke-width:2.2}
-.room-hotspot .room-shape{fill:#ffc7cb;fill-opacity:.95;stroke:#333c33;stroke-width:1.35}
+.room-hotspot .room-shape{fill:transparent;stroke:transparent;stroke-width:1.35;pointer-events:all}
 .room-hotspot:hover .room-shape,.room-hotspot:focus .room-shape,.room-hotspot.selected .room-shape{fill:#ff9da5;stroke:#a9323b;stroke-width:2.5}
 #room-hotspots{display:block!important}
 .desk-hotspot{cursor:pointer;outline:none}
@@ -108,7 +108,7 @@
 <div class="mapview" id="mapview">
 
 <svg id="map" class="map" viewBox="0 0 850 779" role="img" aria-label="Interactive Kv Poolen floor plan. Find desks and meeting rooms, then share a location.">
-<image id="vector-plan" x="0" y="0" width="850" height="779" preserveAspectRatio="none" href="assets/floor-background.svg?v=vector-trace-1"></image>
+<image id="vector-plan" x="0" y="0" width="850" height="779" preserveAspectRatio="none" href="assets/floor-map.svg?v=vector-trace-2"></image>
 <g id="room-hotspots"></g><g id="desks"></g>
 <g id="pin-layer"></g><g id="destination-layer"></g>
 
