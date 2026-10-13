@@ -35,8 +35,8 @@
 @media(prefers-reduced-motion:reduce){.destination-pulse{animation:none;fill-opacity:.48}}
 
 .map-status{padding:9px 14px;background:#f7f5e9;border-bottom:1px solid #dcded2;font-size:12px;color:#53604c;line-height:1.4}
-.location-popover{position:absolute;z-index:12;width:228px;padding:10px;background:#fffef9;border:2px solid #273027;border-radius:10px;box-shadow:4px 4px #273027;display:grid;gap:7px}
-.location-popover[hidden]{display:none!important}
+.location-popover{position:fixed;z-index:1000;width:228px;padding:10px;background:#fffef9;border:2px solid #273027;border-radius:10px;box-shadow:4px 4px #273027;display:grid;gap:7px}
+.location-popover[hidden]{display:none!important;pointer-events:none}.location-popover:not([hidden]){pointer-events:auto;visibility:visible;opacity:1}
 .popover-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;color:#626f5a;font-size:9px;font-weight:950;letter-spacing:.1em}
 .popover-close{width:24px;height:24px;border:1.5px solid #273027;background:white;border-radius:6px;font-size:17px;line-height:1}
 #popover-title{font-size:14px;line-height:1.2;overflow-wrap:anywhere;margin-bottom:2px}
@@ -45,7 +45,10 @@
 .popover-action:hover{filter:brightness(.97);transform:translate(1px,1px);box-shadow:1px 1px #273027}
 .desk-hotspot.selected .dot{transform:scale(2.5);transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 1px 1px #1f271d)}
 .desk-hotspot.selected .hit{fill:#ffc94b55;stroke:#422b1c;stroke-width:1.8}
-.room-hotspot.selected circle{r:11px;filter:drop-shadow(0 1px 1px #1f271d)}
+.room-hotspot.selected circle:not(.selection-pulse){r:11px;filter:drop-shadow(0 1px 1px #1f271d)}
+.selection-pulse{fill:#ff4a42;fill-opacity:.22;stroke:#ed3932;stroke-width:2;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:selected-location-pulse 1.25s ease-out infinite}
+@keyframes selected-location-pulse{0%{transform:scale(.6);fill-opacity:.38;stroke-opacity:1}80%,100%{transform:scale(1.8);fill-opacity:0;stroke-opacity:0}}
+@media(prefers-reduced-motion:reduce){.selection-pulse{animation:none;transform:none;fill-opacity:.5}}
 .room-hotspot.selected text{font-size:10px;fill:#222}
 @media(max-width:700px){.location-popover{width:210px}.popover-action{font-size:12px;padding:10px}}
 </style>
@@ -198,11 +201,18 @@ function focusView(place){
 function resetMapView(){svg.setAttribute('viewBox','0 0 850 779');svg.style.transform='';}
 
 function chooseSvgNode(p){
- document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));
- if(p&&p.node&&(p.type==='desk'||p.node.classList.contains('room-hotspot')))p.node.classList.add('selected');
+ document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));document.querySelectorAll('.selection-pulse').forEach(n=>n.remove());
+ document.querySelectorAll('.selection-pulse').forEach(n=>n.remove());
+ if(!p||!p.node)return;
+ if(p.type==='desk'||p.node.classList.contains('room-hotspot')){
+   p.node.classList.add('selected');
+   const pulse=svgEl('circle',{class:'selection-pulse',cx:p.x,cy:p.y,r:10});
+   p.node.insertBefore(pulse,p.node.firstChild);
+ }
 }
 function placePopover(place){
- const pop=$('location-popover');if(!place){pop.hidden=true;return}
+ const pop=$('location-popover');
+ if(!place){pop.hidden=true;return}
  $('popover-title').textContent=place.name||place.id||'Map point';
  $('popover-type').textContent=place.type==='room'?'MEETING ROOM':place.type==='desk'?'DESK':'MAP LOCATION';
  const sameAsStart=!!starting&&starting.id===place.id;
@@ -210,15 +220,16 @@ function placePopover(place){
  $('popover-start').hidden=!!starting&&!isSharedStart;
  $('popover-destination').hidden=!starting||sameAsStart||isSharedStart;
  pop.hidden=false;
+ // Move the popover to <body> so overflow/scroll on the map cannot clip it.
+ if(pop.parentElement!==document.body)document.body.appendChild(pop);
  const pt=svg.createSVGPoint();pt.x=place.x;pt.y=place.y;
- const screen=pt.matrixTransform(svg.getScreenCTM()),rect=mapview.getBoundingClientRect();
- const x=screen.x-rect.left+mapview.scrollLeft,y=screen.y-rect.top+mapview.scrollTop;
- const width=pop.offsetWidth||228,height=pop.offsetHeight||145;
- let left=x+15,top=y-height/2;
- if(left+width>mapview.scrollWidth-8)left=x-width-15;
- left=Math.max(8,Math.min(left,mapview.scrollWidth-width-8));
- if(top<8)top=y+16;
- top=Math.max(8,Math.min(top,mapview.scrollHeight-height-8));
+ const screen=pt.matrixTransform(svg.getScreenCTM());
+ const width=pop.offsetWidth||228,height=pop.offsetHeight||160,gap=14,margin=10;
+ let left=screen.x+gap,top=screen.y-height/2;
+ if(left+width>window.innerWidth-margin)left=screen.x-width-gap;
+ left=Math.max(margin,Math.min(left,window.innerWidth-width-margin));
+ if(top<margin)top=screen.y+gap;
+ top=Math.max(margin,Math.min(top,window.innerHeight-height-margin));
  pop.style.left=left+'px';pop.style.top=top+'px';
 }
 function select(p,opts={}){
@@ -286,6 +297,7 @@ function decodePayload(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length
 const backdrop=$('backdrop');
 function openShare(){if(!selected)return;const expires=Date.now()+3600000;shareUrl=location.href.split('#')[0]+'#spot='+encodePayload({place:selected.id,expires,x:selected.x,y:selected.y,name:selected.name,type:selected.type,access:selected.access||null});$('modalplace').textContent=selected.name+' · expires in 1 hour';$('modalcopy').textContent='Send this link so someone can find '+selected.name+'.';backdrop.classList.add('open')}
 $('close').addEventListener('click',()=>backdrop.classList.remove('open'));
+window.addEventListener('resize',()=>{if(selected&&!$('location-popover').hidden)placePopover(selected)});
 $('popover-close').addEventListener('click',()=>{$('location-popover').hidden=true});
 $('popover-share').addEventListener('click',()=>{if(selected)openShare()});
 $('popover-start').addEventListener('click',()=>{
