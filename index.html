@@ -113,32 +113,27 @@ const placeRecords=roomRecords.concat(extraLandmarks);
 placeRecords.forEach(p=>{const g=svgEl('g',{class:'room-hotspot',tabindex:0,role:'button','aria-label':p.name});g.appendChild(svgEl('circle',{cx:p.x,cy:p.y,r:p.type==='room'?5.1:7}));const title=svgEl('title');title.textContent=p.name;g.appendChild(title);g.addEventListener('click',()=>select(p));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(p)}});roomHotspotLayer.appendChild(g);p.node=g});
 const namedPlaces=()=>placeRecords;
 const graph={
- W0:{x:67,y:212,edges:{T1:1,W1:1}},
- T1:{x:126,y:212,edges:{W0:1,T2:1}},
+ T1:{x:126,y:212,edges:{T2:1}},
  T2:{x:300,y:212,edges:{T1:1,T3:1,C0:1}},
  T3:{x:435,y:212,edges:{T2:1,T4:1,C6:1}},
  T4:{x:580,y:212,edges:{T3:1,T5:1,C6:1}},
  T5:{x:692,y:212,edges:{T4:1,T6:1,E0:1}},
- T6:{x:787,y:212,edges:{T5:1,E2:1}},
- W1:{x:67,y:314,edges:{W0:1,W2:1}},
- W2:{x:67,y:495,edges:{W1:1,B1:1}},
- B1:{x:67,y:545,edges:{W2:1,B2:1}},
- B2:{x:261,y:545,edges:{B1:1,B3:1}},
- B3:{x:351,y:545,edges:{B2:1,B4:1,C4:1}},
- B4:{x:516,y:545,edges:{B3:1,B5:1,C5:1}},
- B5:{x:644,y:545,edges:{B4:1,B6:1,E3:1}},
- B6:{x:746,y:545,edges:{B5:1,E4:1}},
- C0:{x:333,y:212,edges:{T2:1,C1:1}},
- C1:{x:333,y:303,edges:{C0:1,C4:1}},
- C6:{x:528,y:212,edges:{T3:1,T4:1,C3:1}},
- C3:{x:528,y:303,edges:{C6:1,C5:1}},
- C4:{x:333,y:429,edges:{C1:1,B3:1}},
- C5:{x:528,y:429,edges:{C3:1,B4:1}},
+ T6:{x:787,y:212,edges:{T5:1}},
+ B1:{x:67,y:565,edges:{B2:1}},
+ B2:{x:261,y:565,edges:{B1:1,B3:1}},
+ B3:{x:363,y:565,edges:{B2:1,B4:1,C4:1}},
+ B4:{x:516,y:565,edges:{B3:1,B5:1,C7:1}},
+ B5:{x:644,y:565,edges:{B4:1,B6:1,E1:1}},
+ B6:{x:746,y:565,edges:{B5:1}},
+ C0:{x:363,y:212,edges:{T2:1,C1:1}},
+ C1:{x:363,y:303,edges:{C0:1,C4:1}},
+ C6:{x:540,y:212,edges:{T3:1,T4:1,C3:1}},
+ C3:{x:540,y:303,edges:{C6:1,C5:1}},
+ C4:{x:363,y:429,edges:{C1:1,B3:1}},
+ C5:{x:540,y:429,edges:{C3:1,C7:1}},
+ C7:{x:540,y:565,edges:{C5:1,B4:1}},
  E0:{x:644,y:212,edges:{T5:1,E1:1}},
- E1:{x:644,y:303,edges:{E0:1,E3:1}},
- E2:{x:810,y:303,edges:{T6:1,E4:1}},
- E3:{x:644,y:545,edges:{E1:1,E4:1,B5:1}},
- E4:{x:810,y:545,edges:{E2:1,E3:1,B6:1}}
+ E1:{x:644,y:303,edges:{E0:1,B5:1}}
 };
 
 function allPlaces(){return namedPlaces()}
