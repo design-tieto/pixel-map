@@ -8,6 +8,11 @@ The map background comes from the supplied Plan 4 / Vån 3 PDF's original SVG ex
 
 Desk and room markers are separate interactive overlays in the app's `0 0 850 779` coordinate system. The datasets contain 246 desk markers and 34 room records; the desk count alone does not prove every marker is centered correctly.
 
+
+## Location search and sharing
+
+The room picker includes every room and named destination in a scrollable, searchable list with a live result count. The kitchen, coffee stations, and lounge are represented by one Kitchen destination. The sidebar identifies Arenastaden floor 3 and explains how to find or share a location; the map does not support booking.
+
 ## Verification
 
 - Confirmed the compressed asset expands to valid SVG with a `216 77 666 618` viewBox and 152,854 PDF-exported paths.
