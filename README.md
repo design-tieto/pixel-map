@@ -1,22 +1,19 @@
 # Pixel Office
 
-Static responsive office map for Kv Poolen, Plan 4 / Vån 3. Find a desk or meeting room and share its location.
+Pixel Office is a static floor map for finding and sharing desk and meeting-room locations.
 
-## Desk coordinates and IDs
-- Desk centre candidates use the vector-tracing dataset in `office_trace/desk-centres-poly.csv`, which includes rotated/curved-corner desks missed by the earlier axis-aligned detector.
-- Desk IDs are assigned deterministically after spatial sorting. The numbering starts at the top-left corner, proceeds across the top edge, down the right side, across the bottom toward the left, up the left side, then numbers interior desks row-by-row.
-- Current traced candidate count: 258. This uses traced geometric centres, not the previously inserted manual points through the central open void.
-- The count must still be checked against the drawing's stated inventory and candidates in meeting rooms/tables. Do not claim one-to-one completeness until visually audited.
+## Map source
 
-## Finding and sharing
-- Use `assets/floor-plan-hires.jpg` as the map image.
-- Clicking a desk or meeting-room marker opens a compact share popover.
-- Search offers a dropdown of matching desk IDs, room IDs, and landmarks.
-- Share links expire client-side after one hour; there is no backend, authentication, or live colleague presence.
-- The project deliberately has no walking directions or route functions.
+The map background comes from the supplied Plan 4 / Vån 3 PDF's original SVG export. The SVG paths, fills, strokes, furniture, rotations, labels, corridors, and planting details are kept from the export. Only the SVG page viewBox is cropped to the plan; no architectural geometry is redrawn. The compressed SVG is decompressed by the browser before display.
 
-## Remaining QA
-1. Visually verify every traced centre against a real desk surface, particularly rotated curved-corner desks and furniture inside meeting rooms.
-2. Compare the 258 candidate centres against the plan's stated desk count and remove non-desk shapes.
-3. Confirm that the new D001 ordering begins at the top-left corner and stays stable across edits.
-4. Test search, share links, reset, and mobile behaviour.
+Desk and room markers are separate interactive overlays in the app's `0 0 850 779` coordinate system. The datasets contain 246 desk markers and 34 room records; the desk count alone does not prove every marker is centered correctly.
+
+## Verification
+
+- Confirmed the compressed asset expands to valid SVG with a `216 77 666 618` viewBox and 152,854 PDF-exported paths.
+- Confirmed 246 unique desk IDs and 34 unique room IDs.
+- Rendered the PDF plan crop with desk and room marker centers overlaid for a full-map visual comparison.
+- Checked the inline JavaScript syntax and `git diff --check`.
+- Verified the deployed feature branch in Chrome: the PDF-derived plan loaded; searches for D001, D122, and D244 selected their desks; room 04F021 showed 10P; search selection preserved the manual zoom; manual zoom, map scrolling, and Reset worked.
+
+GitHub Pages now publishes `feat/pixel-map-vector-trace`. The branch remains unmerged.

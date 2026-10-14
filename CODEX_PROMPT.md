@@ -1,19 +1,18 @@
-# Pixel Office — Codex project brief
+# Pixel Office — Codex brief
 
-Continue on `feat/pixel-office-prototype`. Do not merge the PR unless instructed.
+Continue on `feat/pixel-office-prototype`; don't merge without instruction.
 
 ## Scope
-Find and share locations only: do not reintroduce routes, directions, or start/end selection.
+Find and share locations only. No directions, routes, start/end selection, desk booking, or room locking.
 
-## Desk map
-- Use the centre points from the vector tracing data (`office_trace/desk-centres-poly.csv` in the local project workspace), which includes rotated desk rectangles in the curved corners.
-- IDs must be assigned deterministically after spatial sorting: top-left corner first, across the top, down the right, across the bottom right-to-left, up the left, then interior desks row-by-row.
-- The manual line of markers through the central open void must not return.
-- There are 258 candidate centres. Audit them against physical desk surfaces, especially corners and any furniture inside meeting rooms; remove non-desk detections before claiming the inventory is complete.
-- Keep one pink M marker per real MÖTE room.
+## UI
+- Use a compact single-row search at top with no logo, title, intro row, or reset button outside the map.
+- Let the map take most of the viewport. Put zoom out (-), zoom in (+), and reset (#) controls over the map at top-right.
+- Keep the selectable desk circles centred on the desk surfaces and meeting-room M targets centred in their pink room footprints. Use the high-resolution source image; do not use the old thumbnail.
+- Remove the Plant area as a selectable/searchable landmark.
+- The share popup must not overlap the share modal on mobile: hide it before opening the modal, put the modal above it, and constrain the modal to the viewport with internal scrolling.
+- Footer only: “Built by Rashmi Borole” and “Not a booking system — you cannot book or lock desks or rooms.”
+- Keep search dropdown for desk and meeting-room IDs. Selection and shared destination markers must remain obvious.
 
-## Interaction
-- Click/search a location to highlight it with a pulse and show a share-only popover.
-- Search dropdown lists matching desk IDs, meeting-room IDs and landmarks.
-- Reset clears the selection, pulse, shared pin, popover, search dropdown, share dialog and zoom.
-- Shared links expire client-side after one hour. Keep static GitHub Pages hosting.
+## Hosting
+Static GitHub Pages app. Share links expire client-side after one hour. No backend or live colleague presence.
