@@ -127,7 +127,7 @@
 <script>
 (() => {
 const NS='http://www.w3.org/2000/svg', svg=document.getElementById('map'),mapview=document.getElementById('mapview'),deskLayer=document.getElementById('desks'),pinLayer=document.getElementById('pin-layer'),destinationLayer=document.getElementById('destination-layer');
-let selected=null,shareUrl='',zoom=1,toastTimer;
+let selected=null,shareUrl='',zoom=1,baseMapWidth=0,baseMapHeight=0,toastTimer;
 const $=id=>document.getElementById(id);
 const toast=message=>{const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3000)};
 fetch('assets/floor-plan-source.svg.gz?v=pdf-vector-1').then(response=>{if(!response.ok)throw new Error('PDF vector asset could not be loaded');return response.body.pipeThrough(new DecompressionStream('gzip')).getReader()}).then(async reader=>{const chunks=[];for(;;){const {done,value}=await reader.read();if(done)break;chunks.push(value)}const href=URL.createObjectURL(new Blob(chunks,{type:'image/svg+xml'}));const image=document.getElementById('vector-plan');image.addEventListener('load',()=>URL.revokeObjectURL(href),{once:true});image.setAttribute('href',href)}).catch(error=>{console.error(error);toast('The floor plan could not be loaded. Please refresh the page.')});
@@ -165,7 +165,8 @@ function focusView(place){
  // At the default full-floor view, the location remains visible in context.
  if(selected&&!$('location-popover').hidden)placePopover(selected);
 }
-function resetMapView(){svg.setAttribute('viewBox','0 0 850 779');zoom=1;svg.style.transform='';svg.style.width='';svg.style.height='';}
+function measureBaseMap(){if(!svg.style.width&&!svg.style.height){const rect=svg.getBoundingClientRect();if(rect.width&&rect.height){baseMapWidth=rect.width;baseMapHeight=rect.height}}}
+function resetMapView(){svg.setAttribute('viewBox','0 0 850 779');zoom=1;svg.style.transform='';svg.style.width='';svg.style.height='';measureBaseMap()}
 
 function chooseSvgNode(p){document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));document.querySelectorAll('.selection-pulse').forEach(n=>n.remove());if(!p||!p.node)return;if(p.type==='desk'||p.node.classList.contains('room-hotspot')){p.node.classList.add('selected');p.node.appendChild(svgEl('circle',{class:'selection-pulse',cx:p.x,cy:p.y,r:p.type==='desk'?8:10}))}}
 function placePopover(place){const pop=$('location-popover');if(!place){pop.hidden=true;return}$('popover-title').textContent=place.name||place.id||'Map point';$('popover-type').textContent=place.type==='room'?'MEETING ROOM':place.type==='desk'?'DESK':'MAP LOCATION';pop.hidden=false;pop.style.display='grid';pop.style.visibility='visible';pop.style.opacity='1';if(pop.parentElement!==document.body)document.body.appendChild(pop);const pt=svg.createSVGPoint();pt.x=place.x;pt.y=place.y;const screen=pt.matrixTransform(svg.getScreenCTM());const width=pop.offsetWidth||228,height=pop.offsetHeight||110,gap=14,margin=10;let left=screen.x+gap,top=screen.y-height/2;if(left+width>window.innerWidth-margin)left=screen.x-width-gap;left=Math.max(margin,Math.min(left,window.innerWidth-width-margin));if(top<margin)top=screen.y+gap;top=Math.max(margin,Math.min(top,window.innerHeight-height-margin));pop.style.left=left+'px';pop.style.top=top+'px'}
@@ -175,7 +176,7 @@ function decodePayload(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length
 const backdrop=$('backdrop');
 function openShare(){if(!selected)return;$('location-popover').hidden=true;const expires=Date.now()+3600000;shareUrl=location.href.split('#')[0]+'#spot='+encodePayload({place:selected.id,expires,x:selected.x,y:selected.y,name:selected.name,type:selected.type,access:selected.access||null});$('modalplace').textContent=selected.name+' · expires in 1 hour';$('modalcopy').textContent='Send this link so someone can find '+selected.name+'.';backdrop.classList.add('open')}
 $('close').addEventListener('click',()=>backdrop.classList.remove('open'));
-window.addEventListener('resize',()=>{if(selected&&!$('location-popover').hidden)placePopover(selected)});
+window.addEventListener('resize',()=>{svg.style.width='';svg.style.height='';measureBaseMap();if(zoom>1){svg.style.width=(baseMapWidth*zoom)+'px';svg.style.height=(baseMapHeight*zoom)+'px'}if(selected&&!$('location-popover').hidden)placePopover(selected)});
 $('popover-close').addEventListener('click',()=>{$('location-popover').hidden=true});$('popover-share').addEventListener('click',()=>{if(selected)openShare()});
 backdrop.addEventListener('click',e=>{if(e.target===backdrop){backdrop.classList.remove('open');$('location-popover').hidden=true}});
 $('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(shareUrl);toast('Location link copied. Share it in Teams.');backdrop.classList.remove('open')}catch{window.prompt('Copy your location link:',shareUrl)}});
@@ -196,14 +197,17 @@ searchInput.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSearchResul
 document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))closeSearch()});
 $('reset').addEventListener('click',()=>{selected=null;zoom=1;pinLayer.innerHTML='';destinationLayer.innerHTML='';$('location-popover').hidden=true;$('search').value='';closeSearchResults();searchKind='room';document.querySelectorAll('.search-tab').forEach(t=>{const active=t.dataset.kind==='room';t.classList.toggle('active',active);t.setAttribute('aria-selected',String(active))});searchInput.placeholder='Find a room…';renderSearchResults('');backdrop.classList.remove('open');document.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));document.querySelectorAll('.selection-pulse').forEach(n=>n.remove());resetMapView();mapview.scrollTo({left:0,top:0,behavior:'auto'});toast('Map reset.')});
 function setMapZoom(next){
- const beforeWidth=svg.getBoundingClientRect().width,beforeHeight=svg.getBoundingClientRect().height;
+ const beforeRect=svg.getBoundingClientRect(),beforeWidth=beforeRect.width,beforeHeight=beforeRect.height;
+ if(zoom===1&&(!svg.style.width||!svg.style.height)){baseMapWidth=beforeWidth;baseMapHeight=beforeHeight}
+ if(!baseMapWidth||!baseMapHeight){baseMapWidth=beforeWidth;baseMapHeight=beforeHeight}
  const centerX=mapview.scrollLeft+mapview.clientWidth/2,centerY=mapview.scrollTop+mapview.clientHeight/2;
  const ratioX=beforeWidth?centerX/beforeWidth:.5,ratioY=beforeHeight?centerY/beforeHeight:.5;
- zoom=Math.max(1,Math.min(3,next));
+ const nextZoom=Math.max(1,Math.min(3,next));
+ if(nextZoom===zoom)return;
+ zoom=nextZoom;
  svg.style.transform='none';
- svg.style.width=(zoom*100)+'%';
- svg.style.height='auto';
- svg.style.aspectRatio='850 / 779';
+ svg.style.width=(baseMapWidth*zoom)+'px';
+ svg.style.height=(baseMapHeight*zoom)+'px';
  const width=svg.getBoundingClientRect().width,height=svg.getBoundingClientRect().height;
  mapview.scrollLeft=Math.max(0,ratioX*width-mapview.clientWidth/2);
  mapview.scrollTop=Math.max(0,ratioY*height-mapview.clientHeight/2);
