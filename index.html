@@ -127,7 +127,7 @@
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title"><section class="modal"><h2 id="modal-title">Share your spot</h2><p id="modalcopy">Send a link so someone can find you.</p><div class="modalplace" id="modalplace"></div><p class="tiny">This link contains the place and expiry time. Client-side expiry prevents opening an old link in this app, but cannot revoke a copied URL from outside it.</p><div class="modalactions"><button class="btn primary" id="copy">Copy link</button><button class="btn" id="teams">Share to Teams</button><button class="btn" id="close">Close</button></div></section></div>
-<script src="assets/desks.js?v=vector-trace-1"></script><script src="assets/floor-rooms.js?v=focus-rooms-1"></script><script src="assets/floor2-rooms.js?v=floor-2-2"></script><script src="assets/floor1-rooms.js?v=floor-1-1"></script>
+<script src="assets/desks.js?v=vector-trace-1"></script><script src="assets/floor-rooms.js?v=floor3-display-names-2"></script><script src="assets/floor2-rooms.js?v=floor-2-2"></script><script src="assets/floor1-rooms.js?v=floor-1-1"></script>
 <script>
 (() => {
 const NS='http://www.w3.org/2000/svg', svg=document.getElementById('map'),mapview=document.getElementById('mapview'),deskLayer=document.getElementById('desks'),pinLayer=document.getElementById('pin-layer'),destinationLayer=document.getElementById('destination-layer');
@@ -143,9 +143,9 @@ const floor2RoomRecords=window.PIXEL_OFFICE_FLOOR2_ROOMS.map(p=>({...p,access:nu
 const floor1RoomRecords=window.PIXEL_OFFICE_FLOOR1_ROOMS.map(p=>({...p,access:null,node:null}));
 const placeLabel=p=>p.capacity&&!String(p.name).endsWith(' · '+p.capacity)?p.name+' · '+p.capacity:p.name;
 const extraLandmarks=[
-{id:'KITCHEN',name:'Kitchen',type:'landmark',x:443.9,y:294.4,access:null},
-{id:'ELEVATORS',name:'Elevator lobby',type:'landmark',x:453.3,y:483.6,access:null},
-{id:'COPY',name:'Copy area',type:'landmark',x:284.5,y:102,access:null}
+{id:'KITCHEN',name:'Kitchen',type:'landmark',showId:false,x:443.9,y:294.4,access:null},
+{id:'ELEVATORS',name:'Elevator lobby',type:'landmark',showId:false,x:453.3,y:483.6,access:null},
+{id:'COPY',name:'Copy area',type:'landmark',showId:false,x:284.5,y:102,access:null}
 ];
 let activeFloor='3',desks=[],roomRecords=[],placeRecords=[];
 function addDeskMarker(p){const g=svgEl('g',{class:'desk-hotspot',tabindex:0,role:'button','aria-label':p.name});g.appendChild(svgEl('rect',{class:'desk-shape',x:p.x-p.w/2,y:p.y-p.h/2,width:p.w,height:p.h,transform:'rotate('+p.angle+' '+p.x+' '+p.y+')'}));g.appendChild(svgEl('circle',{class:'hit',cx:p.x,cy:p.y,r:10}));g.appendChild(svgEl('circle',{class:'dot',cx:p.x,cy:p.y,r:3.2}));const title=svgEl('title');title.textContent=p.name;g.appendChild(title);p.node=g;g.addEventListener('click',e=>{e.stopPropagation();select(p)});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();select(p)}});deskLayer.appendChild(g)}
@@ -206,7 +206,7 @@ function closeSearchResults(){searchResults.hidden=false;searchInput.setAttribut
 function renderSearchResults(query){const q=query.trim().toLowerCase();if(!q){searchResults.innerHTML='';}
 const matches=allPlaces().filter(p=>(searchKind==='room'?(p.type==='room'||p.type==='landmark'):p.type==='desk')&&(!q||p.id.toLowerCase().includes(q)||p.name.toLowerCase().includes(q)||(p.searchTerms||[]).some(t=>String(t).toLowerCase().includes(q))));searchResults.innerHTML='';$('search-count').textContent=matches.length+(searchKind==='room'?' places':' desks');
 if(!matches.length){const empty=document.createElement('div');empty.className='search-empty';empty.textContent='No matching desks or rooms.';searchResults.appendChild(empty)}
-else{matches.forEach(p=>{const b=document.createElement('button');b.type='button';b.className='search-option';b.setAttribute('role','option');const id=document.createElement('span');id.className='result-id';id.textContent=p.id;id.hidden=p.showId===false;const name=document.createElement('span');name.className='result-name';name.textContent=placeLabel(p);b.append(id,name);b.addEventListener('click',()=>{searchInput.value=p.id;pendingSearchPlace=p;if(!window.matchMedia('(max-width: 700px)').matches){commitSearch();return}searchResults.querySelectorAll('.search-option').forEach(option=>{option.classList.toggle('pending',option===b);option.setAttribute('aria-selected',String(option===b))})});searchResults.appendChild(b)})}
+else{matches.forEach(p=>{const b=document.createElement('button');b.type='button';b.className='search-option';b.setAttribute('role','option');const id=document.createElement('span');id.className='result-id';id.textContent=p.id;id.hidden=p.showId===false;const name=document.createElement('span');name.className='result-name';name.textContent=placeLabel(p);b.append(id,name);b.addEventListener('click',()=>{searchInput.value=p.name;pendingSearchPlace=p;if(!window.matchMedia('(max-width: 700px)').matches){commitSearch();return}searchResults.querySelectorAll('.search-option').forEach(option=>{option.classList.toggle('pending',option===b);option.setAttribute('aria-selected',String(option===b))})});searchResults.appendChild(b)})}
 searchResults.hidden=false;searchInput.setAttribute('aria-expanded','true')}
 searchInput.addEventListener('input',e=>{pendingSearchPlace=null;const query=e.target.value.trim().toLowerCase();renderSearchResults(e.target.value);if(query&&!window.matchMedia('(max-width: 700px)').matches){const exact=allPlaces().filter(p=>(searchKind==='room'?(p.type==='room'||p.type==='landmark'):p.type==='desk')&&(p.id.toLowerCase()===query||p.name.toLowerCase()===query||placeLabel(p).toLowerCase()===query));if(exact.length===1){pendingSearchPlace=exact[0];commitSearch()}}});
 searchInput.addEventListener('focus',()=>{openSearch()});
